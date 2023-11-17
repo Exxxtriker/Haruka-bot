@@ -94,9 +94,10 @@ module.exports = {
                     ephemeral: true,
                 });
             } else {
-                cooldowns.delete(interaction.user.id);    //É oque eu consegui fazer para ser um cooldown fds
+                cooldowns.delete(interaction.user.id);
             }
         }
+        //É oque eu consegui fazer para ser um cooldown fds
 
         const { id } = await interaction.options.getUser('alvo');
         const user = interaction.user;
