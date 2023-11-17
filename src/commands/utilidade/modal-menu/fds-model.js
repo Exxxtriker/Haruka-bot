@@ -19,7 +19,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'Haruka Harano 運', iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png' });
         await interaction.reply({
-            content: `<@${getCargoValue()}>`,
+            content: `${getCargoValue()}`,
             embeds: [embed],
         });
     },

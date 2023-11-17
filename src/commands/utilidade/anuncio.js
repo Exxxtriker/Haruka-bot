@@ -12,12 +12,12 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('anuncio')
         .setDescription('*Utilize para confeccionar um anúncio ao servidor...*')
-        .addStringOption((option) => option.setName('mencao')
+        .addRoleOption((option) => option.setName('cargo')
             .setDescription('Selecione o cargo para mencionar')
             .setRequired(true)),
     async execute(interaction) {
-        const mencao = await interaction.options.getString('mencao');
-        cargoValue = mencao;
+        const cargo = await interaction.options.getRole('cargo');
+        cargoValue = cargo;
 
         const modal = new ModalBuilder()
             .setCustomId('utilidade-model')
@@ -41,6 +41,7 @@ module.exports = {
 
         modal.addComponents(firstActionRow, secondActionRow);
         await interaction.showModal(modal);
+        module.exports = cargo;
     },
     getCargoValue: () => cargoValue,
 
