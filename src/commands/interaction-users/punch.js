@@ -140,7 +140,7 @@ module.exports = {
 
             await buttonInteraction.update({ embeds: [retribuirEmbed], components: [], content: `${user}` });
         });
-        const cooldownTime = 30 * 1000; // 30 seconds cooldown
+        const cooldownTime = 15 * 1000; // 30 seconds cooldown
         cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
     },
 };
