@@ -28,6 +28,17 @@ const slapImages1 = [
     'https://media.tenor.com/Bsrk9d8-BRwAAAAd/naruto-sasuke.gif',
     'https://media.tenor.com/SYBbHkpBq-sAAAAd/naruto-uchiha-sasuke.gif',
     'https://media.tenor.com/2o2dVrH6fiUAAAAd/rock-lee-reverse-lotus.gif',
+    'https://media.tenor.com/C5F7JE6xmtIAAAAC/sasuke-orochimaru.gif',
+    'https://media.tenor.com/uQA1kJfi9NIAAAAd/sasuke-orochimaru.gif',
+    'https://media.tenor.com/kdPdOB_RQWwAAAAd/punch-direct-hit.gif',
+    'https://media.tenor.com/0ifkFdUxqe4AAAAd/gon-neferpitou.gif',
+    'https://media.tenor.com/7u2dD57wmB8AAAAd/hajime-no-ippo-sendo-takeshi.gif',
+    'https://media.tenor.com/UeOIfdk_XnMAAAAd/hajime-no-ippo-sendo-takeshi.gif',
+    'https://media.tenor.com/NTH6jymmElcAAAAd/baki-fight.gif',
+    'https://media.tenor.com/6tkj4GlWzM0AAAAd/che-guevara.gif',
+    'https://media.tenor.com/7pCfC7W2T0sAAAAd/biscuit-oliva-olivia.gif',
+    'https://media.tenor.com/eJ-qdn2dOtEAAAAd/hajime-no-ippo-ippo.gif',
+    'https://media.tenor.com/XIgzyvU9tMoAAAAC/attack-hit.gif',
 
 ];
 const slapImages2 = [
