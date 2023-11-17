@@ -69,7 +69,7 @@ module.exports = {
         const row = new ActionRowBuilder()
             .addComponents(retribuir);
 
-        await interaction.reply({ embeds: [embed], components: [row] });
+        await interaction.reply({ embeds: [embed], components: [row], content: `<@${id}>` });
 
         const filter = (i) => i.customId === 'retribuir' && i.user.id === id;
         const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
@@ -86,7 +86,7 @@ module.exports = {
                     text: 'Haruka Harano 運',
                     iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                 });
-            await buttonInteraction.update({ embeds: [retribuirEmbed], components: [] });
+            await buttonInteraction.update({ embeds: [retribuirEmbed], components: [], content: `${user}` });
         });
         const cooldownTime = 30 * 1000; // 40 seconds cooldown
         cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
