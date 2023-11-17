@@ -6,6 +6,7 @@ const {
     EmbedBuilder,
 } = require('discord.js');
 
+const cooldowns = new Map();
 const awaitImages = [
     'https://media.tenor.com/QcvGepJbzYIAAAAC/anime-tumblr.gif',
     'https://media.tenor.com/0SQ3v0yMUt4AAAAC/love-young.gif',
@@ -52,6 +53,17 @@ module.exports = {
             .setDescription('Marque a pessoa que você deseja')
             .setRequired(true)),
     async execute(interaction) {
+        if (cooldowns.has(interaction.user.id)) {
+            const expirationTime = cooldowns.get(interaction.user.id);
+            if (Date.now() < expirationTime) {
+                // User is still on cooldown
+                const remainingTime = (expirationTime - Date.now()) / 1000;
+                return interaction.reply({ content: `Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`, ephemeral: true });
+            } else {
+                // Cooldown has expired, remove user from cooldown map
+                cooldowns.delete(interaction.user.id);
+            }
+        }
         const { user } = interaction;
         const targetUser = interaction.options.getUser('alvo');
 
@@ -106,7 +118,7 @@ module.exports = {
             collectors[collectorKey]?.stop();
         };
 
-        await interaction.reply({ embeds: [embed], components: [row] });
+        await interaction.reply({ embeds: [embed], components: [row], content: `${targetUser}` });
 
         collectors[collectorKey].on('collect', async (buttonInteraction) => {
             const originalMessage = await interaction.fetchReply().catch(() => null);
@@ -145,5 +157,7 @@ module.exports = {
                 disableButtons();
             }
         });
+        const cooldownTime = 40 * 1000; // 40 seconds cooldown
+        cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
     },
 };
