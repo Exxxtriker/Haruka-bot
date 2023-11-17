@@ -123,7 +123,7 @@ module.exports = {
         await interaction.reply({ embeds: [embed], components: [row], content: `<@${id}>` });
 
         const filter = (i) => i.customId === 'retribuir' && i.user.id === id;
-        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
+        const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15 * 60 * 1000 });
 
         collector.on('collect', async (buttonInteraction) => {
             // Lógica para retribuir o soco
