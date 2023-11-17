@@ -25,7 +25,7 @@ const kissImages2 = [
     'https://media.tenor.com/F02Ep3b2jJgAAAAC/cute-kawai.gif',
     // Adicione mais URLs conforme necessário
 ];
-
+const cooldowns = new Map();
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('kiss')
@@ -34,6 +34,19 @@ module.exports = {
             .setDescription('Marque a pessoa que você deseja')
             .setRequired(true)),
     async execute(interaction) {
+        if (cooldowns.has(interaction.user.id)) {
+            const expirationTime = cooldowns.get(interaction.user.id);
+            if (Date.now() < expirationTime) {
+                // User is still on cooldown
+                const remainingTime = (expirationTime - Date.now()) / 1000;
+                return interaction.reply({
+                    content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`,
+                    ephemeral: true,
+                });
+            } else {
+                cooldowns.delete(interaction.user.id);
+            }
+        }
         const { id } = await interaction.options.getUser('alvo');
         const user = interaction.user;
 
@@ -73,8 +86,9 @@ module.exports = {
                     text: 'Haruka Harano 運',
                     iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                 });
-            await interaction.editReply({ embeds: [embed], components: [] });
-            await buttonInteraction.upgrade({ embeds: [retribuirEmbed] });
+            await buttonInteraction.update({ embeds: [retribuirEmbed], components: [] });
         });
+        const cooldownTime = 30 * 1000; // 30 seconds cooldown
+        cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
     },
 };

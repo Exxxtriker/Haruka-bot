@@ -68,7 +68,10 @@ module.exports = {
             if (Date.now() < expirationTime) {
                 // User is still on cooldown
                 const remainingTime = (expirationTime - Date.now()) / 1000;
-                return interaction.reply({ content: `Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`, ephemeral: true });
+                return interaction.reply({
+                    content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`,
+                    ephemeral: true,
+                });
             } else {
                 // Cooldown has expired, remove user from cooldown map
                 cooldowns.delete(interaction.user.id);
@@ -117,7 +120,7 @@ module.exports = {
             await interaction.editReply({ embeds: [embed], components: [] });
             await buttonInteraction.reply({ embeds: [retribuirEmbed] });
         });
-        const cooldownTime = 40 * 1000; // 40 seconds cooldown
+        const cooldownTime = 30 * 1000; // 30 seconds cooldown
         cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
     },
 };
