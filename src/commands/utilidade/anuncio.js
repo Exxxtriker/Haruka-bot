@@ -12,11 +12,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('anuncio')
         .setDescription('*Utilize para confeccionar um anúncio ao servidor...*')
-        .addRoleOption((option) => option.setName('cargo')
+        .addMentionableOption((option) => option.setName('cargo')
             .setDescription('Selecione o cargo para mencionar')
             .setRequired(true)),
     async execute(interaction) {
-        const cargo = await interaction.options.getRole('cargo');
+        const cargo = await interaction.options.getMentionable('cargo');
         cargoValue = cargo;
 
         const modal = new ModalBuilder()
@@ -41,7 +41,6 @@ module.exports = {
 
         modal.addComponents(firstActionRow, secondActionRow);
         await interaction.showModal(modal);
-        module.exports = cargo;
     },
     getCargoValue: () => cargoValue,
 
