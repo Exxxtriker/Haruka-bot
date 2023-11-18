@@ -86,6 +86,9 @@ module.exports = {
             .setDescription('Marque a pessoa que você deseja')
             .setRequired(true)),
     async execute(interaction) {
+        const { user } = interaction;
+        const targetUser = interaction.options.getUser('alvo');
+
         if (cooldowns.has(interaction.user.id)) {
             const expirationTime = cooldowns.get(interaction.user.id);
             if (Date.now() < expirationTime) {
@@ -99,9 +102,6 @@ module.exports = {
                 cooldowns.delete(interaction.user.id);
             }
         }
-
-        const { user } = interaction;
-        const targetUser = interaction.options.getUser('alvo');
 
         const aceita = new ButtonBuilder()
             .setCustomId('aceita')
@@ -164,7 +164,6 @@ module.exports = {
                         text: 'Haruka Harano 運',
                         iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                     });
-
                 // Responder editando a mensagem original
                 await buttonInteraction.reply({ embeds: [aceitarEmbed], content: `${user}` });
                 disableButtons();
