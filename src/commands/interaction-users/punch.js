@@ -168,10 +168,10 @@ module.exports = {
                 // Responder editando a mensagem original
                 await buttonInteraction.reply({ embeds: [aceitarEmbed], content: `${user}` });
                 disableButtons();
-            }
 
-            const cooldownTime = 15 * 1000; // 15 seconds cooldown
-            cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
+                const cooldownTime = 15 * 1000; // 15 seconds cooldown
+                cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
+            }
         });
     },
 };
