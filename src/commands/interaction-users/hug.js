@@ -77,7 +77,7 @@ module.exports = {
         const collectorKey = `${interaction.guild.id}-${interaction.channel.id}-${interaction.user.id}`;
         if (!collectors[collectorKey]) {
             const filter = (i) => (i.customId === 'aceita') && i.user.id === targetUser.id;
-            collectors[collectorKey] = interaction.channel.createMessageComponentCollector({ filter, time: 10 * 60 * 1000 });
+            collectors[collectorKey] = interaction.channel.createMessageComponentCollector({ filter, time: 30 * 60 * 1000 });
 
             collectors[collectorKey].on('end', () => {
                 // Remover o coletor quando ele terminar
