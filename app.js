@@ -14,6 +14,5 @@ const client = new Client({
 require('./src/handlers/eventsHandler')(client);
 require('./src/handlers/commandsHandler')(client);
 require('./src/handlers/modalHadler')(client);
-require('./src/handlers/buttonHandler')(client);
 
 client.login(token);
