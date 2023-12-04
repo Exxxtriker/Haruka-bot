@@ -12,7 +12,7 @@ module.exports = {
         .setDescription('*Veja todos os comandos da Haruka*'),
     async execute(interaction) {
         try {
-            const collector = interaction.channel.createMessageComponentCollector({ time: 180000 });
+            const collector = interaction.channel.createMessageComponentCollector({ time: 1000000 });
             const pag02 = new ButtonBuilder()
                 .setCustomId('pag02')
                 .setLabel('Pagina 2')
