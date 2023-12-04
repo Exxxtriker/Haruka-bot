@@ -147,7 +147,10 @@ module.exports = {
                 interaction.editReply({ embeds: [embed], components: [row] });
 
                 // Remover a capacidade de coletar interações
-                collectors[collectorKey]?.stop();
+                if (collectors[collectorKey]) {
+                    collectors[collectorKey].stop();
+                    delete collectors[collectorKey];
+                }
             };
 
             await interaction.reply({ embeds: [embed], components: [row], content: `${targetUser}` });
