@@ -15,7 +15,7 @@ module.exports = (member) => ({
     fields: [
         {
             name: '**Fique á vontade em nossos canais de Entreterimento :**',
-            value: '<#1100050808969646191> :heart_on_fire: \n <#1100066765637177456> :heart_on_fire:',
+            value: '<#1170110185973502072> :heart_on_fire: \n <#1100066765637177456> :heart_on_fire:',
         },
         {
             name: '**Passe pela categoria 👻・Mini Games onde temos:**',
