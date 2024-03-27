@@ -12,11 +12,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('anuncio')
         .setDescription('*Utilize para confeccionar um anúncio ao servidor...*')
-        .addMentionableOption((option) => option.setName('cargo')
+        .addRoleOption((option) => option.setName('cargo')
             .setDescription('Selecione o cargo para mencionar')
             .setRequired(true)),
     async execute(interaction) {
-        const cargo = await interaction.options.getMentionable('cargo');
+        const cargo = await interaction.options.getRole('cargo');
         cargoValue = cargo;
 
         const modal = new ModalBuilder()
