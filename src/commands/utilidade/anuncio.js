@@ -43,5 +43,4 @@ module.exports = {
         await interaction.showModal(modal);
     },
     getCargoValue: () => cargoValue,
-
 };
