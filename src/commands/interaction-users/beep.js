@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('beep')
+        .setName('audio')
         .setDescription('Toca um áudio específico de uma pasta na call.')
         .addStringOption(option =>
             option.setName('audio')
