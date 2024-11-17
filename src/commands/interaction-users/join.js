@@ -37,7 +37,7 @@ module.exports = {
                 '-ar', '48000', // Taxa de amostragem (Discord usa 48kHz)
                 '-c:a', 'libopus', // Codificação Opus
                 '-f', 'opus', // Formato de saída Opus
-                '-rtbufsize', '10M', // Aumenta o tamanho do buffer para 10MB
+                '-rtbufsize', '1500k', // Tamanho do buffer ajustado
                 '-loglevel', 'error', // Suprime tudo, exceto erros
                 'pipe:1', // Saída para pipe
             ]);
