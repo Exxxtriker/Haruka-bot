@@ -5,10 +5,9 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('perfil')
         .setDescription('Exibe informações de um usuário.')
-        .addUserOption(option =>
-            option.setName('usuário')
-                .setDescription('Selecione o usuário')
-                .setRequired(false)),
+        .addUserOption((option) => option.setName('usuário')
+            .setDescription('Selecione o usuário')
+            .setRequired(false)),
     async execute(interaction) {
         const user = interaction.options.getUser('usuário') || interaction.user; // Usuário selecionado ou autor do comando
         const member = interaction.guild.members.cache.get(user.id); // Obtém o membro no servidor

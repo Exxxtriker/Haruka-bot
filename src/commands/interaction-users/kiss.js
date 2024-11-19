@@ -35,34 +35,36 @@ module.exports = {
             .setRequired(true)),
     async execute(interaction) {
         try {
-            if (cooldowns.has(interaction.user.id)) {
-                const expirationTime = cooldowns.get(interaction.user.id);
-                if (Date.now() < expirationTime) {
-                    // User is still on cooldown
-                    const remainingTime = (expirationTime - Date.now()) / 1000;
-                    return interaction.reply({
-                        content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`,
-                        ephemeral: true,
-                    });
-                } else {
-                    cooldowns.delete(interaction.user.id);
-                }
-            }
-
-            const { user } = interaction;
+            const { user, channel } = interaction;
             const targetUser = interaction.options.getUser('alvo');
 
+            // Verificar cooldown
+            if (cooldowns.has(user.id)) {
+                const expirationTime = cooldowns.get(user.id);
+                if (Date.now() < expirationTime) {
+                    const remainingTime = ((expirationTime - Date.now()) / 1000).toFixed(1);
+                    return interaction.reply({
+                        content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime} segundos.`,
+                        ephemeral: true,
+                    });
+                }
+                cooldowns.delete(user.id);
+            }
+
+            // Configurar botão
             const aceita = new ButtonBuilder()
-                .setCustomId('aceita')
+                .setCustomId(`accept-${interaction.id}`) // ID único para a interação
                 .setLabel('Retribuir')
                 .setStyle(ButtonStyle.Success);
 
+            // Selecionar imagens
             const randomImageUrl = kissImages[Math.floor(Math.random() * kissImages.length)];
             const randomImageUrl2 = kissImages2[Math.floor(Math.random() * kissImages2.length)];
 
+            // Criar embed inicial
             const embed = new EmbedBuilder()
                 .setTitle('💋 Big Beijo 💋')
-                .setDescription(`${user} lançou um beijou em ${targetUser}\nヽ(*￣▽￣*)ノミ|Ю`)
+                .setDescription(`${user} lançou um beijo em ${targetUser}\nヽ(*￣▽￣*)ノミ|Ю`)
                 .setColor('701198')
                 .setImage(randomImageUrl)
                 .setTimestamp()
@@ -71,49 +73,23 @@ module.exports = {
                     iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                 });
 
-            const row = new ActionRowBuilder()
-                .addComponents(aceita);
+            const row = new ActionRowBuilder().addComponents(aceita);
 
-            const collectorKey = `${interaction.guild.id}-${interaction.channel.id}-${interaction.user.id}`;
-            if (!collectors[collectorKey]) {
-                const filter = (i) => (i.customId === 'aceita') && i.user.id === targetUser.id;
-                collectors[collectorKey] = interaction.channel.createMessageComponentCollector({ filter, time: 15 * 60 * 1000 });
+            // Responder ao comando
+            await interaction.reply({ embeds: [embed], components: [row] });
 
-                collectors[collectorKey].on('end', () => {
-                    // Remover o coletor quando ele terminar
-                    if (collectors[collectorKey]) {
-                        collectors[collectorKey].stop();
-                        delete collectors[collectorKey];
-                    }
+            // Criar coletor exclusivo para a interação
+            const collector = channel.createMessageComponentCollector({
+                filter: (i) => i.customId === `accept-${interaction.id}` && i.user.id === targetUser.id,
+                time: 10 * 60 * 1000, // 10 minutos
+            });
 
-                    // Remover a mensagem se o alvo não interagir em 10 minutos
-                    if (!interaction.deferred && !interaction.replied) {
-                        interaction.deleteReply();
-                    }
-                });
-            }
+            // Adicionar ao gerenciador global
+            collectors[interaction.id] = collector;
 
-            const disableButtons = () => {
-                aceita.setDisabled(true);
-                row.components = [aceita.setDisabled(true)];
-                interaction.editReply({ embeds: [embed], components: [row] });
-
-                // Remover a capacidade de coletar interações
-                if (collectors[collectorKey]) {
-                    collectors[collectorKey].stop();
-                    delete collectors[collectorKey];
-                }
-            };
-
-            await interaction.reply({ embeds: [embed], components: [row], content: `${targetUser}` });
-
-            collectors[collectorKey].on('collect', async (buttonInteraction) => {
-                const originalMessage = await interaction.fetchReply().catch(() => null);
-                if (!originalMessage) {
-                    return;
-                }
-                if (buttonInteraction.customId === 'aceita') {
-                    const aceitarEmbed = new EmbedBuilder()
+            collector.on('collect', async (buttonInteraction) => {
+                if (buttonInteraction.customId === `accept-${interaction.id}`) {
+                    const acceptEmbed = new EmbedBuilder()
                         .setTitle('💋 Vai dar namoro 💋')
                         .setDescription(`${targetUser} retribuiu o beijo ${user}!\nヽ(￣ω￣(￣ω￣〃)ゝ`)
                         .setImage(randomImageUrl2)
@@ -124,16 +100,33 @@ module.exports = {
                             iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                         });
 
-                    // Responder editando a mensagem original
-                    await buttonInteraction.reply({ embeds: [aceitarEmbed], content: `${targetUser}` });
-                    disableButtons();
-                }
+                    await buttonInteraction.reply({ embeds: [acceptEmbed], content: `${targetUser}` });
 
-                const cooldownTime = 15 * 1000; // 15 seconds cooldown
-                cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
+                    // Encerrar coletor
+                    collector.stop();
+
+                    // Desativar botão
+                    aceita.setDisabled(true);
+                    await interaction.editReply({ components: [row] });
+
+                    // Adicionar cooldown ao usuário
+                    const cooldownTime = 15 * 1000; // 15 segundos
+                    cooldowns.set(user.id, Date.now() + cooldownTime);
+                }
+            });
+
+            collector.on('end', async () => {
+                // Remover coletor e desativar botão
+                delete collectors[interaction.id];
+                aceita.setDisabled(true);
+                await interaction.editReply({ components: [row] }).catch(() => {});
             });
         } catch (error) {
             console.error(error);
+            interaction.reply({
+                content: '❌ Ocorreu um erro ao processar o comando.',
+                ephemeral: true,
+            });
         }
     },
 };

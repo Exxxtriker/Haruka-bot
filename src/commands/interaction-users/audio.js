@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+const {
+    joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus,
+} = require('@discordjs/voice');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,10 +9,9 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('audio')
         .setDescription('Toca um áudio específico de uma pasta na call (01 / 15')
-        .addStringOption(option =>
-            option.setName('audio')
-                .setDescription('Escolha o áudio para tocar (sem extensão)')
-                .setRequired(true)),
+        .addStringOption((option) => option.setName('audio')
+            .setDescription('Escolha o áudio para tocar (sem extensão)')
+            .setRequired(true)),
 
     async execute(interaction) {
         // Captura qualquer erro que ocorra durante a execução do comando

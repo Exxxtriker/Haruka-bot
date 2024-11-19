@@ -16,56 +16,46 @@ const hugImages = [
     'https://media.tenor.com/ann8bhGuneoAAAAC/hug-hugging.gif',
     // Adicione mais URLs conforme necessário
 ];
-const hugImages2 = [
-
-    'https://media.tenor.com/J7eGDvGeP9IAAAAC/enage-kiss-anime-hug.gif',
-    'https://media.tenor.com/FgLRE4gi5VoAAAAC/hugs-cute.gif',
-    'https://media.tenor.com/pqXmHpbIy0MAAAAd/anime-anime-hug.gif',
-    'https://media.tenor.com/RR4YJdzCJRMAAAAd/chainsaw-man-hug.gif',
-    'https://media.tenor.com/My2v_lTI3LIAAAAC/hug-anime.gif',
-    'https://media.tenor.com/2VVGNLi-EV4AAAAC/anime-cute.gif',
-    'https://media.tenor.com/ann8bhGuneoAAAAC/hug-hugging.gif',
-    // Adicione mais URLs conforme necessário
-];
-const collectors = {};
 const cooldowns = new Map();
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('hug')
         .setDescription('*Marque a pessoa que você quer abraçar*')
-        .addUserOption((option) => option.setName('alvo')
-            .setDescription('Marque a pessoa que você deseja')
+        .addUserOption((option) => option
+            .setName('alvo')
+            .setDescription('Marque a pessoa que você deseja abraçar')
             .setRequired(true)),
     async execute(interaction) {
         try {
-            if (cooldowns.has(interaction.user.id)) {
-                const expirationTime = cooldowns.get(interaction.user.id);
-                if (Date.now() < expirationTime) {
-                    // User is still on cooldown
-                    const remainingTime = (expirationTime - Date.now()) / 1000;
-                    return interaction.reply({
-                        content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`,
-                        ephemeral: true,
-                    });
-                } else {
-                    cooldowns.delete(interaction.user.id);
-                }
-            }
-
             const { user } = interaction;
             const targetUser = interaction.options.getUser('alvo');
 
+            // Gerenciar cooldown
+            if (cooldowns.has(user.id)) {
+                const expirationTime = cooldowns.get(user.id);
+                if (Date.now() < expirationTime) {
+                    const remainingTime = ((expirationTime - Date.now()) / 1000).toFixed(1);
+                    return interaction.reply({
+                        content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime} segundos.`,
+                        ephemeral: true,
+                    });
+                }
+            }
+
+            // Resetar cooldown
+            cooldowns.delete(user.id);
+
+            // Configuração do embed e botões
             const aceita = new ButtonBuilder()
-                .setCustomId('aceita')
+                .setCustomId(`aceita-${interaction.id}`) // ID único para evitar conflitos
                 .setLabel('Retribuir')
                 .setStyle(ButtonStyle.Success);
 
             const randomImageUrl = hugImages[Math.floor(Math.random() * hugImages.length)];
-            const randomImageUrl2 = hugImages2[Math.floor(Math.random() * hugImages2.length)];
 
             const embed = new EmbedBuilder()
-                .setTitle('🫂Momento Afeto🫂')
+                .setTitle('🫂 Momento Afeto 🫂')
                 .setDescription(`${user} lançou um baita abraço em ${targetUser}\n（づ￣3￣）づ`)
                 .setColor('701198')
                 .setImage(randomImageUrl)
@@ -75,65 +65,61 @@ module.exports = {
                     iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                 });
 
-            const row = new ActionRowBuilder()
-                .addComponents(aceita);
+            const row = new ActionRowBuilder().addComponents(aceita);
 
-            const collectorKey = `${interaction.guild.id}-${interaction.channel.id}-${interaction.user.id}`;
-            if (!collectors[collectorKey]) {
-                const filter = (i) => (i.customId === 'aceita') && i.user.id === targetUser.id;
-                collectors[collectorKey] = interaction.channel.createMessageComponentCollector({ filter, time: 15 * 60 * 1000 });
+            // Responder ao comando
+            await interaction.reply({
+                embeds: [embed],
+                components: [row],
+                content: `${targetUser}`,
+            });
 
-                collectors[collectorKey].on('end', () => {
-                    // Remover o coletor quando ele terminar
-                    delete collectors[collectorKey];
-                    // Remover a mensagem se o alvo não interagir em 10 minutos
-                    if (!interaction.deferred && !interaction.replied) {
-                        interaction.deleteReply();
-                    }
-                });
-            }
+            // Configuração do coletor
+            const filter = (i) => i.customId === `aceita-${interaction.id}` && i.user.id === targetUser.id;
+            const collector = interaction.channel.createMessageComponentCollector({
+                filter,
+                time: 15 * 60 * 1000,
+            });
 
-            const disableButtons = () => {
-                aceita.setDisabled(true);
-                row.components = [aceita.setDisabled(true)];
-                interaction.editReply({ embeds: [embed], components: [row] });
+            collector.on('collect', async (buttonInteraction) => {
+                if (buttonInteraction.customId === `aceita-${interaction.id}`) {
+                    const randomHugImage = hugImages[Math.floor(Math.random() * hugImages.length)];
 
-                // Remover a capacidade de coletar interações
-                if (collectors[collectorKey]) {
-                    collectors[collectorKey].stop();
-                    delete collectors[collectorKey];
-                }
-            };
-
-            await interaction.reply({ embeds: [embed], components: [row], content: `${targetUser}` });
-
-            collectors[collectorKey].on('collect', async (buttonInteraction) => {
-                const originalMessage = await interaction.fetchReply().catch(() => null);
-                if (!originalMessage) {
-                    return;
-                }
-                if (buttonInteraction.customId === 'aceita') {
                     const aceitarEmbed = new EmbedBuilder()
-                        .setTitle('🫂Momento intimo🫂')
+                        .setTitle('🫂 Momento Íntimo 🫂')
                         .setDescription(`${targetUser} retribuiu o abraço com outro abraço em ${user}!\nヽ(￣ω￣(￣ω￣〃)ゝ`)
-                        .setImage(randomImageUrl2)
+                        .setImage(randomHugImage)
                         .setColor('701198')
                         .setTimestamp()
                         .setFooter({
                             text: 'Haruka Harano 運',
-                            iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
+                            iconURL:
+                                'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                         });
 
-                    // Responder editando a mensagem original
                     await buttonInteraction.reply({ embeds: [aceitarEmbed], content: `${user}` });
-                    disableButtons();
-                }
 
-                const cooldownTime = 15 * 1000; // 15 seconds cooldown
-                cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
+                    // Desabilitar o botão após o uso
+                    aceita.setDisabled(true);
+                    await interaction.editReply({ components: [row] });
+                    collector.stop();
+                }
             });
+
+            collector.on('end', async () => {
+                // Desabilitar botões após expiração do tempo
+                aceita.setDisabled(true);
+                await interaction.editReply({ components: [row] }).catch(() => null);
+            });
+
+            // Aplicar cooldown
+            cooldowns.set(user.id, Date.now() + 15 * 1000); // 15 segundos
         } catch (error) {
             console.error(error);
+            interaction.reply({
+                content: '❌ Ocorreu um erro ao executar o comando.',
+                ephemeral: true,
+            });
         }
     },
 };

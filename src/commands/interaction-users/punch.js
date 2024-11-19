@@ -75,14 +75,14 @@ const slapImages2 = [
     'https://media.tenor.com/eJ-qdn2dOtEAAAAd/hajime-no-ippo-ippo.gif',
     'https://media.tenor.com/XIgzyvU9tMoAAAAC/attack-hit.gif',
 ];
-const collectors = {};
 const cooldowns = new Map();
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('punch')
         .setDescription('*Marque a pessoa que você quer arrebentar*')
-        .addUserOption((option) => option.setName('alvo')
+        .addUserOption((option) => option
+            .setName('alvo')
             .setDescription('Marque a pessoa que você deseja')
             .setRequired(true)),
     async execute(interaction) {
@@ -90,28 +90,25 @@ module.exports = {
             const { user } = interaction;
             const targetUser = interaction.options.getUser('alvo');
 
-            if (cooldowns.has(interaction.user.id)) {
-                const expirationTime = cooldowns.get(interaction.user.id);
+            // Gerenciar cooldown
+            if (cooldowns.has(user.id)) {
+                const expirationTime = cooldowns.get(user.id);
                 if (Date.now() < expirationTime) {
-                    // User is still on cooldown
-                    const remainingTime = (expirationTime - Date.now()) / 1000;
+                    const remainingTime = ((expirationTime - Date.now()) / 1000).toFixed(1);
                     return interaction.reply({
-                        content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime.toFixed(1)} segundos.`,
+                        content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime} segundos.`,
                         ephemeral: true,
                     });
-                } else {
-                    cooldowns.delete(interaction.user.id);
                 }
             }
 
+            // Configurar o botão
             const aceita = new ButtonBuilder()
-                .setCustomId('aceita')
+                .setCustomId(`aceita-${interaction.id}`) // ID único
                 .setLabel('Retribuir')
                 .setStyle(ButtonStyle.Success);
 
             const randomImageUrl = slapImages1[Math.floor(Math.random() * slapImages1.length)];
-            const randomImageUrl2 = slapImages2[Math.floor(Math.random() * slapImages2.length)];
-
             const embed = new EmbedBuilder()
                 .setTitle('👊🏼 Now fight 👊🏼')
                 .setDescription(`${user} cassetou ${targetUser}\n Isso vai deixar marcas...\n╰（‵□′）╯`)
@@ -120,67 +117,63 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({
                     text: 'Haruka Harano 運',
-                    iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
+                    iconURL:
+                        'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                 });
 
-            const row = new ActionRowBuilder()
-                .addComponents(aceita);
+            const row = new ActionRowBuilder().addComponents(aceita);
 
-            const collectorKey = `${interaction.guild.id}-${interaction.channel.id}-${interaction.user.id}`;
-            if (!collectors[collectorKey]) {
-                const filter = (i) => (i.customId === 'aceita') && i.user.id === targetUser.id;
-                collectors[collectorKey] = interaction.channel.createMessageComponentCollector({ filter, time: 15 * 60 * 1000 });
-
-                collectors[collectorKey].on('end', () => {
-                    // Remover o coletor quando ele terminar
-                    delete collectors[collectorKey];
-                    // Remover a mensagem se o alvo não interagir em 10 minutos
-                    if (!interaction.deferred && !interaction.replied) {
-                        interaction.deleteReply();
-                    }
-                });
-            }
-
-            const disableButtons = () => {
-                aceita.setDisabled(true);
-                row.components = [aceita.setDisabled(true)];
-                interaction.editReply({ embeds: [embed], components: [row] });
-
-                // Remover a capacidade de coletar interações
-                if (collectors[collectorKey]) {
-                    collectors[collectorKey].stop();
-                    delete collectors[collectorKey];
-                }
-            };
-
-            await interaction.reply({ embeds: [embed], components: [row], content: `${targetUser}` });
-
-            collectors[collectorKey].on('collect', async (buttonInteraction) => {
-                const originalMessage = await interaction.fetchReply().catch(() => null);
-                if (!originalMessage) {
-                    return;
-                }
-                if (buttonInteraction.customId === 'aceita') {
-                    const aceitarEmbed = new EmbedBuilder()
-                        .setTitle('👊🏼Round Two, Fight !!!👊🏼')
-                        .setDescription(`${targetUser} retribuiu o soco em ${user}!\n Ui eu não deixava !!\n(ノ｀Д)ノ`)
-                        .setImage(randomImageUrl2)
-                        .setColor('701198')
-                        .setTimestamp()
-                        .setFooter({
-                            text: 'Haruka Harano 運',
-                            iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
-                        });
-                    // Responder editando a mensagem original
-                    await buttonInteraction.reply({ embeds: [aceitarEmbed], content: `${user}` });
-                    disableButtons();
-
-                    const cooldownTime = 15 * 1000; // 15 seconds cooldown
-                    cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
-                }
+            // Responder ao comando
+            await interaction.reply({
+                embeds: [embed],
+                components: [row],
+                content: `${targetUser}`,
             });
+
+            // Configurar o coletor
+            const filter = (i) => i.customId === `aceita-${interaction.id}` && i.user.id === targetUser.id;
+            const collector = interaction.channel.createMessageComponentCollector({
+                filter,
+                time: 15 * 60 * 1000, // 15 minutos
+            });
+
+            collector.on('collect', async (buttonInteraction) => {
+                const randomImageUrl2 = slapImages2[Math.floor(Math.random() * slapImages2.length)];
+                const aceitarEmbed = new EmbedBuilder()
+                    .setTitle('👊🏼Round Two, Fight !!!👊🏼')
+                    .setDescription(`${targetUser} retribuiu o soco em ${user}!\n Ui eu não deixava !!\n(ノ｀Д)ノ`)
+                    .setImage(randomImageUrl2)
+                    .setColor('701198')
+                    .setTimestamp()
+                    .setFooter({
+                        text: 'Haruka Harano 運',
+                        iconURL:
+                            'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
+                    });
+
+                await buttonInteraction.reply({ embeds: [aceitarEmbed], content: `${user}` });
+
+                // Desabilitar o botão
+                aceita.setDisabled(true);
+                await interaction.editReply({ components: [row] });
+
+                collector.stop();
+            });
+
+            collector.on('end', async () => {
+                // Desativar botão ao expirar o tempo
+                aceita.setDisabled(true);
+                await interaction.editReply({ components: [row] }).catch(() => null);
+            });
+
+            // Aplicar cooldown
+            cooldowns.set(user.id, Date.now() + 15 * 1000); // 15 segundos
         } catch (error) {
             console.error(error);
+            interaction.reply({
+                content: '❌ Ocorreu um erro ao executar o comando.',
+                ephemeral: true,
+            });
         }
     },
 };
