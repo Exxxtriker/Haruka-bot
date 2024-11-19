@@ -19,12 +19,14 @@ module.exports = (member) => ({
         },
         {
             name: '**Passe pela categoria 👻・Mini Games onde temos:**',
+            // eslint-disable-next-line max-len
             value: '<#1140631807495258172> :game_die: \n <#1140631849023049800> :game_die: \n <#1140706806373552209> :game_die: \n <#1140717410257731764> :game_die: \n \n **Fique atento no canal** <#1100043571081531493> \n **Para receber as notificações das Lives!**',
         },
     ],
     timestamp: new Date().toISOString(),
     footer: {
         text: 'Todos os direitos reservados á Exxxtriker',
+        // eslint-disable-next-line max-len
         icon_url: 'https://cdn.discordapp.com/attachments/1084488222278688890/1100868552203980810/73f39cb8-c234-451f-b7e3-e9d820a39681-profile_image-300x300.png',
     },
 });

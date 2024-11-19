@@ -22,6 +22,7 @@ module.exports = {
 
             isAlternate = !isAlternate;
         }
+        // eslint-disable-next-line prefer-const, no-unused-vars
         interval = setInterval(toggleActivity, 10000); // Timer
 
         await bot.user.setStatus('idle');

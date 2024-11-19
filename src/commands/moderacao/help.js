@@ -12,77 +12,79 @@ module.exports = {
         .setDescription('*Veja todos os comandos da Haruka*'),
     async execute(interaction) {
         try {
-            const collector = interaction.channel.createMessageComponentCollector({ time: 1000000 });
+            const { user, channel } = interaction;
+
+            // Configurar botões com IDs únicos para a interação
             const pag02 = new ButtonBuilder()
-                .setCustomId('pag02')
-                .setLabel('Pagina 2')
-                .setEmoji('1142826291347849397')
-                .setStyle(ButtonStyle.Success);
+                .setCustomId(`pag02-${interaction.id}`)
+                .setLabel('Página 2')
+                .setEmoji('📄')
+                .setStyle(ButtonStyle.Primary);
+
             const pag01 = new ButtonBuilder()
-                .setCustomId('pag01')
-                .setLabel('Pagina 1')
-                .setEmoji('1142826285639401612')
-                .setStyle(ButtonStyle.Success);
+                .setCustomId(`pag01-${interaction.id}`)
+                .setLabel('Página 1')
+                .setEmoji('📄')
+                .setStyle(ButtonStyle.Primary);
+
+            // Embed da página 1
             const pagina01 = new EmbedBuilder()
-                .setTitle('☠️ Comandos da Haruka Harano 運 (Pag 01) ☠️')
-                .setDescription('Comandos da moderação requerem que o bot tenha o cargo de (Administrator)')
+                .setTitle('☠️ **Comandos da Haruka Harano 運** (Página 1) ☠️')
+                .setDescription('**Comandos disponíveis** - Requer permissão de administrador para alguns comandos.')
                 .addFields(
-                    { name: '\n', value: '༺═────────────────────────────═༻' },
-                    { name: '\n', value: '\n' },
-                    { name: '**Comandos da Administração 🛸⚠️**', value: '\n' },
-                    { name: '/ban', value: '*Use para banir alguem ☠️*', inline: true },
-                    { name: '/help', value: '*Exibe esta mensagem 🎸*', inline: true },
-                    { name: '/unban', value: '*Desbane um usuario 🫂*', inline: true },
-                    { name: '/kick', value: '*Expulse alguém 🫂*', inline: true },
-                    { name: '/anuncio', value: '*Confeccionar um anúncio ao servidor 📣*', inline: true },
-                    { name: '\n', value: '༺═────────────────────────────═༻' },
+                    { name: '༺═──────────═༻', value: '**🛡️ Comandos de Administração:**' },
+                    { name: '/ban', value: '*Bane um usuário do servidor.* ☠️', inline: true },
+                    { name: '/unban', value: '*Desbane um usuário.* 🛠️', inline: true },
+                    { name: '/kick', value: '*Expulsa um membro do servidor.* 🚪', inline: true },
+                    { name: '/anuncio', value: '*Envia um anúncio para o servidor.* 📣', inline: true },
+                    { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
+
+                    { name: '**🎉 Comandos de Entretenimento:**', value: '\u200B' },
+                    { name: '/hug', value: '*Dá um abraço em outro usuário.* 🤗', inline: true },
+                    { name: '/kiss', value: '*Dá um beijo em alguém.* 💋', inline: true },
+                    { name: '/punch', value: '*Dá um soco em alguém.* 👊🏼', inline: true },
+                    { name: '/marry', value: '*Case-se com outro membro.* 👰🏼', inline: true },
+                    { name: '/audio', value: '*Toca um áudio no canal de voz.* 🎵', inline: true },
+                    { name: '/radio', value: '*Escute a radio em tempo real do bot.* 🎵', inline: true },
+                    { name: '/marco', value: '*Chama "POLLO"! 🏌️*', inline: true },
+                    { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
+
+                    { name: '**📂 Comandos Diversos:**', value: '\u200B' },
+                    { name: '/perfil', value: '*Mostra o perfil de um usuário.* 📜', inline: true },
+                    { name: '/avatar', value: '*Exibe o avatar de um usuário.* 🖼️', inline: true },
+                    { name: '/ping', value: '*Teste de latência do bot.* 🏓', inline: true },
                 )
-                .addFields(
-                    { name: '\n', value: '\n' },
-                    { name: '**Comandos de entreterimento 📣🎊**', value: '\n' },
-                    { name: '/hug', value: '*Abrace alguém 🫂*', inline: true },
-                    { name: '/kiss', value: '*Beije alguém 👄*', inline: true },
-                    { name: '/punch', value: '*Bata em alguém 👊🏼*', inline: true },
-                    { name: '/marry', value: '*Case-se com alguem 👰🏼*', inline: true },
-                    { name: '/audio', value: '*Toca um áudio específico de uma pasta na call. 🎵*', inline: true },
-                    { name: '/duvida', value: '*Tire sua duvida com alguém 📝*', inline: true },
-                    { name: '/perfil', value: '*Exibe informações de um usuário 📝*', inline: true },
-                    { name: '/avatar', value: '*Exibe o avatar de um usuário e oferece um botão para baixá-lo. ☀️*', inline: true },
-                    { name: '/marco', value: '*POLLO 🏌🏼*', inline: true },
-                    { name: '/ping', value: '*Jogue ping pong 🏓*', inline: true },
-                    { name: '/proibido', value: '*Marque a pessoa que proibe a diversão ⚠️*', inline: true },
-                    { name: '/sadness', value: '*Utilize quando não aguentar mais o server 🔫*', inline: true },
-                )
-                .setColor('000000')
+                .setColor('#000000')
                 .setImage('https://i.gifer.com/Wntc.gif')
                 .setTimestamp()
                 .setFooter({
                     text: 'Haruka Harano 運',
-                    iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png'
+                    iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                 });
 
-            const row = new ActionRowBuilder()
-                .addComponents(pag01, pag02);
+            const row = new ActionRowBuilder().addComponents(pag01, pag02);
 
             await interaction.reply({ embeds: [pagina01], components: [row], ephemeral: true });
 
+            // Criar coletor exclusivo para a interação atual
+            const collector = channel.createMessageComponentCollector({
+                filter: (i) => i.customId.startsWith('pag') && i.user.id === user.id,
+                time: 15 * 60 * 1000, // 15 minutos
+            });
+
             collector.on('collect', async (buttonInteraction) => {
-                if (buttonInteraction.customId === 'pag02') {
-                    // Handle button click for page 2
-                    const pagina2 = new EmbedBuilder()
-                        .setTitle('☠️ Comandos da Haruka Harano 運 (Pag 02) ☠️')
-                        .setDescription('Em construção 🚧👷🏼🏗️ ')
+                if (buttonInteraction.customId === `pag02-${interaction.id}`) {
+                    // Página 2
+                    const pagina02 = new EmbedBuilder()
+                        .setTitle('☠️ **Comandos da Haruka Harano 運** (Página 2) ☠️')
+                        .setDescription('**Comandos em desenvolvimento:** - Fique atento às novidades! 🚧')
                         .addFields(
-                            { name: '**Comandos que estão vindo**', value: '\n' },
-                            { name: '** (+) = Comandos de interação **', value: '\n' },
-                            { name: '** (!) = Comandos de Música **', value: '\n' },
-                            { name: '** (!) = Comandos de integrados ao ChatGPT **', value: '\n' },
-                            { name: '** (!) = Comandos de SRC de imagens **', value: '\n' },
-                            { name: '\u200B', value: '\u200B' },
-                            { name: '** Tradução dos sinais **', value: '\n' },
-                            { name: '** ( ! ) = "comandos (NÃO) sendo feitos ainda"\n ( + ) = "comandos sendo feitos"\n **', value: '\n' },
+                            { name: '📂 **Novos Comandos Planejados:**', value: '\u200B' },
+                            { name: '(+)', value: '*Interações avançadas com ChatGPT.*', inline: true },
+                            { name: '(+)', value: '*Ferramentas de geração de imagens.*', inline: true },
+                            { name: '(+)', value: '*Melhorias em comandos de áudio.*', inline: true },
                         )
-                        .setColor('000000')
+                        .setColor('#000000')
                         .setImage('https://i.gifer.com/Wntc.gif')
                         .setTimestamp()
                         .setFooter({
@@ -90,19 +92,26 @@ module.exports = {
                             iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                         });
 
-                    const rowb = new ActionRowBuilder()
-                        .addComponents(pag01, pag02);
-
-                    await buttonInteraction.update({ embeds: [pagina2], components: [rowb], ephemeral: true });
-                } else if (buttonInteraction.customId === 'pag01') {
+                    await buttonInteraction.update({ embeds: [pagina02], components: [row], ephemeral: true });
+                } else if (buttonInteraction.customId === `pag01-${interaction.id}`) {
+                    // Voltar para a página 1
                     await buttonInteraction.update({ embeds: [pagina01], components: [row], ephemeral: true });
                 }
-                collector.on('end', (collected) => {
-                    console.log(`Collector ended. Collected ${collected.size} interactions.`);
-                });
+            });
+
+            collector.on('end', async () => {
+                // Desativar os botões após o término
+                pag01.setDisabled(true);
+                pag02.setDisabled(true);
+                const disabledRow = new ActionRowBuilder().addComponents(pag01, pag02);
+                await interaction.editReply({ components: [disabledRow] }).catch(() => {});
             });
         } catch (error) {
             console.error(error);
+            interaction.reply({
+                content: '❌ Ocorreu um erro ao executar o comando.',
+                ephemeral: true,
+            });
         }
     },
 };

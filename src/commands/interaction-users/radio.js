@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('reproduzir_audio')
+        .setName('radio')
         .setDescription('Conecta ao canal de voz e reproduz o áudio da saída do sistema.'),
 
     async execute(interaction) {

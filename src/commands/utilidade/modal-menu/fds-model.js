@@ -8,7 +8,7 @@ module.exports = {
 
         const assunto = interaction.fields.getTextInputValue('assuntoInput');
         const descricao = interaction.fields.getTextInputValue('descricaoInput');
-        const user = interaction.user;
+        const { user } = interaction;
         const cargo = getCargoValue();
 
         const embed = new EmbedBuilder()
