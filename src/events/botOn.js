@@ -6,26 +6,49 @@ module.exports = {
     async execute(bot) {
         await bot.guilds.fetch();
 
-        let isAlternate = false;
-        let interval;
+        // Lista de atividades para alternar (sem timer)
+        const activities = [
+            {
+                text: 'Are you afraid?',
+                details: 'Competitive',
+                type: ActivityType.Playing,
+            },
+            {
+                text: '/help 🎸',
+                details: 'Explore Commands',
+                type: ActivityType.Playing,
+            },
+            {
+                text: `${bot.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)} Users | ${bot.guilds.cache.size} Servers🔥`,
+                details: 'Active on Multiple Servers',
+                type: ActivityType.Playing,
+            },
+        ];
 
-        // Função para alternar entre os estados de atividade
-        function toggleActivity() {
-            const guildCount = bot.guilds.cache.size;
-            const userCount = bot.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+        let currentIndex = 0; // Inicia o índice da rotação de atividades
 
-            if (isAlternate) {
-                bot.user.setActivity(`${userCount} Users | ${guildCount} Servers🔥`, { type: ActivityType.Listening });
-            } else {
-                bot.user.setActivity('/help 🎸', { type: ActivityType.Listening });
-            }
+        // Função para alternar entre as atividades
+        function updateActivity() {
+            const activity = activities[currentIndex];
 
-            isAlternate = !isAlternate;
+            // Configuração do Rich Presence sem timer
+            bot.user.setActivity(activity.text, {
+                type: activity.type,
+                details: activity.details,
+            });
+
+            // Incrementa o índice para a próxima atividade (faz rotação)
+            currentIndex = (currentIndex + 1) % activities.length;
         }
-        // eslint-disable-next-line prefer-const, no-unused-vars
-        interval = setInterval(toggleActivity, 10000); // Timer
 
-        await bot.user.setStatus('idle');
+        // Atualiza a atividade a cada 10 segundos
+        setInterval(updateActivity, 10000); // A cada 10 segundos
+
+        // Inicializa a primeira atividade imediatamente
+        updateActivity();
+
+        // Definir o status do bot
+        await bot.user.setStatus('online');
 
         console.log(`✅ Login successfully on ${bot.user.username}#${bot.user.discriminator} - Estou em ${bot.guilds.cache.size} servidores`);
     },
