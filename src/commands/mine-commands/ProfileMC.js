@@ -54,8 +54,7 @@ module.exports = {
                 embeds: [embed],
                 files: [{ attachment: iconPath, name: 'server-icon.png' }], // Anexa o ícone
             });
-        } catch (error) {
-            console.error(error);
+        } catch {
             await interaction.reply({
                 content: '❌ Não foi possível encontrar o jogador. Tente novamente.',
                 ephemeral: true,
