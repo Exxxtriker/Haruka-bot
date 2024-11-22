@@ -37,7 +37,11 @@ module.exports = {
                     { name: '/unban', value: '*Desbane um usuário.* 🛠️', inline: true },
                     { name: '/kick', value: '*Expulsa um membro do servidor.* 🚪', inline: true },
                     { name: '/anuncio', value: '*Envia um anúncio para o servidor.* 📣', inline: true },
+                    { name: '/castigar', value: '*Coloca um usuário em castigo (timeout).* 🔇', inline: true },
                     { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
+
+                    { name: '**🎮 Comandos de Minecraft:**', value: '\u200B' },
+                    { name: '/mcstatus', value: '*Monitora o status de um servidor de Minecraft.* 🎮', inline: true },
 
                     { name: '**🎉 Comandos de Entretenimento:**', value: '\u200B' },
                     { name: '/hug', value: '*Dá um abraço em outro usuário.* 🤗', inline: true },
@@ -45,7 +49,7 @@ module.exports = {
                     { name: '/punch', value: '*Dá um soco em alguém.* 👊🏼', inline: true },
                     { name: '/marry', value: '*Case-se com outro membro.* 👰🏼', inline: true },
                     { name: '/audio', value: '*Toca um áudio no canal de voz.* 🎵', inline: true },
-                    { name: '/radio', value: '*Escute a radio em tempo real do bot.* 🎵', inline: true },
+                    { name: '/radio', value: '*Escute a rádio em tempo real do bot.* 🎵', inline: true },
                     { name: '/marco', value: '*Chama "POLLO"! 🏌️*', inline: true },
                     { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
 
