@@ -7,12 +7,12 @@ const { spawn } = require('child_process');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('radio')
-        .setDescription('Conecta ao canal de voz e reproduz o áudio da saída do sistema.'),
+        .setDescription('Conecta ao canal de voz e reproduz o áudio do desktop do host'),
 
     async execute(interaction) {
-    /*         if (interaction.user.id !== '335012394226941966') {
+        if (interaction.user.id !== '335012394226941966') {
             return interaction.reply('Você não tem permissão para usar este comando!');
-        } */
+        }
         const voiceChannel = interaction.member.voice.channel;
 
         if (!voiceChannel) {
@@ -34,7 +34,7 @@ module.exports = {
             // Configuração do FFmpeg para capturar o áudio da saída do sistema
             const ffmpeg = spawn('ffmpeg', [
                 '-f', 'dshow', // Dispositivo de captura de áudio
-                '-i', 'audio=CABLE Output (VB-Audio Virtual Cable)', // Dispositivo de entrada de áudio
+                '-i', 'audio=CABLE Output (VB-Audio Virtual Cable)', // Instale o virtual cable
                 '-ac', '2', // Número de canais (stereo)
                 '-ar', '48000', // Taxa de amostragem (Discord usa 48kHz)
                 '-c:a', 'libopus', // Codificação Opus
