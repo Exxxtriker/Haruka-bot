@@ -40,9 +40,6 @@ module.exports = {
                     { name: '/castigar', value: '*Coloca um usuário em castigo (timeout).* 🔇', inline: true },
                     { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
 
-                    { name: '**🎮 Comandos de Minecraft:**', value: '\u200B' },
-                    { name: '/mcstatus', value: '*Monitora o status de um servidor de Minecraft.* 🎮', inline: true },
-
                     { name: '**🎉 Comandos de Entretenimento:**', value: '\u200B' },
                     { name: '/hug', value: '*Dá um abraço em outro usuário.* 🤗', inline: true },
                     { name: '/kiss', value: '*Dá um beijo em alguém.* 💋', inline: true },
@@ -81,8 +78,13 @@ module.exports = {
                     // Página 2
                     const pagina02 = new EmbedBuilder()
                         .setTitle('☠️ **Comandos da Haruka Harano 運** (Página 2) ☠️')
-                        .setDescription('**Comandos em desenvolvimento:** - Fique atento às novidades! 🚧')
+                        .setDescription('**Comandos de jogos:** - Fique atento às novidades! 🚧')
                         .addFields(
+
+                            { name: '**🎮 Comandos de Minecraft:**', value: '\u200B' },
+                            { name: '/mcstatus', value: '*Monitora o status de um servidor de Minecraft.* 🎮', inline: true },
+                            { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
+
                             { name: '📂 **Novos Comandos Planejados:**', value: '\u200B' },
                             { name: '(+)', value: '*Interações avançadas com ChatGPT.*', inline: true },
                             { name: '(+)', value: '*Ferramentas de geração de imagens.*', inline: true },
