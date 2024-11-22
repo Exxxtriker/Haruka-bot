@@ -32,7 +32,7 @@ module.exports = {
                 .setTitle('☠️ **Comandos da Haruka Harano 運** (Página 1) ☠️')
                 .setDescription('**Comandos disponíveis** - Requer permissão de administrador para alguns comandos.')
                 .addFields(
-                    { name: '༺═──────────═༻', value: '**🛡️ Comandos de Administração:**' },
+                    { name: '**🛡️ Comandos de Administração:**', value: '\u200B' },
                     { name: '/ban', value: '*Bane um usuário do servidor.* ☠️', inline: true },
                     { name: '/unban', value: '*Desbane um usuário.* 🛠️', inline: true },
                     { name: '/kick', value: '*Expulsa um membro do servidor.* 🚪', inline: true },
