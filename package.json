@@ -28,6 +28,7 @@
     "opusscript": "^0.0.8",
     "spotify-url-info": "^3.2.18",
     "spotify-web-api-node": "^5.0.2",
+    "uuid": "^11.0.3",
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
