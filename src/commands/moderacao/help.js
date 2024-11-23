@@ -83,6 +83,7 @@ module.exports = {
 
                             { name: '**🎮 Comandos de Minecraft:**', value: '\u200B' },
                             { name: '/mcstatus', value: '*Monitora o status de um servidor de Minecraft.* 🎮', inline: true },
+                            { name: '/namemc', value: '*Busca o perfil de um jogador no NameMC.* 🎮', inline: true },
                             { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
 
                             { name: '📂 **Novos Comandos Planejados:**', value: '\u200B' },
