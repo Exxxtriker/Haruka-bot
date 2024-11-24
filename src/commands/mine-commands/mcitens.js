@@ -4,7 +4,7 @@ const path = require('path');
 const { EmbedBuilder } = require('discord.js');
 
 // Carregar dados dos itens do arquivo JSON
-const itemsPath = path.join(__dirname, 'datamc.json'); // Ajuste o caminho conforme necessário
+const itemsPath = path.join(__dirname, 'datamc', 'datamc.json'); // Ajuste o caminho conforme necessário
 const itemsData = JSON.parse(fs.readFileSync(itemsPath, 'utf-8'));
 
 // Função para normalizar strings (remover espaços e converter para minúsculas)
