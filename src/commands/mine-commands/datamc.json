@@ -1,0 +1,147 @@
+{
+    "carvao": {
+        "name": "Carvão",
+        "description": "Um mineral básico usado como combustível e para criar tochas.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/48/Coal_Ore_JE5_BE4.png/revision/latest?cb=20210325235945",
+        "crafting_image": "https://example.com/crafting_carvao.png",
+        "id": "minecraft:coal",
+        "category": "Mineral",
+        "crafting": "Encontrado entre os níveis 0 e 127, mais comum em montanhas ou cavernas pouco profundas."
+    },
+    "ferro": {
+        "name": "Ferro",
+        "description": "Um minério essencial usado para criar ferramentas, armaduras e outros itens.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/19/Iron_Ore_JE6_BE4.png/revision/latest?cb=20210326000111",
+        "crafting_image": "https://example.com/crafting_ferro.png",
+        "id": "minecraft:iron_ingot",
+        "category": "Mineral",
+        "crafting": "Fundido a partir do minério de ferro, encontrado entre os níveis -64 e 64; mais abundante ao nível 16."
+    },
+    "ouro": {
+        "name": "Ouro",
+        "description": "Um minério raro usado para criar itens decorativos e equipamentos.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/18/Gold_Ore_JE7_BE4.png/revision/latest?cb=20210414170925",
+        "crafting_image": "https://example.com/crafting_ouro.png",
+        "id": "minecraft:gold_ingot",
+        "category": "Mineral",
+        "crafting": "Fundido a partir do minério de ouro, encontrado entre os níveis -64 e 32; mais comum ao nível -16."
+    },
+    "lapis_lazuli": {
+        "name": "Lápis-lazúli",
+        "description": "Um minério usado para encantamentos e como corante.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ea/Lapis_Lazuli_Ore_JE4_BE4.png/revision/latest?cb=20210414171130",
+        "crafting_image": "https://example.com/crafting_lapis_lazuli.png",
+        "id": "minecraft:lapis_lazuli",
+        "category": "Mineral",
+        "crafting": "Encontrado entre os níveis -64 e 64; mais comum ao nível 0."
+    },
+    "redstone": {
+        "name": "Redstone",
+        "description": "Um minério usado para criar circuitos e mecanismos avançados.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/cd/Redstone_Ore_JE4_BE3.png/revision/latest?cb=20210226103025",
+        "crafting_image": "https://example.com/crafting_redstone.png",
+        "id": "minecraft:redstone",
+        "category": "Mineral",
+        "crafting": "Encontrado entre os níveis -64 e 15; mais comum entre os níveis -64 e -32."
+    },
+    "esmeralda": {
+        "name": "Esmeralda",
+        "description": "Usada como moeda para trocas com aldeões.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a9/Emerald_Ore_JE4_BE3.png/revision/latest?cb=20210225021326",
+        "crafting_image": "https://example.com/crafting_esmeralda.png",
+        "id": "minecraft:emerald",
+        "category": "Mineral",
+        "crafting": "Encontrada em montanhas, entre os níveis -16 e 256; mais comum em altitudes elevadas."
+    },
+    "diamante": {
+        "name": "Diamante",
+        "description": "Um precioso mineral que pode ser usado para criar ferramentas e armaduras.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/29/Diamond_Ore_JE5_BE5.png/revision/latest?cb=20210326000237",
+        "crafting_image": "https://example.com/crafting_diamante.png",
+        "id": "minecraft:diamond",
+        "category": "Mineral",
+        "crafting": "O minério é encontrado no nível 15 ou inferior, mais comumente entre -50 e -64; os níveis -58 e -59 são os níveis preferidos para mineração, pois não contêm rochas matriz que começam a ser geradas em -60."
+    },    
+    "netherite": {
+        "name": "Netherita",
+        "description": "O material mais resistente, usado para melhorar equipamentos de diamante.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Ancient_Debris_JE1_BE1.png/revision/latest?cb=20200216200020",
+        "crafting_image": "https://example.com/crafting_netherite.png",
+        "id": "minecraft:netherite_ingot",
+        "category": "Mineral",
+        "crafting": "Criado ao combinar sucata de netherita com ouro. Os detritos ancestrais são encontrados no Nether entre os níveis 8 e 22."
+    },
+    "ametista": {
+        "name": "Ametista",
+        "description": "Um cristal brilhante encontrado em geodos, usado para criar itens decorativos e telescópios.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/61/Amethyst_Shard_JE2_BE1.png/revision/latest?cb=20201111173100",
+        "crafting_image": "https://example.com/crafting_ametista.png",
+        "id": "minecraft:amethyst_shard",
+        "category": "Mineral",
+        "crafting": "Obtida ao quebrar blocos de Ametista em geodos, encontrados no subsolo. Pode ser usada para criar telescópios (Spyglass) e blocos de Ametista para decoração."
+    },
+
+
+    "espada": {
+        "name": "Espada",
+        "description": "Uma arma usada para combate. Pode ser feita de madeira, pedra, ferro, ouro, diamante ou netherita.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?cb=20200304213920",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310329316126621737/Sem_titulo.png?ex=6744d2c5&is=67438145&hm=c68306693a352d7ebc868e41d8a20aaf9f16fdba978c6f51ed5cf928b070043f&",
+        "id": "minecraft:sword",
+        "category": "Ferramenta",
+        "crafting": "1x Graveto + 2x do material correspondente (madeira, pedra, ferro, ouro, diamante ou netherita)."
+    },
+    "picareta": {
+        "name": "Picareta",
+        "description": "Ferramenta usada para minerar blocos. Pode ser feita de madeira, pedra, ferro, ouro, diamante ou netherita.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Netherite_Pickaxe_JE3.png/revision/latest?cb=20210418192807",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310330467999813797/1.png?ex=6744d3d8&is=67438258&hm=57d5f8dc7f5e9b39353581c16a9accc806cb9746086e6125db725c8053414b1f&",
+        "id": "minecraft:pickaxe",
+        "category": "Ferramenta",
+        "crafting": "2x Graveto + 3x do material correspondente (madeira, pedra, ferro, ouro, diamante ou netherita)."
+    },
+    "pa": {
+        "name": "Pá",
+        "description": "Ferramenta usada para cavar terra, areia e neve. Pode ser feita de madeira, pedra, ferro, ouro, diamante ou netherita.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a1/Netherite_Shovel_JE2_BE1.png/revision/latest?cb=20200304185542",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310333049950568589/4.png?ex=6744d63f&is=674384bf&hm=895d73e26b5da2efeb82c7166d7e91da3dbdaf9d6d7973b7f1ca32f494e8ec81&",
+        "id": "minecraft:shovel",
+        "category": "Ferramenta",
+        "crafting": "2x Graveto + 1x do material correspondente (madeira, pedra, ferro, ouro, diamante ou netherita)."
+    },
+    "machado": {
+        "name": "Machado",
+        "description": "Ferramenta usada para cortar madeira mais rapidamente e também como arma. Pode ser feita de madeira, pedra, ferro, ouro, diamante ou netherita.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/df/Netherite_Axe_JE2.png/revision/latest?cb=20200522035253",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310331678312497183/3.png?ex=6744d4f8&is=67438378&hm=9895eb828cd80795849cfd2d55fd983c6928f08e31824a66451407402ec9a60e&",
+        "id": "minecraft:axe",
+        "category": "Ferramenta",
+        "crafting": "2x Graveto + 3x do material correspondente (madeira, pedra, ferro, ouro, diamante ou netherita)."
+    },
+    "enxada": {
+        "name": "Enxada",
+        "description": "Ferramenta usada para arar terras e acelerar a colheita. Pode ser feita de madeira, pedra, ferro, ouro, diamante ou netherita.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d7/Netherite_Hoe_JE2_BE2.png/revision/latest?cb=20200526212455",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310331153130983455/2.png?ex=6744d47b&is=674382fb&hm=d69a046aaba343d9fd3a0d7fe40a7e329490497ff5255396bcc2d0f70ea1396a&",
+        "id": "minecraft:hoe",
+        "category": "Ferramenta",
+        "crafting": "2x Graveto + 2x do material correspondente (madeira, pedra, ferro, ouro, diamante ou netherita)."
+    },
+    "arco": {
+        "name": "Arco",
+        "description": "Uma arma usada para atirar flechas à distância. Pode ser feito com madeira, ferro, ou outras matérias-primas.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/36/Steve_aiming_with_Bow.png/revision/latest?cb=20191113173152",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310326802723508374/image.png?ex=6744d06e&is=67437eee&hm=a7e3d80cbe6af7f493ee307e0a60b8a2bfdfddb3016cbabf618bcdd4d77b6c5d&",
+        "id": "minecraft:bow",
+        "category": "Arma",
+        "crafting": "3x Graveto + 3x Fio"
+    }
+
+}
+    
+
+
+
+    
+    
+
