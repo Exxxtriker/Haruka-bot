@@ -135,13 +135,51 @@
         "id": "minecraft:bow",
         "category": "Arma",
         "crafting": "3x Graveto + 3x Fio"
-    }
+    },
+    "mace": {
+        "name": "Mace",
+        "description": "Uma nova arma que pode ser criada a partir de Breeze Rods, um item que os Breezes deixam ao morrer.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/63/Mace.png/revision/latest?cb=20240317084754",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310338895296073758/image.png?ex=6744dbb1&is=67438a31&hm=c949471dd7d96309032c0cc76aab9d506cf7b6fff83b1f739cf497ad22335e84&",
+        "id": "minecraft:mace",
+        "category": "Arma",
+        "crafting": "1x Breeze Rod + 1x Heavy Core"
+    },
+    "pincel": {
+        "name": "Pincel",
+        "description": "Uma ferramenta usada para escavar areia suspeita em locais de arqueologia, revelando fragmentos e outros itens.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/99/Brush_JE1_BE1.png/revision/latest?cb=20230319032249",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310335156044959865/4.png?ex=6744d836&is=674386b6&hm=872158893137c836b9f58b0b806a6085a7764ac0b2149c0cef37b018695eeee4&",
+        "id": "minecraft:brush",
+        "category": "Ferramenta",
+        "crafting": "1x Madeira + 1x Fio + 1x Cobre-Ingot"
+    },
+    "tesoura": {
+        "name": "Tesoura",
+        "description": "Uma ferramenta utilizada para cortar lã, folhas e outros itens específicos no Minecraft. Também pode ser usada para pegar blocos de lã de ovelhas sem matá-las.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5a/Shears_JE2_BE2.png/revision/latest?cb=20191012183756",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310337423393296425/4.png?ex=6744da52&is=674388d2&hm=a3920f4a603ffde9ff011d4a3dd78575f16cd2da3750f9aeec20a3d35ec6d87b&",
+        "id": "minecraft:shears",
+        "category": "Ferramenta",
+        "crafting": "2x Ferro"
+    },
+    "sacola": {
+        "name": "Sacola",
+        "description": "Uma sacola que pode ser usada para transportar itens, funcionando de forma semelhante ao Shulker Box, mas sendo um item que pode ser colocado dentro de outros.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Bundle_JE2.png/revision/latest?cb=20201111180923",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310339867535740998/5.png?ex=6744dc99&is=67438b19&hm=bd7d1b1fe873fe956a6ee885a027e6e6141f8658404dad54562f66661e86264f&",
+        "id": "minecraft:leather_sack",
+        "category": "Armazenamento",
+        "crafting": "2x Linha + 6x Pele de coelho"
+    },
+    "luneta": {
+        "name": "Luneta",
+        "description": "Uma ferramenta que permite ao jogador ampliar a visão para observar objetos distantes com mais clareza. Ideal para explorar o mundo e procurar por detalhes à distância.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6f/Spyglass_%28item%29_JE3_BE1.png/revision/latest?cb=20210310162651",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310342073685377104/5.png?ex=6744dea7&is=67438d27&hm=9b807e68b120abacaa960122ff43d31768aa0c156c512b65dab93fc63b5870ac&",
+        "id": "minecraft:spyglass",
+        "category": "Ferramenta",
+        "crafting": "2x Cobre + 1x Ametista"
+    }                    
 
 }
-    
-
-
-
-    
-    
-

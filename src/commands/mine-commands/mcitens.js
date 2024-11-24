@@ -13,12 +13,12 @@ const normalizeString = (str) => str.toLowerCase().replace(/\s+/g, '');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('mcwiki')
-        .setDescription('Exibe informações sobre um item do Minecraft.')
-        .addStringOption((option) => option.setName('item')
-            .setDescription('O nome do item (ex: diamante, espada de ferro)')
+        .setDescription('Exibe informações sobre Minecraft.')
+        .addStringOption((option) => option.setName('procurar')
+            .setDescription('O nome do item (ex: diamante, espada)')
             .setRequired(true)),
     async execute(interaction) {
-        const itemName = normalizeString(interaction.options.getString('item')); // Normaliza a entrada
+        const itemName = normalizeString(interaction.options.getString('procurar')); // Normaliza a entrada
 
         // Criar um mapeamento normalizado dos itens
         const normalizedItems = Object.keys(itemsData).reduce((acc, key) => {
