@@ -152,7 +152,7 @@
         "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310335156044959865/4.png?ex=6744d836&is=674386b6&hm=872158893137c836b9f58b0b806a6085a7764ac0b2149c0cef37b018695eeee4&",
         "id": "minecraft:brush",
         "category": "Ferramenta",
-        "crafting": "1x Madeira + 1x Fio + 1x Cobre-Ingot"
+        "crafting": "1x Graveto + 1x Fio + 1x Cobre-Ingot"
     },
     "tesoura": {
         "name": "Tesoura",
