@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const itemsPath = path.join(__dirname, 'datagame.json');
+const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -36,17 +36,20 @@ module.exports = {
 
         // Criando a embed personalizada
         const embed = new EmbedBuilder()
-            .setColor('#0099ff')
-            .setTitle(`Inventário de ${interaction.user.username}`)
-            .setThumbnail(interaction.user.displayAvatarURL())
+            .setColor('#4CAF50') // Cor personalizada
+            .setTitle(`📦 Inventário de ${interaction.user.username}`)
+            .setThumbnail(interaction.user.displayAvatarURL()) // Imagem de perfil
+            .setDescription(`Aqui estão os itens que você possui no seu inventário, ${interaction.user.username}!`)
+            .setFooter({ text: 'Continue coletando recursos para expandir seu inventário!' })
             .setTimestamp();
 
         if (Object.keys(userInventory).length === 0) {
-            embed.setDescription('**Seu Inventário está vazio!**');
+            embed.setDescription('**Seu inventário está vazio!** 😢');
+            embed.setColor('#F44336'); // Cor para inventário vazio (vermelho)
         } else {
-            let inventoryText = '';
+            let inventoryText = 'Aqui estão os itens que você possui:\n';
             for (const [item, quantity] of Object.entries(userInventory)) {
-                inventoryText += `- **${item}**: ${quantity}\n`;
+                inventoryText += `- **${item}**: ${quantity} unidades\n`;
             }
             embed.setDescription(inventoryText);
         }

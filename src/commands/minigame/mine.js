@@ -1,89 +1,88 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+const dataManager = require('../../utils/dataManager');
 
-const itemsPath = path.join(__dirname, 'datagame.json');
+const isMiningInProgress = {}; // Para evitar spam
+
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('mine')
+        .setName('minerar')
         .setDescription('Minere para obter recursos!'),
+
     async execute(interaction) {
-        const userId = interaction.user.id;
-        const resources = ['pedra', 'ferro', 'ouro', 'diamante'];
-        const mined = resources[Math.floor(Math.random() * resources.length)];
-        const quantity = Math.floor(Math.random() * 5) + 1;
-
-        // Verificar se o arquivo existe, se não, criar com estrutura inicial
-        if (!fs.existsSync(itemsPath)) {
-            const initialData = {};
-            fs.writeFileSync(itemsPath, JSON.stringify(initialData, null, 2));
-        }
-
-        // Tentar carregar os dados, com fallback em caso de erro
-        let data = {};
         try {
-            data = JSON.parse(fs.readFileSync(itemsPath, 'utf8'));
+            const userId = interaction.user.id;
+
+            // Verificar se o comando está sendo executado
+            if (isMiningInProgress[userId]) {
+                return interaction.reply('⛔ Você já está minerando. Por favor, espere antes de tentar novamente!');
+            }
+
+            // Definir o usuário como em progresso
+            isMiningInProgress[userId] = true;
+
+            const resources = ['pedra', 'ferro', 'ouro', 'diamante'];
+            const mined = resources[Math.floor(Math.random() * resources.length)];
+            const quantity = Math.floor(Math.random() * 5) + 1;
+
+            // Carregar os dados do usuário
+            const gameData = dataManager.getGameData();
+            let user = gameData[userId];
+
+            // Se o usuário não existir, inicializar os dados
+            if (!user) {
+                // eslint-disable-next-line no-multi-assign
+                user = gameData[userId] = {
+                    coins: 0,
+                    inventory: {},
+                    stamina: 10,
+                    lastMine: 0,
+                };
+            }
+
+            const currentTime = Date.now();
+            const timePassed = currentTime - user.lastMine;
+
+            // Recarregar estamina a cada 10 minutos (600000 ms)
+            if (timePassed >= 600000) {
+                user.stamina = 10;
+                user.lastMine = currentTime;
+            }
+
+            // Verificar estamina suficiente
+            if (user.stamina <= 0) {
+                const timeLeft = Math.ceil((600000 - timePassed) / 60000); // Minutos restantes
+                isMiningInProgress[userId] = false; // Liberar o bloqueio
+                return interaction.reply(`⏳ Sua estamina está esgotada! Espere **${timeLeft} minutos** para recarregar.`);
+            }
+
+            // Atualizar inventário e estamina
+            user.inventory[mined] = (user.inventory[mined] || 0) + quantity;
+            user.stamina -= 1;
+
+            // Salvar as alterações no cache
+            dataManager.setGameData(gameData);
+
+            // Criar embed de resposta
+            const embed = new EmbedBuilder()
+                .setColor('#4CAF50') // Verde
+                .setTitle('⛏️ Mineração bem-sucedida!')
+                .setDescription(`Você minerou **${quantity}x ${mined}**!`)
+                .addFields(
+                    { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
+                    { name: 'Inventário atualizado', value: `${mined}: ${user.inventory[mined]}`, inline: true },
+                )
+                .setThumbnail(interaction.user.displayAvatarURL())
+                .setFooter({ text: 'Continue minerando para obter mais recursos!' })
+                .setTimestamp();
+
+            // Enviar resposta ao usuário
+            await interaction.reply({ embeds: [embed] });
+
+            // Liberar o bloqueio após a execução
+            isMiningInProgress[userId] = false;
         } catch (error) {
-            // Se ocorrer erro, como um arquivo corrompido ou vazio, re-inicialize os dados
-            console.error('Erro ao ler o arquivo JSON:', error);
-            data = {}; // Resetar dados para um objeto vazio
-            fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2)); // Salvar dados inicializados novamente
+            console.error('Erro ao executar o comando de mineração:', error);
+            interaction.reply('❌ Ocorreu um erro ao tentar minerar. Tente novamente mais tarde!');
         }
-
-        // Verificar se o usuário já existe, se não, criar dados iniciais para ele
-        if (!data[userId]) {
-            data[userId] = {
-                coins: 50,
-                inventory: {},
-                stamina: 10,
-                lastMine: 0,
-            };
-            fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2)); // Salvar após criar o usuário
-        }
-
-        const user = data[userId];
-        const currentTime = Date.now();
-        const timePassed = currentTime - user.lastMine;
-
-        // Verificar se o usuário tem estamina suficiente
-        if (timePassed < 600000 && user.stamina <= 0) {
-            // Estamina não recarregada após 10 minutos (600000ms)
-            const timeLeft = 600000 - timePassed;
-            const minutesLeft = Math.ceil(timeLeft / 60000); // converter de ms para minutos
-            return interaction.reply(`Sua estamina está esgotada. Você precisa esperar **${minutesLeft} minutos** para minerar novamente.`);
-        }
-
-        // Se passaram 10 minutos, recarregar a estamina
-        if (timePassed >= 600000) {
-            user.stamina = 10;
-            user.lastMine = currentTime;
-        }
-
-        // Verificar se há estamina suficiente para minerar
-        if (user.stamina <= 0) {
-            return interaction.reply('Você não tem estamina suficiente para minerar! Aguarde um momento para recarregar.');
-        }
-
-        // Atualizar inventário
-        user.inventory[mined] = (user.inventory[mined] || 0) + quantity;
-        user.stamina -= 1; // Usar 1 ponto de estamina
-        data[userId] = user;
-
-        // Salvar os dados atualizados
-        fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
-
-        // Criar embed personalizada para resposta
-        const embed = new EmbedBuilder()
-            .setColor('#0088cc') // Cor azul para a mineração
-            .setTitle('Mineração realizada com sucesso!')
-            .setDescription(`Você minerou **${quantity}x ${mined}**!`)
-            .addFields(
-                { name: 'Estamina restante', value: `**${user.stamina}** pontos`, inline: true },
-                { name: 'Novo inventário', value: `**${mined}**: ${user.inventory[mined]}`, inline: true },
-            )
-            .setThumbnail(interaction.user.displayAvatarURL())
-            .setTimestamp();
-
-        await interaction.reply({ embeds: [embed] });
     },
 };

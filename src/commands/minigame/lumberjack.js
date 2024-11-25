@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const itemsPath = path.join(__dirname, 'datagame.json');
+const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -45,9 +45,9 @@ module.exports = {
 
         // Criar embed personalizada para a resposta
         const embed = new EmbedBuilder()
-            .setColor('#8B4513') // Cor marrom representando a madeira
-            .setTitle('Pegar Madeira')
-            .setDescription(`Você pegou **1 madeira** e consumiu **${staminaCost} estamina**!`)
+            .setColor('#FFD700') // Cor marrom representando a madeira
+            .setTitle('Pegar Madeira 🪓')
+            .setDescription(`Você pegou **1 madeira** e consumiu **${staminaCost} estamina**! 🪓`)
             .addFields(
                 { name: 'Estamina restante', value: `**${user.stamina}** estamina`, inline: true },
                 { name: 'Inventário', value: `Madeira: **${user.inventory.madeira || 0}**`, inline: true },

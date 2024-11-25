@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const itemsPath = path.join(__dirname, 'datagame.json');
+const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -72,7 +72,7 @@ module.exports = {
 
         // Criar uma embed personalizada para a resposta
         const embed = new EmbedBuilder()
-            .setColor('#00ff00') // Cor verde para sucesso
+            .setColor('#FFD700') // Cor verde para sucesso
             .setTitle(`Forjamento de ${equipamento} realizado com sucesso!`)
             .setDescription(`Você forjou uma **${equipamento}**!`)
             .addFields(

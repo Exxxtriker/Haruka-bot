@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const itemsPath = path.join(__dirname, 'datagame.json');
+const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -43,7 +43,7 @@ module.exports = {
 
         // Verificar se o usuário tem moedas suficientes
         if (user.coins < cost) {
-            return interaction.reply('Você não tem moedas suficientes!');
+            return interaction.reply('Você não tem moedas suficientes para comprar esse item!');
         }
 
         // Atualizar os dados do usuário
@@ -65,10 +65,12 @@ module.exports = {
             .setTitle('Compra realizada com sucesso!')
             .setDescription(`Você comprou **${quantity}x ${item}** por **${cost} moedas**.`)
             .addFields(
-                { name: 'Saldo atual', value: `Moedas: **${user.coins}**`, inline: true },
+                { name: 'Saldo de Moedas', value: `**${user.coins}** moedas`, inline: true },
                 { name: 'Novo item no inventário', value: `**${item}**: ${user.inventory[item]}`, inline: true },
             )
             .setThumbnail(interaction.user.displayAvatarURL())
+            // eslint-disable-next-line max-len
+            .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }) // Logo da loja (exemplo)
             .setTimestamp();
 
         // Responder com a embed
