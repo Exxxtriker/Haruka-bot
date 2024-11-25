@@ -61,7 +61,7 @@
         "id": "minecraft:diamond",
         "category": "Mineral",
         "crafting": "O minério é encontrado no nível 15 ou inferior, mais comumente entre -50 e -64; os níveis -58 e -59 são os níveis preferidos para mineração, pois não contêm rochas matriz que começam a ser geradas em -60."
-    },    
+    },
     "netherite": {
         "name": "Netherita",
         "description": "O material mais resistente, usado para melhorar equipamentos de diamante.",
@@ -80,8 +80,6 @@
         "category": "Mineral",
         "crafting": "Obtida ao quebrar blocos de Ametista em geodos, encontrados no subsolo. Pode ser usada para criar telescópios (Spyglass) e blocos de Ametista para decoração."
     },
-
-
     "espada": {
         "name": "Espada",
         "description": "Uma arma usada para combate. Pode ser feita de madeira, pedra, ferro, ouro, diamante ou netherita.",
@@ -180,6 +178,32 @@
         "id": "minecraft:spyglass",
         "category": "Ferramenta",
         "crafting": "2x Cobre + 1x Ametista"
-    }                    
-
+    },
+    "pederneira": {
+        "name": "Pederneira",
+        "description": "Usado para criar fogo e acender portais do Nether.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f5/Flint_and_Steel_JE3_BE1.png/revision/latest?cb=20200127082853",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310417954491334736/flint.png?ex=67452552&is=6743d3d2&hm=c5e114dc42837bb7ccab514fe46881047bbae127451ac2bfe2a0c747c50ac49c&",
+        "id": "flint_and_steel",
+        "category": "Ferramenta",
+        "crafting": "1x Pederneira (Flint) + 1x Barra de Ferro."
+    },
+    "balde": {
+        "name": "Balde",
+        "description": "Permite carregar água, lava ou leite",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fc/Bucket_JE2_BE2.png/revision/latest?cb=20200510234539",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310419716820439070/6.png?ex=674526f6&is=6743d576&hm=5d5047775c9514f201fae34cbe2f0925725aba2e3334e9b0f432172e51d3f125&",
+        "id": "bucket",
+        "category": "Ferramenta.",
+        "crafting": "3x Barras de Ferro."
+    },
+    "laço": {
+        "name": "Laço",
+        "description": "Usada para prender e levar mobs.",
+        "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/1f/Lead_JE2_BE2.png/revision/latest?cb=2",
+        "crafting_image": "https://cdn.discordapp.com/attachments/1310325661839392889/1310421442554232892/6.png?ex=67452892&is=6743d712&hm=9020db064fa39adc3fb680688dd9b219ba1e668fb1a9762bc989a1492ecc0413&",
+        "id": "lead",
+        "category": "Utilitário.",
+        "crafting": "4x Fio + 1x Slimeball."
+    }
 }
