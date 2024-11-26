@@ -31,15 +31,19 @@ module.exports = {
             return interaction.reply('Seu inventário está vazio ou você ainda não tem dados registrados!');
         }
 
-        // Acessar inventário do usuário
+        // Acessar inventário e coins do usuário
         const userInventory = userData.inventory;
+        const userCoins = userData.coins || 0;
 
         // Criando a embed personalizada
         const embed = new EmbedBuilder()
             .setColor('#4CAF50') // Cor personalizada
             .setTitle(`📦 Inventário de ${interaction.user.username}`)
             .setThumbnail(interaction.user.displayAvatarURL()) // Imagem de perfil
-            .setDescription(`Aqui estão os itens que você possui no seu inventário, ${interaction.user.username}!`)
+            .setDescription(`Aqui estão os itens e moedas que você possui, ${interaction.user.username}!`)
+            .addFields(
+                { name: '💰 Coins', value: `${userCoins.toLocaleString()} moedas`, inline: false },
+            )
             .setFooter({ text: 'Continue coletando recursos para expandir seu inventário!' })
             .setTimestamp();
 
@@ -51,7 +55,7 @@ module.exports = {
             for (const [item, quantity] of Object.entries(userInventory)) {
                 inventoryText += `- **${item}**: ${quantity} unidades\n`;
             }
-            embed.setDescription(inventoryText);
+            embed.addFields({ name: '🛠️ Itens', value: inventoryText });
         }
 
         // Enviar a embed
