@@ -113,7 +113,7 @@ module.exports = {
                 .addFields(
                     { name: '💀 Inimigo', value: `**${inimigo.nome}**\nHP: ${inimigo.hp}\n⚔️ Ataque: ${inimigo.ataque}\n🛡️ Defesa: ${inimigo.defesa}`, inline: true },
                     { name: '🧑 Você', value: `HP: ${jogador.hp}\n🛡️ Defesa: ${jogador.defesa}\n💰 Coins: ${jogador.coins}`, inline: true },
-                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['espada de diamante'] > 0 ? '🟦 Espada de Diamante' : '🟫 Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
+                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
                 )
                 .setFooter({ text: 'Clique no botão para avançar o turno!' });
 
