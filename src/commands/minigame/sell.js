@@ -21,12 +21,17 @@ module.exports = {
         const mineral = interaction.options.getString('minério');
         const quantidade = interaction.options.getInteger('quantidade');
 
+        // Valores de venda fixos para minérios e minérios refinados
         const prices = {
             pedra: 2,
             ferro: 5,
             ouro: 10,
             diamante: 20,
-        }; // Valores de venda
+            'pedra refinada': 4,
+            'ferro refinado': 10,
+            'ouro refinado': 20,
+            'diamante refinado': 40,
+        };
 
         // Verificar se o minério pode ser vendido
         if (!prices[mineral]) {
@@ -50,6 +55,7 @@ module.exports = {
             return interaction.reply(`Você não tem ${quantidade}x ${mineral} no inventário!`);
         }
 
+        // Calcular o lucro da venda
         const lucro = prices[mineral] * quantidade;
 
         // Atualizar inventário e moedas

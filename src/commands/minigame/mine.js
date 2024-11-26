@@ -21,8 +21,12 @@ module.exports = {
 
         try {
             const resources = ['pedra', 'ferro', 'ouro', 'diamante'];
-            const mined = resources[Math.floor(Math.random() * resources.length)];
-            const quantity = Math.floor(Math.random() * 5) + 1;
+            const refinedResources = {
+                pedra: 'pedra refinada',
+                ferro: 'ferro refinado',
+                ouro: 'ouro refinado',
+                diamante: 'diamante refinado',
+            };
 
             // Carregar os dados do usuário
             const gameData = dataManager.getGameData();
@@ -63,9 +67,27 @@ module.exports = {
                 });
             }
 
-            // Atualizar inventário somando a quantidade de recursos minerados
-            user.inventory[mined] = (user.inventory[mined] || 0) + quantity;
-            user.stamina -= 1;
+            // Determinar qual recurso o jogador minerou (normal ou refinado)
+            const mined = resources[Math.floor(Math.random() * resources.length)];
+            const quantity = Math.floor(Math.random() * 5) + 1;
+
+            // Verificar se o jogador possui uma picareta de diamante
+            const hasDiamondPickaxe = user.inventory.picareta >= 1;
+
+            // Se o jogador tiver uma picareta de diamante, existe uma chance de minerar um recurso refinado
+            let refinedMineral = null;
+            if (hasDiamondPickaxe) {
+                const refinedChance = 50; // 50% de chance de minerar um recurso refinado
+                if (Math.random() * 100 < refinedChance) {
+                    refinedMineral = refinedResources[mined];
+                }
+            }
+
+            // Se minerar um recurso refinado, adicione ao inventário, senão, adicione o recurso normal
+            const resourceToAdd = refinedMineral || mined;
+
+            user.inventory[resourceToAdd] = (user.inventory[resourceToAdd] || 0) + quantity;
+            user.stamina -= 1; // Consome 1 de estamina para minerar
 
             // Salvar as alterações no cache
             dataManager.setGameData(gameData);
@@ -74,10 +96,10 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor('#4CAF50') // Verde
                 .setTitle('⛏️ Mineração bem-sucedida!')
-                .setDescription(`Você minerou **${quantity}x ${mined}**!`)
+                .setDescription(`Você minerou **${quantity}x ${resourceToAdd}**!`)
                 .addFields(
                     { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
-                    { name: 'Inventário atualizado', value: `${mined}: ${user.inventory[mined]}`, inline: true },
+                    { name: 'Inventário atualizado', value: `${resourceToAdd}: ${user.inventory[resourceToAdd]}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Continue minerando para obter mais recursos!' })

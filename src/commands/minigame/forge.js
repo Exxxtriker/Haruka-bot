@@ -17,8 +17,8 @@ module.exports = {
         const equipamento = interaction.options.getString('equipamento');
 
         const recipes = {
-            espada: { madeira: 2, ferro: 3 },
-            picareta: { madeira: 3, pedra: 5 },
+            espada: { madeira: 2, diamante: 3 },
+            picareta: { madeira: 3, diamante: 5 },
         };
 
         // Verificar se o equipamento é válido
