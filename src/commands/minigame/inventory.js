@@ -6,7 +6,7 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('inventory')
+        .setName('inventario')
         .setDescription('Mostra o inventário do jogador'),
     async execute(interaction) {
         const userId = interaction.user.id;

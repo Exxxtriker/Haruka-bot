@@ -6,7 +6,7 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('sell')
+        .setName('vender')
         .setDescription('Venda minérios para ganhar moedas')
         .addStringOption((option) => option
             .setName('minério')
