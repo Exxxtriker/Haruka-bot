@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
 const {
     SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder,
@@ -43,45 +44,72 @@ module.exports = {
             return interaction.reply('Você precisa de uma espada de ferro ou de diamante para lutar!');
         }
 
-        // Definir estatísticas do inimigo
+        // Definir inimigos com vida aleatória e ataques variáveis
         const inimigos = [
             {
-                nome: 'Goblin Selvagem', hp: 50, ataque: 10, defesa: 3,
+                nome: 'Goblin Selvagem', hp: getRandomNumber(40, 60), ataque: getRandomNumber(8, 12), defesa: getRandomNumber(2, 5),
             },
             {
-                nome: 'Ladrão', hp: 70, ataque: 20, defesa: 2,
+                nome: 'Ladrão', hp: getRandomNumber(60, 80), ataque: getRandomNumber(15, 25), defesa: getRandomNumber(1, 4),
             },
             {
-                nome: 'Elfo', hp: 60, ataque: 18, defesa: 8,
+                nome: 'Elfo', hp: getRandomNumber(50, 70), ataque: getRandomNumber(16, 20), defesa: getRandomNumber(6, 10),
             },
             {
-                nome: 'Dragão de Fogo', hp: 200, ataque: 30, defesa: 20,
+                nome: 'Dragão de Fogo', hp: getRandomNumber(180, 220), ataque: getRandomNumber(25, 35), defesa: getRandomNumber(15, 25),
             },
             {
-                nome: 'Lorde das Sombras', hp: 150, ataque: 35, defesa: 15,
+                nome: 'Lorde das Sombras', hp: getRandomNumber(140, 160), ataque: getRandomNumber(30, 40), defesa: getRandomNumber(10, 18),
             },
             {
-                nome: 'Titanos', hp: 300, ataque: 50, defesa: 25,
+                nome: 'Titanos', hp: getRandomNumber(280, 320), ataque: getRandomNumber(45, 55), defesa: getRandomNumber(20, 30),
             },
         ];
 
         // Escolher um inimigo aleatório
         const inimigo = inimigos[Math.floor(Math.random() * inimigos.length)];
 
+        // Função para calcular a vida inicial do jogador com base na benção
+        function calcularVidaInicial(benção) {
+            const vidaBase = 100;
+            if (benção === 'fraca') return Math.floor(vidaBase * 0.8); // 20% a menos de vida
+            if (benção === 'forte') return Math.floor(vidaBase * 1.2); // 20% a mais de vida
+            return vidaBase; // Benção média (sem alteração)
+        }
+
         // Definir estatísticas do jogador
+        const bençãoAtual = getBenção(); // Obter a benção da deusa Haruka
+        const vidaJogador = calcularVidaInicial(bençãoAtual);
+
         const jogador = {
             nome: interaction.user.username,
-            hp: 100,
+            hp: vidaJogador,
             defesa: 5,
             coins: userData.coins || 0,
         };
 
-        // Função para calcular o dano com base na espada
+        // Função para calcular o dano com base na espada e na benção
         const calcularDano = () => {
-            if (userInventory['espada de diamante'] > 0) return 55;
-            if (userInventory['espada de ferro'] > 0) return 35;
-            return 0;
+            let danoBase = 0;
+            if (userInventory['espada de diamante'] > 0) danoBase = 55;
+            if (userInventory['espada de ferro'] > 0) danoBase = 35;
+
+            // Modificar o dano baseado na benção
+            if (bençãoAtual === 'fraca') return Math.floor(danoBase * 0.8); // Dano reduzido
+            if (bençãoAtual === 'forte') return Math.floor(danoBase * 1.2); // Dano aumentado
+            return danoBase; // Benção média (sem alteração)
         };
+
+        // Função para obter benção aleatória
+        function getBenção() {
+            const benções = ['fraca', 'média', 'forte'];
+            return benções[Math.floor(Math.random() * benções.length)];
+        }
+
+        // Função para gerar um número aleatório dentro de um intervalo
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
         const jogadorDano = calcularDano();
 
@@ -114,6 +142,7 @@ module.exports = {
                     { name: '💀 Inimigo', value: `**${inimigo.nome}**\nHP: ${inimigo.hp}\n⚔️ Ataque: ${inimigo.ataque}\n🛡️ Defesa: ${inimigo.defesa}`, inline: true },
                     { name: '🧑 Você', value: `HP: ${jogador.hp}\n🛡️ Defesa: ${jogador.defesa}\n💰 Coins: ${jogador.coins}`, inline: true },
                     { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
+                    { name: '🌟 Benção da Deusa Haruka', value: `Nível de Benção: **${bençãoAtual}**`, inline: false },
                 )
                 .setFooter({ text: 'Clique no botão para avançar o turno!' });
 
@@ -145,19 +174,18 @@ module.exports = {
                     });
                     collector.stop();
                 } else if (inimigo.hp <= 0) {
-                    // eslint-disable-next-line no-use-before-define
                     const loot = ganharLoot();
                     jogador.coins += loot.coins;
-                    userInventory[loot.item] = (userInventory[loot.item] || 0) + loot.quantity;
                     data[userId].coins = jogador.coins;
-                    data[userId].inventory = userInventory;
                     fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
+
                     await i.update({
                         embeds: [
                             new EmbedBuilder()
-                                .setColor('#32cd32')
-                                .setTitle('🎉 Vitória Gloriosa! 🎉')
-                                .setDescription(`Você derrotou **${inimigo.nome}** e saiu vitorioso!\n\n**Recompensas:**\n💰 Coins: ${loot.coins}\n🏆 Loot: **${loot.quantity}x ${loot.item}**`),
+                                .setColor('#00ff00')
+                                .setTitle('🎉 Vitória! 🎉')
+                                .setDescription(`Você derrotou o **${inimigo.nome}**!\n\nVocê recebeu **${loot.coins} coins** e **${loot.quantity}x ${loot.item}**!`)
+                                .addFields({ name: '🏆 Loot', value: `**${loot.quantity}x ${loot.item}**`, inline: false }),
                         ],
                         components: [],
                     });
