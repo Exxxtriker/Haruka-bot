@@ -13,7 +13,7 @@ module.exports = {
 
         // Verificar se o comando está sendo executado
         if (isMiningInProgress[userId]) {
-            return interaction.reply('⛔ Você já está minerando. Por favor, espere antes de tentar novamente!');
+            return interaction.reply({ content: '⛔ Você já está minerando. Por favor, espere antes de tentar novamente!', ephemeral: true });
         }
 
         // Definir o usuário como em progresso
@@ -52,8 +52,15 @@ module.exports = {
 
             // Verificar estamina suficiente
             if (user.stamina <= 0) {
-                const timeLeft = Math.ceil((staminaRechargeTime - timePassed) / 60000); // Minutos restantes
-                return interaction.reply(`⏳ Sua estamina está esgotada! Espere **${timeLeft} minutos** para recarregar.`);
+                const timeRemaining = staminaRechargeTime - timePassed;
+
+                const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+                const minutes = Math.ceil((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+                return interaction.reply({
+                    content: `⏳ Sua estamina está esgotada! Espere **${hours} horas e ${minutes} minutos** para recarregar.`,
+                    ephemeral: true,
+                });
             }
 
             // Atualizar inventário somando a quantidade de recursos minerados
@@ -80,7 +87,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error('Erro ao executar o comando de mineração:', error);
-            interaction.reply('❌ Ocorreu um erro ao tentar minerar. Tente novamente mais tarde!');
+            interaction.reply({ content: '❌ Ocorreu um erro ao tentar minerar. Tente novamente mais tarde!', ephemeral: true });
         } finally {
             // Liberar o bloqueio após a execução (ou em caso de erro)
             isMiningInProgress[userId] = false;

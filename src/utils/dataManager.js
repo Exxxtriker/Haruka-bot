@@ -22,7 +22,6 @@ function loadData() {
 // Função para salvar os dados no arquivo
 function saveData() {
     try {
-        // Salva os dados de volta no arquivo JSON
         fs.writeFileSync(itemsPath, JSON.stringify(gameData, null, 2));
     } catch (error) {
         console.error('Erro ao salvar dados:', error);
@@ -32,7 +31,6 @@ function saveData() {
 // Função para manter os dados atualizados a cada 1 segundo
 function autoSaveData() {
     setInterval(() => {
-        // Carrega os dados e os salva a cada 1 segundo para garantir que nada fique para trás
         loadData();
         saveData();
     }, 1000); // 1 segundo
@@ -40,21 +38,37 @@ function autoSaveData() {
 
 // Função para obter os dados do jogo
 function getGameData() {
-    loadData(); // Sempre carrega os dados antes de retornar
+    loadData();
     return gameData;
 }
 
-// Função para atualizar os dados do jogo (somente o inventário)
+// Função para atualizar os dados do jogo
 function setGameData(newData) {
-    // Atualiza o inventário somando os novos recursos ao já existente
-    if (newData && newData.inventory) {
-        // Se a chave inventory existir, somamos os valores minerados
-        // eslint-disable-next-line guard-for-in
-        for (const resource in newData.inventory) {
-            gameData.inventory[resource] = (gameData.inventory[resource] || 0) + newData.inventory[resource];
-        }
-    }
-    saveData(); // Atualiza o arquivo JSON com os dados novos
+    gameData = { ...gameData, ...newData }; // Atualiza os dados no cache
+    saveData();
 }
 
-module.exports = { getGameData, setGameData, autoSaveData };
+// Função para calcular o tempo restante em horas e minutos
+function getTimeRemaining(userId, intervalMs) {
+    const userData = gameData[userId];
+    if (!userData || !userData.lastMine) {
+        return 'Nenhuma atividade registrada.';
+    }
+
+    const currentTime = Date.now();
+    const timePassed = currentTime - userData.lastMine;
+    const timeRemaining = intervalMs - timePassed;
+
+    if (timeRemaining <= 0) {
+        return 'Já disponível!';
+    }
+
+    const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+    const minutes = Math.ceil((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${hours} horas e ${minutes} minutos restantes.`;
+}
+
+module.exports = {
+    getGameData, setGameData, autoSaveData, getTimeRemaining,
+};
