@@ -54,7 +54,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor('#FFD700') // Cor dourada para ranking
             .setTitle('🏆 Leaderboard - Top 10 Jogadores com Mais Moedas')
-            .setDescription('Aqui estão os 10 jogadores mais ricos no servidor!')
+            .setDescription('Aqui estão os 10 jogadores mais ricos!')
             .setTimestamp();
 
         // Adicionar os jogadores ao ranking
