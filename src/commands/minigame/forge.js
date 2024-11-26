@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+require('querystring');
 
 const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
@@ -17,14 +18,16 @@ module.exports = {
         const equipamento = interaction.options.getString('equipamento');
 
         const recipes = {
-            espada: { madeira: 2, diamante: 3 },
+            espada: { madeira: 2, pedra: 3 },
+            'espada de ferro': { espada: 1, madeira: 2, ferro: 3 },
+            'espada de diamante': { espada: 1, madeira: 2, diamante: 3 },
             picareta: { madeira: 3, diamante: 5 },
         };
 
         // Verificar se o equipamento é válido
         if (!recipes[equipamento]) {
             return interaction.reply(
-                'Equipamento inválido! Os equipamentos disponíveis são: espada e picareta.',
+                'Equipamento inválido! Os equipamentos disponíveis são: espada, espada de ferro, espada de diamante, picareta.',
             );
         }
 

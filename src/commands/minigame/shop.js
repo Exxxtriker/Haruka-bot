@@ -21,7 +21,9 @@ module.exports = {
         const item = interaction.options.getString('item');
         const quantity = interaction.options.getInteger('quantidade');
 
-        const prices = { pedra: 10, madeira: 5, ferro: 25, ouro: 35, diamante: 50 }; // Exemplos de preços
+        const prices = {
+            pedra: 10, madeira: 5, ferro: 25, ouro: 35, diamante: 50,
+        }; // Exemplos de preços
 
         // Verificar se o item é válido
         if (!prices[item]) {
