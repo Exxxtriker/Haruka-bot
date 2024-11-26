@@ -42,15 +42,17 @@ module.exports = {
             const currentTime = Date.now();
             const timePassed = currentTime - user.lastMine;
 
-            // Recarregar estamina a cada 10 minutos (600000 ms)
-            if (timePassed >= 600000) {
+            // Tempo para recarregar estamina é agora 3 horas (10.800.000 ms)
+            const staminaRechargeTime = 10800000;
+
+            if (timePassed >= staminaRechargeTime) {
                 user.stamina = 10;
                 user.lastMine = currentTime;
             }
 
             // Verificar estamina suficiente
             if (user.stamina <= 0) {
-                const timeLeft = Math.ceil((600000 - timePassed) / 60000); // Minutos restantes
+                const timeLeft = Math.ceil((staminaRechargeTime - timePassed) / 60000); // Minutos restantes
                 return interaction.reply(`⏳ Sua estamina está esgotada! Espere **${timeLeft} minutos** para recarregar.`);
             }
 
