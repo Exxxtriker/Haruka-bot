@@ -1,50 +1,60 @@
 const fs = require('fs');
 const path = require('path');
 
-// Caminho do arquivo de dados
 const itemsPath = path.join(__dirname, 'datagame.json');
 
-// Cache de dados
 let gameData = {};
 
-// Função para carregar os dados (assíncrona)
-async function loadData() {
+// Função para carregar os dados do arquivo
+function loadData() {
     try {
         if (fs.existsSync(itemsPath)) {
-            const fileContent = await fs.promises.readFile(itemsPath, 'utf8');
-            if (fileContent.trim() === '') {
-                gameData = {}; // Se o arquivo estiver vazio, inicializa o cache com um objeto vazio
-            } else {
-                gameData = JSON.parse(fileContent); // Tenta carregar o conteúdo JSON
+            const fileContent = fs.readFileSync(itemsPath, 'utf8');
+            if (fileContent.trim() !== '') {
+                gameData = JSON.parse(fileContent);
             }
-        } else {
-            gameData = {}; // Se o arquivo não existir, inicializa o cache com um objeto vazio
         }
     } catch (error) {
         console.error('Erro ao carregar dados:', error);
-        gameData = {}; // Caso haja erro, inicializa o cache com um objeto vazio
     }
 }
 
-// Função para salvar os dados (assíncrona)
-async function saveData() {
+// Função para salvar os dados no arquivo
+function saveData() {
     try {
-        await fs.promises.writeFile(itemsPath, JSON.stringify(gameData, null, 2));
+        // Salva os dados de volta no arquivo JSON
+        fs.writeFileSync(itemsPath, JSON.stringify(gameData, null, 2));
     } catch (error) {
         console.error('Erro ao salvar dados:', error);
     }
 }
 
+// Função para manter os dados atualizados a cada 1 segundo
+function autoSaveData() {
+    setInterval(() => {
+        // Carrega os dados e os salva a cada 1 segundo para garantir que nada fique para trás
+        loadData();
+        saveData();
+    }, 1000); // 1 segundo
+}
+
 // Função para obter os dados do jogo
-async function getGameData() {
-    await loadData(); // Carrega os dados sempre que for necessário
+function getGameData() {
+    loadData(); // Sempre carrega os dados antes de retornar
     return gameData;
 }
 
-// Função para definir os dados do jogo
-async function setGameData(newData) {
-    gameData = newData; // Atualiza o cache
-    await saveData(); // Salva os dados atualizados
+// Função para atualizar os dados do jogo (somente o inventário)
+function setGameData(newData) {
+    // Atualiza o inventário somando os novos recursos ao já existente
+    if (newData && newData.inventory) {
+        // Se a chave inventory existir, somamos os valores minerados
+        // eslint-disable-next-line guard-for-in
+        for (const resource in newData.inventory) {
+            gameData.inventory[resource] = (gameData.inventory[resource] || 0) + newData.inventory[resource];
+        }
+    }
+    saveData(); // Atualiza o arquivo JSON com os dados novos
 }
 
-module.exports = { getGameData, setGameData };
+module.exports = { getGameData, setGameData, autoSaveData };

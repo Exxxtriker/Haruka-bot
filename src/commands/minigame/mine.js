@@ -9,17 +9,17 @@ module.exports = {
         .setDescription('Minere para obter recursos!'),
 
     async execute(interaction) {
+        const userId = interaction.user.id;
+
+        // Verificar se o comando está sendo executado
+        if (isMiningInProgress[userId]) {
+            return interaction.reply('⛔ Você já está minerando. Por favor, espere antes de tentar novamente!');
+        }
+
+        // Definir o usuário como em progresso
+        isMiningInProgress[userId] = true;
+
         try {
-            const userId = interaction.user.id;
-
-            // Verificar se o comando está sendo executado
-            if (isMiningInProgress[userId]) {
-                return interaction.reply('⛔ Você já está minerando. Por favor, espere antes de tentar novamente!');
-            }
-
-            // Definir o usuário como em progresso
-            isMiningInProgress[userId] = true;
-
             const resources = ['pedra', 'ferro', 'ouro', 'diamante'];
             const mined = resources[Math.floor(Math.random() * resources.length)];
             const quantity = Math.floor(Math.random() * 5) + 1;
@@ -51,11 +51,10 @@ module.exports = {
             // Verificar estamina suficiente
             if (user.stamina <= 0) {
                 const timeLeft = Math.ceil((600000 - timePassed) / 60000); // Minutos restantes
-                isMiningInProgress[userId] = false; // Liberar o bloqueio
                 return interaction.reply(`⏳ Sua estamina está esgotada! Espere **${timeLeft} minutos** para recarregar.`);
             }
 
-            // Atualizar inventário e estamina
+            // Atualizar inventário somando a quantidade de recursos minerados
             user.inventory[mined] = (user.inventory[mined] || 0) + quantity;
             user.stamina -= 1;
 
@@ -77,12 +76,12 @@ module.exports = {
 
             // Enviar resposta ao usuário
             await interaction.reply({ embeds: [embed] });
-
-            // Liberar o bloqueio após a execução
-            isMiningInProgress[userId] = false;
         } catch (error) {
             console.error('Erro ao executar o comando de mineração:', error);
             interaction.reply('❌ Ocorreu um erro ao tentar minerar. Tente novamente mais tarde!');
+        } finally {
+            // Liberar o bloqueio após a execução (ou em caso de erro)
+            isMiningInProgress[userId] = false;
         }
     },
 };
