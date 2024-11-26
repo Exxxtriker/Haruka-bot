@@ -3,6 +3,10 @@ const dataManager = require('../../utils/dataManager');
 
 const isMiningInProgress = {}; // Para evitar spam
 
+// Constantes para estamina e tempo de recarga
+const MAX_ESTAMINA = 10;
+const STAMINA_RECHARGE_TIME = 10800000; // 3 horas
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('minerar')
@@ -34,30 +38,27 @@ module.exports = {
 
             // Se o usuário não existir, inicializar os dados
             if (!user) {
-                // eslint-disable-next-line no-multi-assign
-                user = gameData[userId] = {
+                user = {
                     coins: 0,
                     inventory: {},
-                    stamina: 10,
+                    stamina: MAX_ESTAMINA,
                     lastMine: 0,
                 };
+                gameData[userId] = user;
             }
 
             const currentTime = Date.now();
             const timePassed = currentTime - user.lastMine;
 
-            // Tempo para recarregar estamina é agora 3 horas (10.800.000 ms)
-            const staminaRechargeTime = 10800000;
-
-            if (timePassed >= staminaRechargeTime) {
-                user.stamina = 10;
+            // Se o tempo de recarga de estamina passou, recarregar
+            if (timePassed >= STAMINA_RECHARGE_TIME) {
+                user.stamina = MAX_ESTAMINA;
                 user.lastMine = currentTime;
             }
 
-            // Verificar estamina suficiente
+            // Verificar se há estamina suficiente
             if (user.stamina <= 0) {
-                const timeRemaining = staminaRechargeTime - timePassed;
-
+                const timeRemaining = STAMINA_RECHARGE_TIME - timePassed;
                 const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
                 const minutes = Math.ceil((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
 
@@ -67,14 +68,14 @@ module.exports = {
                 });
             }
 
-            // Determinar qual recurso o jogador minerou (normal ou refinado)
+            // Determinar qual recurso o jogador minerou
             const mined = resources[Math.floor(Math.random() * resources.length)];
             const quantity = Math.floor(Math.random() * 5) + 1;
 
-            // Verificar se o jogador possui uma picareta de diamante
+            // Verificar se o jogador tem uma picareta de diamante
             const hasDiamondPickaxe = user.inventory.picareta >= 1;
 
-            // Se o jogador tiver uma picareta de diamante, existe uma chance de minerar um recurso refinado
+            // Se o jogador tiver picareta de diamante, existe uma chance de minerar um recurso refinado
             let refinedMineral = null;
             if (hasDiamondPickaxe) {
                 const refinedChance = 50; // 50% de chance de minerar um recurso refinado
@@ -83,13 +84,12 @@ module.exports = {
                 }
             }
 
-            // Se minerar um recurso refinado, adicione ao inventário, senão, adicione o recurso normal
+            // Adicionar recurso ao inventário
             const resourceToAdd = refinedMineral || mined;
-
             user.inventory[resourceToAdd] = (user.inventory[resourceToAdd] || 0) + quantity;
-            user.stamina -= 1; // Consome 1 de estamina para minerar
+            user.stamina -= 1; // Consumir 1 de estamina
 
-            // Salvar as alterações no cache
+            // Salvar os dados
             dataManager.setGameData(gameData);
 
             // Criar embed de resposta

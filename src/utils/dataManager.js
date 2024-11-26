@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const itemsPath = path.join(__dirname, 'datagame.json');
+// Caminho para o arquivo JSON onde os dados do jogo são armazenados
+const itemsPath = path.join(__dirname, 'datagame.json'); // Certifique-se de que o caminho esteja correto
 
 let gameData = {};
 
@@ -11,7 +12,7 @@ function loadData() {
         if (fs.existsSync(itemsPath)) {
             const fileContent = fs.readFileSync(itemsPath, 'utf8');
             if (fileContent.trim() !== '') {
-                gameData = JSON.parse(fileContent);
+                gameData = JSON.parse(fileContent); // Carrega os dados do arquivo
             }
         }
     } catch (error) {
@@ -22,7 +23,7 @@ function loadData() {
 // Função para salvar os dados no arquivo
 function saveData() {
     try {
-        fs.writeFileSync(itemsPath, JSON.stringify(gameData, null, 2));
+        fs.writeFileSync(itemsPath, JSON.stringify(gameData, null, 2), 'utf8'); // Atualiza o arquivo com os dados mais recentes
     } catch (error) {
         console.error('Erro ao salvar dados:', error);
     }
@@ -31,24 +32,24 @@ function saveData() {
 // Função para manter os dados atualizados a cada 1 segundo
 function autoSaveData() {
     setInterval(() => {
-        loadData();
-        saveData();
-    }, 1000); // 1 segundo
+        loadData(); // Carrega os dados antes de salvar
+        saveData(); // Atualiza o arquivo com os dados mais recentes
+    }, 1000); // Atualização a cada 1 segundo
 }
 
 // Função para obter os dados do jogo
 function getGameData() {
-    loadData();
+    loadData(); // Carrega os dados toda vez que for necessário acessá-los
     return gameData;
 }
 
 // Função para atualizar os dados do jogo
 function setGameData(newData) {
-    gameData = { ...gameData, ...newData }; // Atualiza os dados no cache
-    saveData();
+    gameData = { ...gameData, ...newData }; // Atualiza os dados do jogo com os novos dados
+    saveData(); // Salva os dados atualizados no arquivo
 }
 
-// Função para calcular o tempo restante em horas e minutos
+// Função para calcular o tempo restante para recarga de estamina
 function getTimeRemaining(userId, intervalMs) {
     const userData = gameData[userId];
     if (!userData || !userData.lastMine) {
@@ -70,5 +71,8 @@ function getTimeRemaining(userId, intervalMs) {
 }
 
 module.exports = {
-    getGameData, setGameData, autoSaveData, getTimeRemaining,
+    getGameData,
+    setGameData,
+    autoSaveData,
+    getTimeRemaining,
 };
