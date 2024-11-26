@@ -7,7 +7,7 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('forge')
+        .setName('forja')
         .setDescription('Forje novos equipamentos usando minerais!')
         .addStringOption((option) => option
             .setName('equipamento')
