@@ -7,7 +7,7 @@ const RECHARGE_INTERVAL_MS = 3 * 60 * 60 * 1000; // 3 horas em milissegundos
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('lenhador')
-        .setDescription('Pega madeira e consome estamina!'),
+        .setDescription('Colete madeira!'),
 
     async execute(interaction) {
         const userId = interaction.user.id;
