@@ -220,14 +220,29 @@ module.exports = {
             });
         };
 
+        // Função para ganhar loot e atualizar o inventário
         function ganharLoot() {
             const minerios = ['diamante', 'ouro', 'ferro', 'pedra'];
             const itemAleatorio = minerios[Math.floor(Math.random() * minerios.length)];
             const quantity = Math.floor(Math.random() * 5) + 1;
             const coins = Math.floor(Math.random() * 30) + 20;
+
+            // Atualizar o inventário do jogador
+            if (!userData.inventory[itemAleatorio]) {
+                userData.inventory[itemAleatorio] = 0; // Inicializa o item se não existir
+            }
+            userData.inventory[itemAleatorio] += quantity;
+
+            // Atualizar as coins
+            jogador.coins += coins;
+            data[userId].coins = jogador.coins;
+            data[userId].inventory = userData.inventory;
+
+            // Salvar no arquivo
+            fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
+
             return { item: itemAleatorio, quantity, coins };
         }
-
         await combate();
     },
 };
