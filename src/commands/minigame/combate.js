@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
+
 const {
     SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder,
 } = require('discord.js');
