@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const itemsPath = path.join(__dirname, '../../utils/datagame.json');
-const { STAMINA_RECHARGE_TIME, COMBAT_COST } = require('../../utils/config'); // Importando a constante WOOD_COST
+const { STAMINA_RECHARGE_TIME, COMBAT_COST } = require('../../utils/config');
 const dataManager = require('../../utils/dataManager'); // Importando o dataManager
 
 module.exports = {
@@ -17,6 +17,8 @@ module.exports = {
         .setDescription('Lute contra um inimigo!'),
     async execute(interaction) {
         const userId = interaction.user.id;
+        // Código para coleta de madeira, caso o jogador tenha estamina suficiente
+        const currentTime = Date.now();
 
         dataManager.initializeUser(userId);
         // Verificar se o arquivo existe
@@ -49,8 +51,15 @@ module.exports = {
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
-        // Código para coleta de madeira, caso o jogador tenha estamina suficiente
-        const currentTime = Date.now();
+        // Atualizar o inventário e a estamina
+        // Atualizar o inventário e a estamina
+        dataManager.setGameData({
+            [userId]: { lastMine: currentTime },
+        });
+
+        const currentStamina = dataManager.getGameData()[userId].stamina || 0;
+        const newStamina = Math.max(0, currentStamina - COMBAT_COST); // Estamina é decrementada com base no custo de combate
+        dataManager.updateStamina(userId, newStamina);
 
         // Verificar se o usuário existe no JSON
         const userData = data[userId];
@@ -66,14 +75,6 @@ module.exports = {
         ) {
             return interaction.reply('Você precisa de uma espada de ferro ou de diamante para lutar!');
         }
-
-        // Atualizar o inventário e a estamina
-        dataManager.setGameData({
-            [userId]: { lastMine: currentTime, lastwoods: currentTime },
-        });
-
-        // Subtrai estamina do jogador
-        dataManager.updateStamina(userId, dataManager.getGameData()[userId].stamina - COMBAT_COST);
 
         // Definir inimigos com vida aleatória e ataques variáveis
         const inimigos = [
@@ -275,5 +276,6 @@ module.exports = {
             return { item: itemAleatorio, quantity, coins };
         }
         await combate();
+        fs.writeFileSync(itemsPath, JSON.stringify(dataManager.getGameData(), null, 2));
     },
 };
