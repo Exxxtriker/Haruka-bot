@@ -13,15 +13,18 @@ module.exports = {
         // Inicializar o usuário se não existir
         dataManager.initializeUser(userId);
 
-        // Verificar se o usuário tem estamina suficiente para coletar madeira
-        if (!dataManager.hasSufficientStamina(userId)) {
+        const userStamina = dataManager.getGameData()[userId].stamina;
+
+        // Verificar se o usuário tem pelo menos 2 unidades de estamina
+        if (userStamina < 2) {
             const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
 
             // Criar a embed de tempo restante para recarregar estamina
             const embed = new EmbedBuilder()
                 .setColor('#FF5733') // Cor vermelha
                 .setTitle('⛔ Estamina Insuficiente!')
-                .setDescription(`Sua estamina está esgotada! Espere **${timeRemaining}** para recarregar.`)
+                .setDescription(`Você precisa de pelo menos **2 estaminas** para coletar madeira! 
+                Sua estamina atual: **${userStamina}**. Espere **${timeRemaining}** para recarregar.`)
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                 .setTimestamp();
@@ -35,11 +38,11 @@ module.exports = {
 
         // Atualizar o inventário e a estamina
         dataManager.addItemToInventory(userId, 'madeira', 1); // Adiciona 1 madeira ao inventário
-        dataManager.updateStamina(userId, dataManager.getGameData()[userId].stamina - WOOD_COST); // Subtrai estamina do jogador
+        dataManager.updateStamina(userId, userStamina - WOOD_COST); // Subtrai estamina do jogador
 
         // Atualiza o tempo de coleta de madeira
         dataManager.setGameData({
-            [userId]: { lastMine: currentTime, lastwoods: currentTime },
+            [userId]: { lastMine: currentTime },
         });
 
         // Criar a embed de sucesso com os detalhes da coleta
@@ -50,7 +53,6 @@ module.exports = {
             .addFields(
                 { name: 'Estamina restante', value: `${dataManager.getGameData()[userId].stamina}`, inline: true },
                 { name: 'Inventário', value: `Madeira: ${dataManager.getGameData()[userId].inventory.madeira}`, inline: true },
-            // { name: 'Última coleta de madeira', value: `<t:${Math.floor(dataManager.getGameData()[userId].lastwoods / 1000)}:R>`, inline: true },
             )
             .setThumbnail(interaction.user.displayAvatarURL())
             .setTimestamp();

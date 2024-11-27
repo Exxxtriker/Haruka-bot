@@ -71,6 +71,7 @@ module.exports = {
         dataManager.setGameData({
             [userId]: { lastMine: currentTime, lastwoods: currentTime },
         });
+
         // Subtrai estamina do jogador
         dataManager.updateStamina(userId, dataManager.getGameData()[userId].stamina - COMBAT_COST);
 
