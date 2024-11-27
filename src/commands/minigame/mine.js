@@ -78,7 +78,7 @@ module.exports = {
             // Se o jogador tiver picareta de diamante, existe uma chance de minerar um recurso refinado
             let refinedMineral = null;
             if (hasDiamondPickaxe) {
-                const refinedChance = 50; // 50% de chance de minerar um recurso refinado
+                const refinedChance = 35; // 50% de chance de minerar um recurso refinado
                 if (Math.random() * 100 < refinedChance) {
                     refinedMineral = refinedResources[mined];
                 }
