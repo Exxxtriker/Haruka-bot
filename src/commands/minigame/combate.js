@@ -72,8 +72,8 @@ module.exports = {
         // Função para calcular a vida inicial do jogador com base na benção
         function calcularVidaInicial(benção) {
             const vidaBase = 100;
-            if (benção === 'fraca') return Math.floor(vidaBase * 0.8); // 20% a menos de vida
-            if (benção === 'forte') return Math.floor(vidaBase * 1.2); // 20% a mais de vida
+            if (benção === 'fraca') return Math.floor(vidaBase * 0.9);
+            if (benção === 'forte') return Math.floor(vidaBase * 1.5);
             return vidaBase; // Benção média (sem alteração)
         }
 
