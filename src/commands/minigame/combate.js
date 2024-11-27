@@ -129,8 +129,8 @@ module.exports = {
         // Função de combate
         const combate = async () => {
             const mensagemTurno = [
-                `${jogador.nome} atacou o ${inimigo.nome}!`,
                 `${inimigo.nome} atacou ${jogador.nome}!`,
+                `${jogador.nome} atacou o ${inimigo.nome}!`,
             ];
 
             // Enviar a mensagem inicial
@@ -144,7 +144,9 @@ module.exports = {
                     { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
                     { name: '🌟 Benção da Deusa Haruka', value: `Nível de Benção: **${bençãoAtual}**`, inline: false },
                 )
-                .setFooter({ text: 'Clique no botão para avançar o turno!' });
+                .setFooter({ text: 'Clique no botão para avançar o turno!' })
+                .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
+                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless');
 
             await interaction.editReply({ embeds: [embed], components: [row] });
 
@@ -168,6 +170,8 @@ module.exports = {
                             new EmbedBuilder()
                                 .setColor('#ff0000')
                                 .setTitle('☠️ Você foi derrotado! ☠️')
+                                .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
+                                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless')
                                 .setDescription(`O terrível **${inimigo.nome}** foi mais forte...\n\nVocê perdeu **50 coins**. Não desista, melhore suas habilidades e volte à luta!`),
                         ],
                         components: [],
@@ -185,6 +189,8 @@ module.exports = {
                                 .setColor('#00ff00')
                                 .setTitle('🎉 Vitória! 🎉')
                                 .setDescription(`Você derrotou o **${inimigo.nome}**!\n\nVocê recebeu **${loot.coins} coins** e **${loot.quantity}x ${loot.item}**!`)
+                                .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
+                                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless')
                                 .addFields({ name: '🏆 Loot', value: `**${loot.quantity}x ${loot.item}**`, inline: false }),
                         ],
                         components: [],
@@ -198,7 +204,9 @@ module.exports = {
                             new EmbedBuilder()
                                 .setColor(turno % 2 === 0 ? '#00bfff' : '#ff6347')
                                 .setTitle('⚔️ Turno em Progresso!')
-                                .setDescription(`${mensagemTurno[turno % 2]} Dano causado: **${dano}**\nHPs:\n${jogador.nome}: ${jogador.hp} HP\n${inimigo.nome}: ${inimigo.hp} HP`),
+                                .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
+                                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless')
+                                .setDescription(`☠️${mensagemTurno[turno % 2]}\nDano causado: **${dano}**\n💌 HPs:\n⚔️${jogador.nome}: ${jogador.hp} HP\n\n☠️${inimigo.nome}: ${inimigo.hp} HP`),
                         ],
                         components: [row],
                     });
