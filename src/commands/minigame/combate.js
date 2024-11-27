@@ -71,30 +71,34 @@ module.exports = {
             (!userInventory['espada de ferro'] || userInventory['espada de ferro'] <= 0)
             && (!userInventory['espada de diamante'] || userInventory['espada de diamante'] <= 0)
         ) {
-            return interaction.reply('Você precisa de uma espada de ferro ou de diamante para lutar!');
+            return interaction.reply('Você precisa de uma espada de ferro ou de diamante para lutar, Perdeu 3 de estamina no treinamento equipe-se melhor!');
         }
 
         // Definir inimigos com vida aleatória e ataques variáveis
-        const inimigos = [
-            {
-                nome: 'Goblin Selvagem', hp: getRandomNumber(40, 60), ataque: getRandomNumber(8, 12), defesa: getRandomNumber(2, 5),
-            },
-            {
-                nome: 'Ladrão', hp: getRandomNumber(60, 80), ataque: getRandomNumber(15, 25), defesa: getRandomNumber(1, 4),
-            },
-            {
-                nome: 'Elfo', hp: getRandomNumber(50, 70), ataque: getRandomNumber(16, 20), defesa: getRandomNumber(6, 10),
-            },
-            {
-                nome: 'Dragão de Fogo', hp: getRandomNumber(180, 220), ataque: getRandomNumber(25, 35), defesa: getRandomNumber(15, 25),
-            },
-            {
-                nome: 'Lorde das Sombras', hp: getRandomNumber(140, 160), ataque: getRandomNumber(30, 40), defesa: getRandomNumber(10, 18),
-            },
-            {
-                nome: 'Titanos', hp: getRandomNumber(280, 320), ataque: getRandomNumber(45, 55), defesa: getRandomNumber(20, 30),
-            },
-        ];
+        // Função para criar um inimigo com atributos aleatórios
+        function criarInimigo(nome, hpMin, hpMax, ataqueMin, ataqueMax, defesaMin, defesaMax) {
+            return {
+                nome,
+                hp: getRandomNumber(hpMin, hpMax),
+                ataque: getRandomNumber(ataqueMin, ataqueMax),
+                defesa: getRandomNumber(defesaMin, defesaMax),
+            };
+        }
+
+        // Função para gerar a lista de inimigos
+        function gerarInimigos() {
+            return [
+                criarInimigo('Goblin Selvagem', 40, 60, 8, 12, 2, 5),
+                criarInimigo('Ladrão', 60, 80, 15, 25, 1, 4),
+                criarInimigo('Elfo', 50, 70, 16, 20, 6, 10),
+                criarInimigo('Dragão de Fogo', 180, 220, 25, 35, 15, 25),
+                criarInimigo('Lorde das Sombras', 140, 160, 30, 40, 10, 18),
+                criarInimigo('Titanos', 280, 320, 45, 55, 20, 30),
+            ];
+        }
+
+        // Gerar a lista de inimigos
+        const inimigos = gerarInimigos();
 
         // Escolher um inimigo aleatório
         const inimigo = inimigos[Math.floor(Math.random() * inimigos.length)];
