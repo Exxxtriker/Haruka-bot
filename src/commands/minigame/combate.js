@@ -17,8 +17,6 @@ module.exports = {
         .setDescription('Lute contra um inimigo!'),
     async execute(interaction) {
         const userId = interaction.user.id;
-        // Código para coleta de madeira, caso o jogador tenha estamina suficiente
-        const currentTime = Date.now();
 
         dataManager.initializeUser(userId);
         // Verificar se o arquivo existe
@@ -52,14 +50,14 @@ module.exports = {
         }
 
         // Atualizar o inventário e a estamina
-        // Atualizar o inventário e a estamina
-        dataManager.setGameData({
-            [userId]: { lastMine: currentTime },
-        });
 
         const currentStamina = dataManager.getGameData()[userId].stamina || 0;
         const newStamina = Math.max(0, currentStamina - COMBAT_COST); // Estamina é decrementada com base no custo de combate
         dataManager.updateStamina(userId, newStamina);
+
+        // Salvar a estamina atualizada no arquivo JSON
+        data[userId].stamina = newStamina; // Atualiza a estamina no objeto de dados
+        fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2)); // Salva os dados atualizados no arquivo
 
         // Verificar se o usuário existe no JSON
         const userData = data[userId];
@@ -269,9 +267,6 @@ module.exports = {
             jogador.coins += coins;
             data[userId].coins = jogador.coins;
             data[userId].inventory = userData.inventory;
-
-            // Salvar no arquivo
-            fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
             return { item: itemAleatorio, quantity, coins };
         }
