@@ -22,7 +22,7 @@ module.exports = {
         const quantity = interaction.options.getInteger('quantidade');
 
         const prices = {
-            pedra: 10, madeira: 5, ferro: 25, ouro: 35, diamante: 50,
+            Pedra: 10, Madeira: 5, Ferro: 25, Ouro: 35, Diamante: 50, Isca: 5, Linha: 25,
         }; // Exemplos de preços
 
         // Verificar se o item é válido

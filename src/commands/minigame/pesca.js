@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const dataManager = require('../../utils/dataManager');
 const { STAMINA_RECHARGE_TIME, FISHING_COST } = require('../../utils/config');
@@ -21,13 +22,12 @@ module.exports = {
         isFishingInProgress[userId] = true;
 
         try {
-            // eslint-disable-next-line no-unused-vars
             const fishTypes = ['Peixe comum', 'Peixe raro', 'Peixe lendário', 'Peixe mítico'];
             const fishChances = {
-                'peixe comum': 80,
-                'peixe raro': 10,
-                'peixe lendário': 3,
-                'peixe mítico': 0.01,
+                'Peixe comum': 80,
+                'Peixe raro': 10,
+                'Peixe lendário': 3,
+                'Peixe mítico': 0.01,
             };
 
             // Carregar os dados do jogo
@@ -40,6 +40,16 @@ module.exports = {
             }
 
             const user = data[userId];
+
+            // Verificar se o usuário tem a vara de pesca
+            if (!user.inventory['Vara de pesca'] || user.inventory['Vara de pesca'] <= 0) {
+                return interaction.reply({ content: '⛔ Você não tem uma vara de pesca! Adquira uma antes de tentar pescar.', ephemeral: true });
+            }
+
+            // Verificar se o usuário tem isca
+            if (!user.inventory.Isca || user.inventory.Isca <= 0) {
+                return interaction.reply({ content: '⛔ Você não tem isca! Adquira isca antes de tentar pescar.', ephemeral: true });
+            }
 
             // Recarregar estamina, se necessário
             dataManager.rechargeStamina(userId);
@@ -64,14 +74,14 @@ module.exports = {
             const randomValue = Math.random() * 100;
             let caughtFish;
 
-            if (randomValue < fishChances['peixe mítico']) {
-                caughtFish = 'peixe mítico';
-            } else if (randomValue < fishChances['peixe raro'] + fishChances['peixe mítico']) {
-                caughtFish = 'peixe raro';
-            } else if (randomValue < fishChances['peixe lendário'] + fishChances['peixe raro'] + fishChances['peixe mítico']) {
-                caughtFish = 'peixe lendário';
+            if (randomValue < fishChances['Peixe mítico']) {
+                caughtFish = 'Peixe mítico';
+            } else if (randomValue < fishChances['Peixe raro'] + fishChances['Peixe mítico']) {
+                caughtFish = 'Peixe raro';
+            } else if (randomValue < fishChances['Peixe lendário'] + fishChances['Peixe raro'] + fishChances['Peixe mítico']) {
+                caughtFish = 'Peixe lendário';
             } else {
-                caughtFish = 'peixe comum';
+                caughtFish = 'Peixe comum';
             }
 
             const quantity = 1; // Sempre pescar 1 peixe
@@ -79,8 +89,9 @@ module.exports = {
             // Adicionar o peixe coletado ao inventário
             dataManager.addItemToInventory(userId, caughtFish, quantity);
 
-            // Consumir estamina
+            // Consumir estamina e isca
             user.stamina -= FISHING_COST;
+            user.inventory.Isca -= 1; // Consumir 1 isca
             user.lastInteraction = Date.now();
             // Salvar os dados atualizados no banco de dados (ou arquivo)
             dataManager.setGameData({ [userId]: user });
@@ -93,6 +104,7 @@ module.exports = {
                 .addFields(
                     { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
                     { name: 'Inventário atualizado', value: `${caughtFish}: ${user.inventory[caughtFish] || 0}`, inline: true },
+                    { name: 'Isca restante', value: `${user.inventory.Isca}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Continue pescando para obter mais recursos!' })
