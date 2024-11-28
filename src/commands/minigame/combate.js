@@ -17,25 +17,27 @@ module.exports = {
         .setDescription('Lute contra um inimigo!'),
     async execute(interaction) {
         const userId = interaction.user.id;
+        // Carregar os dados do jogo
+        let data = dataManager.getGameData();
 
-        // Recarregar estamina antes de verificar se é suficiente
-        dataManager.rechargeStamina(userId);
-
-        // Verificar se o arquivo existe
-        if (!fs.existsSync(itemsPath)) {
-            return interaction.reply('O arquivo de dados não foi encontrado!');
+        // Verificar se o usuário existe nos dados carregados
+        if (!data[userId]) {
+            // Se o usuário não existir, inicializar os dados dele
+            dataManager.initializeUser(userId);
+            // Carregar novamente os dados após a inicialização
+            data = dataManager.getGameData();
         }
+        // Gerenciar o tempo da última interação para estamina
+        const currentTime = Date.now();
+        const lastInteractionTime = data[userId]?.lastInteraction || 0;
+        const timeDifference = currentTime - lastInteractionTime;
 
-        // Carregar os dados do arquivo JSON
-        let data = {};
-        try {
-            data = JSON.parse(fs.readFileSync(itemsPath, 'utf8'));
-        } catch (error) {
-            console.error('Erro ao ler o arquivo JSON:', error);
-            return interaction.reply('Erro ao carregar os dados do arquivo!');
+        if (timeDifference >= STAMINA_RECHARGE_TIME) {
+            // Atualizar estamina após o tempo de recarga
+            data[userId].stamina = Math.min(data[userId].stamina + 1, 100); // Max estamina = 100
+            data[userId].lastInteraction = currentTime;
+            fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
         }
-
-        dataManager.updateLastMining(userId, Date.now());
 
         // Verificar se o usuário tem estamina suficiente
         if (!dataManager.hasSufficientStamina(userId)) {

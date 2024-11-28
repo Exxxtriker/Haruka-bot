@@ -74,8 +74,9 @@ module.exports = {
 
             // Consumir estamina
             user.stamina -= MINING_COST;
-            user.lastMine = Date.now();
-            dataManager.setGameData({ [userId]: user }); // Salvar no banco de dados
+            user.lastInteraction = Date.now();
+            // Salvar os dados atualizados no banco de dados (ou arquivo)
+            dataManager.setGameData({ [userId]: user });
 
             // Embed de sucesso
             const embed = new EmbedBuilder()

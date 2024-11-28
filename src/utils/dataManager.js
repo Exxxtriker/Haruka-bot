@@ -10,6 +10,7 @@ const itemsPath = path.join(__dirname, 'datagame.json');
 let gameData = {};
 
 // Função para carregar os dados do arquivo
+// Função para carregar os dados do arquivo
 function loadData() {
     try {
         if (fs.existsSync(itemsPath)) {
@@ -18,11 +19,14 @@ function loadData() {
             if (fileContent.trim() !== '') {
                 gameData = JSON.parse(fileContent);
             } else {
-                gameData = {}; // Garante que a variável gameData não fique indefinida
+                // Se o arquivo estiver vazio, inicializa com um objeto vazio
+                gameData = {};
+                saveData(); // Salva o objeto vazio para garantir que o arquivo não fique vazio
             }
         } else {
             // Se o arquivo não existe, cria um arquivo inicial
-            saveData();
+            gameData = {}; // Inicializa com um objeto vazio
+            saveData(); // Salva o objeto vazio
         }
     } catch (error) {
         console.error('Erro ao carregar dados:', error.message);
@@ -70,7 +74,7 @@ function initializeUser(userId) {
             coins: 0,
             inventory: {},
             stamina: MAX_ESTAMINA,
-            lastMine: 0,
+            lastInteraction: 0, // Alteração: Usando lastInteraction para controle global
         };
         setGameData({ [userId]: gameData[userId] }); // Salva dados iniciais
     }
@@ -79,14 +83,14 @@ function initializeUser(userId) {
 // Função para recarregar estamina do usuário, se necessário
 function rechargeStamina(userId) {
     const user = gameData[userId];
-    if (!user || !user.lastMine) return; // Verifica se o usuário existe e se tem uma última atividade registrada
+    if (!user || !user.lastInteraction) return; // Verifica se o usuário existe e se tem uma última atividade registrada
 
     const currentTime = Date.now();
-    const timePassed = currentTime - user.lastMine;
+    const timePassed = currentTime - user.lastInteraction;
 
     if (timePassed >= STAMINA_RECHARGE_TIME) {
         user.stamina = MAX_ESTAMINA;
-        user.lastMine = currentTime;
+        user.lastInteraction = currentTime;
         setGameData({ [userId]: user }); // Salva a atualização
     }
 }
@@ -118,10 +122,10 @@ function hasSufficientStamina(userId) {
 
 function getTimeRemaining(userId, intervalMs, format = true) {
     const userData = gameData[userId];
-    if (!userData || !userData.lastMine) return format ? 'Nenhuma atividade registrada.' : -1;
+    if (!userData || !userData.lastInteraction) return format ? 'Nenhuma atividade registrada.' : -1;
 
     const currentTime = Date.now();
-    const timePassed = currentTime - userData.lastMine;
+    const timePassed = currentTime - userData.lastInteraction;
     const timeRemaining = intervalMs - timePassed;
 
     if (format) {

@@ -1,65 +1,110 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { WOOD_COST, STAMINA_RECHARGE_TIME } = require('../../utils/config'); // Importando a constante WOOD_COST
-const dataManager = require('../../utils/dataManager'); // Importando o dataManager
+const dataManager = require('../../utils/dataManager');
+const { STAMINA_RECHARGE_TIME, WOOD_COST } = require('../../utils/config');
+
+const isLumberjackInProgress = {}; // Para evitar spam
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('lenhador')
-        .setDescription('Colete madeira!'),
+        .setDescription('Pegue madeira para obter recursos!'),
 
     async execute(interaction) {
         const userId = interaction.user.id;
 
-        // Inicializar o usuário se não existir
-        dataManager.initializeUser(userId);
-
-        const userStamina = dataManager.getGameData()[userId].stamina;
-
-        dataManager.updateLastMining(userId, Date.now());
-
-        // Verificar se o usuário tem pelo menos 2 unidades de estamina
-        if (userStamina < 2) {
-            const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
-
-            // Criar a embed de tempo restante para recarregar estamina
-            const embed = new EmbedBuilder()
-                .setColor('#FF5733') // Cor vermelha
-                .setTitle('⛔ Estamina Insuficiente!')
-                .setDescription(`Você precisa de pelo menos **2 estaminas** para coletar madeira! 
-                Sua estamina atual: **${userStamina}**. Espere **${timeRemaining}** para recarregar.`)
-                .setThumbnail(interaction.user.displayAvatarURL())
-                .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
-                .setTimestamp();
-
-            // Retorna a resposta com a embed indicando o tempo de recarga
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+        // Verificar se o comando está sendo executado
+        if (isLumberjackInProgress[userId]) {
+            return interaction.reply({ content: '⛔ Você já está pegando madeira. Por favor, espere antes de tentar novamente!', ephemeral: true });
         }
 
-        // Código para coleta de madeira, caso o jogador tenha estamina suficiente
-        const currentTime = Date.now();
+        // Definir o usuário como em progresso
+        isLumberjackInProgress[userId] = true;
 
-        // Atualizar o inventário e a estamina
-        dataManager.addItemToInventory(userId, 'madeira', 1); // Adiciona 1 madeira ao inventário
-        dataManager.updateStamina(userId, userStamina - WOOD_COST); // Subtrai estamina do jogador
+        try {
+            const resources = ['madeira', 'carvalho', 'abeto', 'bambu'];
+            const refinedResources = {
+                madeira: 'madeira refinada',
+                carvalho: 'carvalho refinado',
+                abeto: 'abeto refinado',
+                bambu: 'bambu refinado',
+            };
 
-        // Atualiza o tempo de coleta de madeira
-        dataManager.setGameData({
-            [userId]: { lastMine: currentTime },
-        });
+            // Carregar os dados do jogo
+            let data = dataManager.getGameData();
 
-        // Criar a embed de sucesso com os detalhes da coleta
-        const embed = new EmbedBuilder()
-            .setColor('#FFD700') // Cor dourada
-            .setTitle('Pegar Madeira 🪓')
-            .setDescription(`Você pegou **1 madeira** e consumiu **${WOOD_COST} estamina**!`)
-            .addFields(
-                { name: 'Estamina restante', value: `${dataManager.getGameData()[userId].stamina}`, inline: true },
-                { name: 'Inventário', value: `Madeira: ${dataManager.getGameData()[userId].inventory.madeira}`, inline: true },
-            )
-            .setThumbnail(interaction.user.displayAvatarURL())
-            .setTimestamp();
+            // Inicializar o usuário, se necessário
+            if (!data[userId]) {
+                dataManager.initializeUser(userId);
+                data = dataManager.getGameData(); // Recarregar os dados após a inicialização
+            }
 
-        // Retorna a resposta com a embed de sucesso
-        await interaction.reply({ embeds: [embed] });
+            const user = data[userId];
+
+            // Recarregar estamina, se necessário
+            dataManager.rechargeStamina(userId);
+
+            // Verificar se há estamina suficiente
+            if (user.stamina < WOOD_COST) {
+                const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
+
+                // Embed para indicar tempo restante
+                const embed = new EmbedBuilder()
+                    .setColor('#FF5733') // Vermelho
+                    .setTitle('⛔ Estamina insuficiente!')
+                    .setDescription(`Sua estamina está esgotada! Espere **${timeRemaining}** para recarregar.`)
+                    .setThumbnail(interaction.user.displayAvatarURL())
+                    .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
+                    .setTimestamp();
+
+                return interaction.reply({ embeds: [embed], ephemeral: true });
+            }
+
+            // Determinar o recurso coletado
+            const gathered = resources[Math.floor(Math.random() * resources.length)];
+            const quantity = Math.floor(Math.random() * 5) + 1;
+
+            // Verificar se o jogador tem um machado de ferro
+            const hasIronAxe = user.inventory.machado >= 1;
+
+            // Chance de pegar recurso refinado
+            let refinedWood = null;
+            if (hasIronAxe) {
+                const refinedChance = 35; // 35% de chance de pegar madeira refinada
+                if (Math.random() * 100 < refinedChance) {
+                    refinedWood = refinedResources[gathered];
+                }
+            }
+
+            // Adicionar o recurso coletado ao inventário
+            const resourceToAdd = refinedWood || gathered;
+            dataManager.addItemToInventory(userId, resourceToAdd, quantity);
+
+            // Consumir estamina
+            user.stamina -= WOOD_COST;
+            user.lastInteraction = Date.now();
+            // Salvar os dados atualizados no banco de dados (ou arquivo)
+            dataManager.setGameData({ [userId]: user });
+
+            // Embed de sucesso
+            const embed = new EmbedBuilder()
+                .setColor('#4CAF50') // Verde
+                .setTitle('🌲 Coleta bem-sucedida!')
+                .setDescription(`Você coletou **${quantity}x ${resourceToAdd}**!`)
+                .addFields(
+                    { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
+                    { name: 'Inventário atualizado', value: `${resourceToAdd}: ${user.inventory[resourceToAdd] || 0}`, inline: true },
+                )
+                .setThumbnail(interaction.user.displayAvatarURL())
+                .setFooter({ text: 'Continue coletando para obter mais recursos!' })
+                .setTimestamp();
+
+            await interaction.reply({ embeds: [embed] });
+        } catch (error) {
+            console.error('Erro ao executar o comando de coleta de madeira:', error);
+            interaction.reply({ content: '❌ Ocorreu um erro ao tentar coletar madeira. Tente novamente mais tarde!', ephemeral: true });
+        } finally {
+            // Liberar o bloqueio
+            isLumberjackInProgress[userId] = false;
+        }
     },
 };
