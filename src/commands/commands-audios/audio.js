@@ -8,7 +8,7 @@ const path = require('path');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('audio')
-        .setDescription('Toca um áudio específico de uma pasta na call (01 / 15')
+        .setDescription('Toca um áudio específico de uma pasta na call (01 / 23)')
         .addStringOption((option) => option.setName('audio')
             .setDescription('Escolha o áudio para tocar (sem extensão)')
             .setRequired(true)),
