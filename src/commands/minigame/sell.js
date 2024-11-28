@@ -23,14 +23,14 @@ module.exports = {
 
         // Valores de venda fixos para minérios e minérios refinados
         const prices = {
-            pedra: 2,
-            ferro: 5,
-            ouro: 10,
-            diamante: 20,
-            'pedra refinada': 4,
-            'ferro refinado': 10,
-            'ouro refinado': 20,
-            'diamante refinado': 40,
+            Pedra: 2,
+            Ferro: 5,
+            Ouro: 10,
+            Diamante: 20,
+            'Pedra refinada': 4,
+            'Ferro refinado': 10,
+            'Ouro refinado': 20,
+            'Diamante refinado': 40,
         };
 
         // Verificar se o minério pode ser vendido

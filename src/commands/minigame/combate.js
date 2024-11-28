@@ -69,8 +69,8 @@ module.exports = {
 
         const userInventory = userData.inventory;
         if (
-            (!userInventory['espada de ferro'] || userInventory['espada de ferro'] <= 0)
-            && (!userInventory['espada de diamante'] || userInventory['espada de diamante'] <= 0)
+            (!userInventory['Espada de ferro'] || userInventory['Espada de ferro'] <= 0)
+            && (!userInventory['Espada de diamante'] || userInventory['Espada de diamante'] <= 0)
         ) {
             const embed = new EmbedBuilder()
                 .setColor('#FF5733')

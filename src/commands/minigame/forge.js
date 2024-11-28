@@ -18,16 +18,20 @@ module.exports = {
         const equipamento = interaction.options.getString('equipamento');
 
         const recipes = {
-            espada: { madeira: 2, pedra: 3 },
-            'espada de ferro': { espada: 1, madeira: 2, ferro: 3 },
-            'espada de diamante': { espada: 1, madeira: 2, diamante: 3 },
-            picareta: { madeira: 3, diamante: 5 },
+            'Espada de pedra': { Madeira: 2, Pedra: 3 },
+            'Espada de ferro': { 'Espada de pedra': 1, Madeira: 2, Ferro: 3 },
+            'Espada de diamante': { Espada: 1, Madeira: 2, Diamante: 3 },
+            'Vara de pesca': { Graveto: 3, Linha: 1, Anzol: 1 },
+            Anzol: { Ferro: 1 },
+            Graveto: { Tabua: 2 },
+            Tabua: { Madeira: 1 },
+            Picareta: { Madeira: 3, Diamante: 5 },
         };
 
         // Verificar se o equipamento é válido
         if (!recipes[equipamento]) {
             return interaction.reply(
-                'Equipamento inválido! Os equipamentos disponíveis são: espada, espada de ferro, espada de diamante, picareta.',
+                'Equipamento inválido! Utilize o /recipes para ver a cria',
             );
         }
 

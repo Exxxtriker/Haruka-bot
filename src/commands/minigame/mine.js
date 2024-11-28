@@ -21,12 +21,12 @@ module.exports = {
         isMiningInProgress[userId] = true;
 
         try {
-            const resources = ['pedra', 'ferro', 'ouro', 'diamante'];
+            const resources = ['Pedra', 'Ferro', 'Ouro', 'Diamante'];
             const refinedResources = {
-                pedra: 'pedra refinada',
-                ferro: 'ferro refinado',
-                ouro: 'ouro refinado',
-                diamante: 'diamante refinado',
+                pedra: 'Pedra refinada',
+                ferro: 'Ferro refinado',
+                ouro: 'Ouro refinado',
+                diamante: 'Diamante refinado',
             };
 
             // Inicializar o usuário, se necessário
