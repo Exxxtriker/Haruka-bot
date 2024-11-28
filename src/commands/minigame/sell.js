@@ -27,65 +27,59 @@ module.exports = {
     async execute(interaction) {
         const subcommand = interaction.options.getSubcommand();
 
-        // Carregar os itens da loja para venda (os preços aqui são os mesmos que os da loja)
+        // Responder imediatamente para evitar o timeout
+        await interaction.deferReply();
+
         let shopItems;
         try {
             shopItems = JSON.parse(fs.readFileSync(shopItemsPath, 'utf8'));
         } catch (error) {
             console.error('Erro ao ler o arquivo de itens da loja:', error);
-            return interaction.reply('Erro ao carregar os itens da loja. Tente novamente mais tarde.');
+            return interaction.editReply('Erro ao carregar os itens da loja. Tente novamente mais tarde.');
         }
 
-        if (subcommand === 'vender') {
+        if (subcommand === 'mercadoria') {
             const userId = interaction.user.id;
             const item = interaction.options.getString('item');
             const quantity = interaction.options.getInteger('quantidade');
 
-            // Verificar se o item é válido
             if (!shopItems[item]) {
-                return interaction.reply(`Item inválido! Os itens disponíveis para venda são: ${Object.keys(shopItems).join(', ')}.`);
+                return interaction.editReply(`Item inválido! Os itens disponíveis para venda são: ${Object.keys(shopItems).join(', ')}.`);
             }
 
             let data;
             try {
-                // Carregar os dados do arquivo JSON
                 data = JSON.parse(fs.readFileSync(itemsPath, 'utf8'));
             } catch (error) {
                 console.error('Erro ao ler o arquivo de dados:', error);
-                return interaction.reply('Erro ao carregar os dados do usuário. Tente novamente mais tarde.');
+                return interaction.editReply('Erro ao carregar os dados do usuário. Tente novamente mais tarde.');
             }
 
-            // Obter dados do usuário ou criar padrão
             const user = data[userId] || { coins: 100, inventory: {} };
 
-            // Verificar se o jogador tem a quantidade necessária para vender
             if ((user.inventory[item] || 0) < quantity) {
-                return interaction.reply(`Você não tem ${quantity}x ${item} no inventário!`);
+                return interaction.editReply(`Você não tem ${quantity}x ${item} no inventário!`);
             }
 
-            // Calcular o valor da venda
             const sellPrice = shopItems[item];
             const revenue = sellPrice * quantity;
 
-            // Atualizar os dados do usuário
             user.coins += revenue;
             user.inventory[item] -= quantity;
             if (user.inventory[item] <= 0) {
-                delete user.inventory[item]; // Remover item do inventário se a quantidade for 0 ou menor
+                delete user.inventory[item];
             }
             data[userId] = user;
 
             try {
-                // Salvar os dados atualizados no arquivo
                 fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
             } catch (error) {
                 console.error('Erro ao salvar os dados no arquivo:', error);
-                return interaction.reply('Erro ao salvar os dados. Tente novamente mais tarde.');
+                return interaction.editReply('Erro ao salvar os dados. Tente novamente mais tarde.');
             }
 
-            // Criar a embed personalizada para a resposta
             const embed = new EmbedBuilder()
-                .setColor('#ff6347') // Cor vermelha para representar a venda de itens
+                .setColor('#ff6347') // Corrigido aqui
                 .setTitle('Venda realizada com sucesso!')
                 .setDescription(`Você vendeu **${quantity}x ${item}** por **${revenue} moedas**.`)
                 .addFields(
@@ -93,24 +87,21 @@ module.exports = {
                     { name: 'Estoque Atual', value: `**${item}**: ${user.inventory[item] || 0}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
-                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }); // Logo da loja
+                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' });
 
-            // Responder com a embed
-            await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         } else if (subcommand === 'lista') {
-            // Criar a embed para a lista de itens
             const embed = new EmbedBuilder()
-                .setColor('#0000ff') // Cor azul para a lista
+                .setColor('#0000ff')
                 .setTitle('Itens Disponíveis para Venda')
                 .setDescription('Aqui estão os itens que você pode vender:')
                 .addFields(
                     ...Object.entries(shopItems).map(([item, price]) => ({ name: item, value: `${price} moedas`, inline: true })),
                 )
-                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }) // Logo da loja
+                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' })
                 .setTimestamp();
 
-            // Responder com a embed da lista
-            await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         }
     },
 };
