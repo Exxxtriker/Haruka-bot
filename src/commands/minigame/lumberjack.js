@@ -15,6 +15,8 @@ module.exports = {
 
         const userStamina = dataManager.getGameData()[userId].stamina;
 
+        dataManager.updateLastMining(userId, Date.now());
+
         // Verificar se o usuário tem pelo menos 2 unidades de estamina
         if (userStamina < 2) {
             const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);

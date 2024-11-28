@@ -35,6 +35,8 @@ module.exports = {
             return interaction.reply('Erro ao carregar os dados do arquivo!');
         }
 
+        dataManager.updateLastMining(userId, Date.now());
+
         // Verificar se o usuário tem estamina suficiente
         if (!dataManager.hasSufficientStamina(userId)) {
             const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
