@@ -71,7 +71,19 @@ module.exports = {
             (!userInventory['espada de ferro'] || userInventory['espada de ferro'] <= 0)
             && (!userInventory['espada de diamante'] || userInventory['espada de diamante'] <= 0)
         ) {
-            return interaction.reply('Você precisa de uma espada de ferro ou de diamante para lutar, Perdeu 3 de estamina no treinamento equipe-se melhor!');
+            // Criar a embed personalizada
+            const embed = new EmbedBuilder()
+                .setColor('#FF5733') // Cor vermelha
+                .setTitle('⚔️ Equipamento Insuficiente!')
+                .setDescription('Você precisa de uma espada de ferro ou de diamante para lutar contra monstros.')
+                .addFields([
+                    { name: '⚠️ Penalidade', value: 'Você perdeu **3 de estamina** no treinamento. Equipe-se melhor!', inline: false },
+                ])
+                .setThumbnail(interaction.user.displayAvatarURL())
+                .setFooter({ text: 'Aguardo você no campo de batalha!' })
+                .setTimestamp();
+            // Retorna a resposta com a embed
+            return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
         // Definir inimigos com vida aleatória e ataques variáveis
