@@ -80,7 +80,17 @@ function initializeUser(userId) {
     }
 }
 
-// Função para recarregar estamina do usuário, se necessário
+function autoRechargeStamina() {
+    // eslint-disable-next-line guard-for-in
+    for (const userId in gameData) {
+        rechargeStamina(userId); // Verifica e recarrega a estamina de cada usuário
+    }
+}
+
+// Configura um intervalo para verificar a estamina a cada 5 minutos (300000 ms)
+setInterval(autoRechargeStamina, 300000);
+
+// Função existente para recarregar estamina do usuário
 function rechargeStamina(userId) {
     const user = gameData[userId];
     if (!user || !user.lastInteraction) return; // Verifica se o usuário existe e se tem uma última atividade registrada
@@ -88,13 +98,13 @@ function rechargeStamina(userId) {
     const currentTime = Date.now();
     const timePassed = currentTime - user.lastInteraction;
 
+    // Verifica se o tempo passado é suficiente para recarregar estamina
     if (timePassed >= STAMINA_RECHARGE_TIME) {
-        user.stamina = MAX_ESTAMINA;
+        user.stamina = Math.min(user.stamina + (timePassed / STAMINA_RECHARGE_TIME) * MAX_ESTAMINA, MAX_ESTAMINA);
         user.lastInteraction = currentTime;
         setGameData({ [userId]: user }); // Salva a atualização
     }
 }
-
 // Função para adicionar itens ao inventário do usuário
 function addItemToInventory(userId, item, quantity) {
     const user = gameData[userId];
@@ -138,6 +148,7 @@ function getTimeRemaining(userId, intervalMs, format = true) {
 
     return Math.max(0, timeRemaining); // Em milissegundos
 }
+
 // Garantir que os dados sejam carregados ao iniciar o bot
 loadData();
 
