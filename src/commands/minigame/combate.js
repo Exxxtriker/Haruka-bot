@@ -9,7 +9,7 @@ const path = require('path');
 
 const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 const { STAMINA_RECHARGE_TIME, COMBAT_COST } = require('../../utils/config');
-const dataManager = require('../../utils/dataManager'); // Importando o dataManager
+const dataManager = require('../../utils/dataManager');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +18,9 @@ module.exports = {
     async execute(interaction) {
         const userId = interaction.user.id;
 
-        dataManager.initializeUser(userId);
+        // Recarregar estamina antes de verificar se é suficiente
+        dataManager.rechargeStamina(userId);
+
         // Verificar se o arquivo existe
         if (!fs.existsSync(itemsPath)) {
             return interaction.reply('O arquivo de dados não foi encontrado!');
@@ -33,47 +35,41 @@ module.exports = {
             return interaction.reply('Erro ao carregar os dados do arquivo!');
         }
 
+        // Verificar se o usuário tem estamina suficiente
         if (!dataManager.hasSufficientStamina(userId)) {
             const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
 
-            // Criar a embed de tempo restante para recarregar estamina
             const embed = new EmbedBuilder()
-                .setColor('#FF5733') // Cor vermelha
+                .setColor('#FF5733')
                 .setTitle('⛔ Estamina Insuficiente!')
                 .setDescription(`Sua estamina está esgotada! Espere **${timeRemaining}** para recarregar.`)
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                 .setTimestamp();
 
-            // Retorna a resposta com a embed indicando o tempo de recarga
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
         // Atualizar o inventário e a estamina
-
         const currentStamina = dataManager.getGameData()[userId].stamina || 0;
-        const newStamina = Math.max(0, currentStamina - COMBAT_COST); // Estamina é decrementada com base no custo de combate
+        const newStamina = Math.max(0, currentStamina - COMBAT_COST);
         dataManager.updateStamina(userId, newStamina);
 
-        // Salvar a estamina atualizada no arquivo JSON
-        data[userId].stamina = newStamina; // Atualiza a estamina no objeto de dados
-        fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2)); // Salva os dados atualizados no arquivo
+        data[userId].stamina = newStamina;
+        fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
-        // Verificar se o usuário existe no JSON
         const userData = data[userId];
         if (!userData || !userData.inventory) {
             return interaction.reply('Seu inventário está vazio ou você ainda não tem dados registrados!');
         }
 
-        // Verificar se o usuário possui uma espada de ferro ou de diamante no inventário
         const userInventory = userData.inventory;
         if (
             (!userInventory['espada de ferro'] || userInventory['espada de ferro'] <= 0)
             && (!userInventory['espada de diamante'] || userInventory['espada de diamante'] <= 0)
         ) {
-            // Criar a embed personalizada
             const embed = new EmbedBuilder()
-                .setColor('#FF5733') // Cor vermelha
+                .setColor('#FF5733')
                 .setTitle('⚔️ Equipamento Insuficiente!')
                 .setDescription('Você precisa de uma espada de ferro ou de diamante para lutar contra monstros.')
                 .addFields([
@@ -82,12 +78,9 @@ module.exports = {
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Aguardo você no campo de batalha!' })
                 .setTimestamp();
-            // Retorna a resposta com a embed
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
-        // Definir inimigos com vida aleatória e ataques variáveis
-        // Função para criar um inimigo com atributos aleatórios
         function criarInimigo(nome, hpMin, hpMax, ataqueMin, ataqueMax, defesaMin, defesaMax) {
             return {
                 nome,

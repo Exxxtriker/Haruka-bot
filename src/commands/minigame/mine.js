@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const dataManager = require('../../utils/dataManager');
-const { MAX_ESTAMINA, STAMINA_RECHARGE_TIME } = require('../../utils/config');
+const { STAMINA_RECHARGE_TIME, MINING_COST } = require('../../utils/config');
 
 const isMiningInProgress = {}; // Para evitar spam
 
@@ -38,7 +37,7 @@ module.exports = {
             dataManager.rechargeStamina(userId);
 
             // Verificar se há estamina suficiente
-            if (!dataManager.hasSufficientStamina(userId)) {
+            if (user.stamina < MINING_COST) {
                 const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
 
                 // Embed para indicar tempo restante
@@ -73,12 +72,10 @@ module.exports = {
             const resourceToAdd = refinedMineral || mined;
             dataManager.addItemToInventory(userId, resourceToAdd, quantity);
 
-            // Consumir 1 de estamina
-            const staminaRemaining = user.stamina - 1;
-            dataManager.updateStamina(userId, staminaRemaining);
-
-            // Atualizar lastMine para o timestamp atual
-            user.lastMine = Date.now(); // Atualiza lastMine
+            // Consumir estamina
+            user.stamina -= MINING_COST;
+            user.lastMine = Date.now();
+            dataManager.setGameData({ [userId]: user }); // Salvar no banco de dados
 
             // Embed de sucesso
             const embed = new EmbedBuilder()
@@ -86,8 +83,8 @@ module.exports = {
                 .setTitle('⛏️ Mineração bem-sucedida!')
                 .setDescription(`Você minerou **${quantity}x ${resourceToAdd}**!`)
                 .addFields(
-                    { name: 'Estamina restante', value: `${staminaRemaining}`, inline: true },
-                    { name: 'Inventário atualizado ', value: `${resourceToAdd}: ${user.inventory[resourceToAdd]}`, inline: true },
+                    { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
+                    { name: 'Inventário atualizado', value: `${resourceToAdd}: ${user.inventory[resourceToAdd]}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Continue minerando para obter mais recursos!' })

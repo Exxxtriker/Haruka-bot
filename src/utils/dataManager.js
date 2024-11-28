@@ -116,28 +116,24 @@ function hasSufficientStamina(userId) {
     return user.stamina > 0;
 }
 
-// Função para calcular o tempo restante para a recarga de estamina
-function getTimeRemaining(userId, intervalMs) {
+function getTimeRemaining(userId, intervalMs, format = true) {
     const userData = gameData[userId];
-    if (!userData || !userData.lastMine) {
-        return 'Nenhuma atividade registrada.';
-    }
+    if (!userData || !userData.lastMine) return format ? 'Nenhuma atividade registrada.' : -1;
 
     const currentTime = Date.now();
     const timePassed = currentTime - userData.lastMine;
     const timeRemaining = intervalMs - timePassed;
 
-    if (timeRemaining <= 0) {
-        return 'Já disponível!';
+    if (format) {
+        if (timeRemaining <= 0) return 'Já disponível!';
+        const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        return `${hours}h ${minutes}m ${seconds}s restantes.`;
     }
 
-    const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-    return `${hours}h ${minutes}m ${seconds}s restantes.`;
+    return Math.max(0, timeRemaining); // Em milissegundos
 }
-
 // Garantir que os dados sejam carregados ao iniciar o bot
 loadData();
 
