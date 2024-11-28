@@ -4,7 +4,7 @@ const STAMINA_RECHARGE_TIME = 10800000; // 3 horas em milissegundos (tempo de re
 const WOOD_COST = 2; // Custo de estamina para pegar madeira
 const COMBAT_COST = 3;
 const MINING_COST = 1;
-const FISHING_COST = 2;
+const FISHING_COST = 1;
 
 module.exports = {
     MAX_ESTAMINA,
