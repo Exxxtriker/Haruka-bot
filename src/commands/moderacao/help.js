@@ -78,6 +78,7 @@ module.exports = {
                     { name: '/combate', value: '*Lute contra um inimigo!* 🏆', inline: true },
                     { name: '**🛠️ Comandos de Forja:**', value: '\u200B' },
                     { name: '/forja', value: '*Forje novos equipamentos usando minerais!* 🔨', inline: true },
+                    { name: '/receitas', value: '*Mostrar receitas da forja!* 🔨', inline: true },
                     { name: '**📜 Comandos de Inventário:**', value: '\u200B' },
                     { name: '/inventario', value: '*Mostra o inventário do jogador.* 📦', inline: true },
                     { name: '**🏅 Comandos de Ranking:**', value: '\u200B' },
@@ -85,9 +86,13 @@ module.exports = {
                     { name: '**🌲 Comandos de Coleta:**', value: '\u200B' },
                     { name: '/lenhador', value: '*Colete madeira!* 🌳', inline: true },
                     { name: '/minerar', value: '*Minere para obter recursos!* ⛏️', inline: true },
+                    { name: '/pesca', value: '*Pesque para obter peixes e recursos!* 🎣', inline: true },
                     { name: '**💰 Comandos de Comércio:**', value: '\u200B' },
-                    { name: '/vender', value: '*Venda minérios para ganhar moedas.* 💸', inline: true },
-                    { name: '/shop', value: '*Compre itens na loja.* 🛒', inline: true },
+                    { name: '/vender mercadoria', value: '*Venda minérios para ganhar moedas.* 💸', inline: true },
+                    { name: '/vender lista', value: '*Mostra a lista de itens disponíveis para venda* 💸', inline: true },
+                    { name: '/shop comprar', value: '*Compre itens na loja.* 🛒', inline: true },
+                    { name: '/shop lista', value: '*Mostra a lista de itens disponíveis para compra* 🛒', inline: true },
+
                 )
                 .setColor('#ffcc00')
                 .setImage('https://i.gifer.com/Wntc.gif')
