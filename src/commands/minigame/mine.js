@@ -77,6 +77,9 @@ module.exports = {
             const staminaRemaining = user.stamina - 1;
             dataManager.updateStamina(userId, staminaRemaining);
 
+            // Atualizar lastMine para o timestamp atual
+            user.lastMine = Date.now(); // Atualiza lastMine
+
             // Embed de sucesso
             const embed = new EmbedBuilder()
                 .setColor('#4CAF50') // Verde
@@ -84,7 +87,7 @@ module.exports = {
                 .setDescription(`Você minerou **${quantity}x ${resourceToAdd}**!`)
                 .addFields(
                     { name: 'Estamina restante', value: `${staminaRemaining}`, inline: true },
-                    { name: 'Inventário atualizado', value: `${resourceToAdd}: ${user.inventory[resourceToAdd]}`, inline: true },
+                    { name: 'Inventário atualizado ', value: `${resourceToAdd}: ${user.inventory[resourceToAdd]}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Continue minerando para obter mais recursos!' })
