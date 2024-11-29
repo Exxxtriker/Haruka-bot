@@ -232,6 +232,7 @@ module.exports = {
                     collector.stop();
                 } else if (inimigo.hp <= 0) {
                     const loot = ganharLoot();
+                    // Atualize as moedas
                     jogador.coins += loot.coins;
                     data[userId].coins = jogador.coins;
                     fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
@@ -280,15 +281,12 @@ module.exports = {
             const quantity = Math.floor(Math.random() * 5) + 1;
             const coins = Math.floor(Math.random() * 30) + 20;
 
-            // Atualizar o inventário do jogador
+            // Atualizar apenas o inventário aqui
             if (!userData.inventory[itemAleatorio]) {
                 userData.inventory[itemAleatorio] = 0; // Inicializa o item se não existir
             }
             userData.inventory[itemAleatorio] += quantity;
 
-            // Atualizar as coins
-            jogador.coins += coins;
-            data[userId].coins = jogador.coins;
             data[userId].inventory = userData.inventory;
 
             return { item: itemAleatorio, quantity, coins };
