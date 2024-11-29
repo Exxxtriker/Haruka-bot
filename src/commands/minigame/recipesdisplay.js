@@ -9,8 +9,8 @@ module.exports = {
         // Receitas da forja
         const recipes = {
             'Espada de pedra': { ingredientes: { Madeira: 2, Pedra: 3 }, resultado: 'Espada de pedra' },
-            'Espada de ferro': { ingredientes: { Espada: 1, Madeira: 2, Ferro: 3 }, resultado: 'Espada de ferro' },
-            'Espada de diamante': { ingredientes: { Espada: 1, Madeira: 2, Diamante: 3 }, resultado: 'Espada de diamante' },
+            'Espada de ferro': { ingredientes: { 'Espada de pedra': 1, Madeira: 2, Ferro: 3 }, resultado: 'Espada de ferro' },
+            'Espada de diamante': { ingredientes: { 'Espada de ferro': 1, Madeira: 2, Diamante: 3 }, resultado: 'Espada de diamante' },
             'Vara de pesca': { ingredientes: { Graveto: 3, Linha: 1, Anzol: 1 }, resultado: 'Vara de pesca' },
             Anzol: { ingredientes: { Ferro: 1 }, resultado: 'Anzol' },
             Graveto: { ingredientes: { Tabua: 2 }, resultado: 'Graveto' },
