@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const itemsPath = path.join(__dirname, '../../utils/datagame.json');
-const shopItemsPath = path.join(__dirname, '../../utils/sellIltens.json');
+const shopItemsPath = path.join(__dirname, '../../utils/data/sellIltens.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
