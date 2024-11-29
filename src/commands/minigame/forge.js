@@ -20,7 +20,7 @@ module.exports = {
         const recipes = {
             'Espada de pedra': { Madeira: 2, Pedra: 3 },
             'Espada de ferro': { 'Espada de pedra': 1, Madeira: 2, Ferro: 3 },
-            'Espada de diamante': { Espada: 1, Madeira: 2, Diamante: 3 },
+            'Espada de diamante': { 'Espada de pedra': 1, Madeira: 2, Diamante: 3 },
             'Vara de pesca': { Graveto: 3, Linha: 1, Anzol: 1 },
             Anzol: { Ferro: 1 },
             Graveto: { Tabua: 2 },

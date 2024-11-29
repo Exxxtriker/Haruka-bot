@@ -215,7 +215,7 @@ module.exports = {
                 defensor.hp -= dano;
 
                 if (jogador.hp <= 0) {
-                    jogador.coins -= 50;
+                    jogador.coins = Math.max(jogador.coins - 50, 0); // Garante que as moedas não fiquem negativas
                     data[userId].coins = jogador.coins;
                     fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
                     await i.update({
