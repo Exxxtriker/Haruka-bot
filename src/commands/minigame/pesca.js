@@ -22,11 +22,12 @@ module.exports = {
         isFishingInProgress[userId] = true;
 
         try {
-            const fishTypes = ['Peixe comum', 'Peixe raro', 'Peixe lendário', 'Peixe mítico'];
+            const fishTypes = ['Peixe comum', 'Peixe raro', 'Tesouro', 'Peixe lendário', 'Peixe mítico'];
             const fishChances = {
                 'Peixe comum': 80,
                 'Peixe raro': 10,
-                'Peixe lendário': 3,
+                Tesouro: 3,
+                'Peixe lendário': 2,
                 'Peixe mítico': 0.01,
             };
 

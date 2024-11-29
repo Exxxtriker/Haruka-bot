@@ -17,6 +17,7 @@ module.exports = {
         .setDescription('Lute contra um inimigo!'),
     async execute(interaction) {
         const userId = interaction.user.id;
+
         // Carregar os dados do jogo
         let data = dataManager.getGameData();
 
@@ -27,24 +28,29 @@ module.exports = {
             // Carregar novamente os dados após a inicialização
             data = dataManager.getGameData();
         }
-        // Gerenciar o tempo da última interação para estamina
+
+        // Obter os dados do usuário
+        const userData = data[userId];
+
         const currentTime = Date.now();
-        const lastInteractionTime = data[userId]?.lastInteraction || 0;
+        const lastInteractionTime = userData.lastInteraction || 0;
         const timeDifference = currentTime - lastInteractionTime;
 
+        // Atualizar estamina após o tempo de recarga
         if (timeDifference >= STAMINA_RECHARGE_TIME) {
-            // Atualizar estamina após o tempo de recarga
-            data[userId].stamina = Math.min(data[userId].stamina + 1, 100); // Max estamina = 100
-            data[userId].lastInteraction = currentTime;
+            userData.stamina = Math.min(userData.stamina + 1, 15); // Max estamina = 15
+            userData.lastInteraction = currentTime;
             fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
         }
 
-        dataManager.rechargeStamina(userId);
+        // Recarregar estamina automaticamente, se necessário
+        if (timeDifference >= STAMINA_RECHARGE_TIME) {
+            dataManager.rechargeStamina(userId);
+        }
 
-        // Verificar se o usuário tem estamina suficiente
+        // Verificar se jogador tem estamina suficiente
         if (!dataManager.hasSufficientStamina(userId)) {
             const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
-
             const embed = new EmbedBuilder()
                 .setColor('#FF5733')
                 .setTitle('⛔ Estamina Insuficiente!')
@@ -56,15 +62,16 @@ module.exports = {
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
-        // Atualizar o inventário e a estamina
-        const currentStamina = dataManager.getGameData()[userId].stamina || 0;
-        const newStamina = Math.max(0, currentStamina - COMBAT_COST);
+        // Deduzir estamina pelo combate
+        const newStamina = Math.max(0, userData.stamina - COMBAT_COST);
         dataManager.updateStamina(userId, newStamina);
 
-        data[userId].stamina = newStamina;
+        // Atualizar o tempo de última interação
+        dataManager.getTimeRemaining(userId, currentTime);
+
+        userData.stamina = newStamina;
         fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
-        const userData = data[userId];
         if (!userData || !userData.inventory) {
             return interaction.reply('Seu inventário está vazio ou você ainda não tem dados registrados!');
         }
@@ -105,6 +112,7 @@ module.exports = {
                 criarInimigo('Dragão de Fogo', 180, 220, 25, 35, 15, 25),
                 criarInimigo('Lorde das Sombras', 140, 160, 30, 40, 10, 18),
                 criarInimigo('Titanos', 200, 320, 45, 55, 20, 30),
+                criarInimigo('CLThanos', 190, 450, 20, 50, 20, 25),
             ];
         }
 
@@ -186,7 +194,7 @@ module.exports = {
                 .addFields(
                     { name: '💀 Inimigo', value: `**${inimigo.nome}**\nHP: ${inimigo.hp}\n⚔️ Ataque: ${inimigo.ataque}\n🛡️ Defesa: ${inimigo.defesa}`, inline: true },
                     { name: '🧑 Você', value: `HP: ${jogador.hp}\n🛡️ Defesa: ${jogador.defesa}\n💰 Coins: ${jogador.coins}`, inline: true },
-                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
+                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['Espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
                     { name: '🌟 Benção da Deusa Haruka', value: `Nível de Benção: **${bençãoAtual}**`, inline: false },
                 )
                 .setFooter({ text: 'Clique no botão para avançar o turno!' })
