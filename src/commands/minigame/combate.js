@@ -136,8 +136,8 @@ module.exports = {
         // Função para calcular o dano com base na espada e na benção
         const calcularDano = () => {
             let danoBase = 0;
-            if (userInventory['espada de diamante'] > 0) danoBase = 55;
-            if (userInventory['espada de ferro'] > 0) danoBase = 35;
+            if (userInventory['Espada de diamante'] > 0) danoBase = 55;
+            if (userInventory['Espada de ferro'] > 0) danoBase = 35;
 
             // Modificar o dano baseado na benção
             if (bençãoAtual === 'fraca') return Math.floor(danoBase * 0.8); // Dano reduzido
