@@ -37,25 +37,35 @@ module.exports = {
 
         // Criando a embed personalizada
         const embed = new EmbedBuilder()
-            .setColor('#4CAF50') // Cor personalizada
-            .setTitle(`📦 Inventário de ${interaction.user.username}`)
-            .setThumbnail(interaction.user.displayAvatarURL()) // Imagem de perfil
-            .setDescription(`Aqui estão os itens e moedas que você possui, ${interaction.user.username}!`)
+            .setColor('#4B9E6F') // Cor de verde escuro (semelhante à cor de uma mochila)
+            .setTitle(`**Mochila de ${interaction.user.username}** 🎒`)
+            .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true })) // Imagem de perfil
+            .setDescription(`Dê uma olhada em sua mochila, ${interaction.user.username}.\nAqui estão os recursos e itens que você carrega!`)
             .addFields(
-                { name: '💰 Coins', value: `${userCoins.toLocaleString()} moedas`, inline: false },
+                {
+                    name: '**Moedas**: ',
+                    value: `**${userCoins.toLocaleString()}** moedas 💰`,
+                    inline: true,
+                },
             )
-            .setFooter({ text: 'Continue coletando recursos para expandir seu inventário!' })
+            .setFooter({ text: 'Continue explorando e coletando para sua mochila!' })
             .setTimestamp();
 
         if (Object.keys(userInventory).length === 0) {
-            embed.setDescription('**Seu inventário está vazio!** 😢');
-            embed.setColor('#F44336'); // Cor para inventário vazio (vermelho)
+            embed.setDescription('**Sua mochila está vazia!** \n Procure mais itens para colocar nela!');
+            embed.setColor('#E74C3C'); // Cor vermelha para mochila vazia
         } else {
-            let inventoryText = 'Aqui estão os itens que você possui:\n';
+            // Listar itens de forma organizada, com um estilo de "pockets" ou "compartimentos"
+            let inventoryText = '**Itens armazenados:**\n';
             for (const [item, quantity] of Object.entries(userInventory)) {
-                inventoryText += `- **${item}**: ${quantity} unidades\n`;
+                inventoryText += `- **${item.charAt(0).toUpperCase() + item.slice(1)}**: ${quantity} unidades\n`;
             }
-            embed.addFields({ name: '🛠️ Itens', value: inventoryText });
+
+            embed.addFields({
+                name: '**Compartimentos da Mochila** 🛠️ ',
+                value: inventoryText,
+                inline: false,
+            });
         }
 
         // Enviar a embed
