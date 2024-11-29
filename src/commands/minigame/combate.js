@@ -174,7 +174,7 @@ module.exports = {
         // Criar botão para avançar turno
         const btnNextTurn = new ButtonBuilder()
             .setCustomId('nextTurn')
-            .setLabel('Avançar Turno')
+            .setLabel('Avançar Turno ⏩')
             .setStyle(1); // 1 = PRIMARY
 
         const row = new ActionRowBuilder().addComponents(btnNextTurn);
