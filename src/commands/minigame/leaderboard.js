@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
@@ -52,19 +53,37 @@ module.exports = {
 
         // Criar a embed do ranking
         const embed = new EmbedBuilder()
-            .setColor('#FFD700') // Cor dourada para ranking
-            .setTitle('🏆 Leaderboard - Top 10 Jogadores com Mais Moedas')
-            .setDescription('Aqui estão os 10 jogadores mais ricos!')
+            .setColor('#F4C542') // Cor dourada vibrante
+            .setTitle('🏆 **Leaderboard - Top 10 Mais Ricos** 🏆')
+            .setDescription('Os jogadores mais ricos do servidor estão listados aqui!')
+            .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1312063913852145695/bag-gold-coins-with-number-3-it_81048-6884.png?ex=674b223e&is=6749d0be&hm=d11e9df3dc7963ddf56a855dd16e91492f2ecfa0ebcf3ed30e1fb9191e59db9b&=&format=webp&quality=lossless&width=427&height=427') // Ícone de troféu
+            .setFooter({
+                text: 'Continue jogando para alcançar o topo!',
+                iconURL: 'https://media.discordapp.net/attachments/1310325661839392889/1312064166277808138/0ef715af51d62dadfa1feaaa625b025c.png?ex=674b227a&is=6749d0fa&hm=48f45efd8141ced82a0c92943f73fc7c125df1e3ee8bba03694fc5c7d4a72aa2&=&format=webp&quality=lossless&width=427&height=427', // Ícone pequeno
+            })
             .setTimestamp();
 
-        // Adicionar os jogadores ao ranking
-        leaderboardWithNames.forEach((user, index) => {
-            embed.addFields({
-                name: `${index + 1}. ${user.username}`,
-                value: `${user.coins} moedas`,
-                inline: false,
-            });
+        // Destaque para o Top 1 (simulando centralização)
+        const top1 = leaderboardWithNames[0];
+        embed.addFields({
+            name: '🥇 **Top 1 - O mais rico!**',
+            value: `\n👑 **${top1.username}**: 💰 **${top1.coins.toLocaleString()} moedas**\n`,
+            inline: false, // Centralizado ocupando a largura total
         });
+
+        // Adicionar os outros 9 jogadores
+        if (leaderboardWithNames.length > 1) {
+            const otherPlayers = leaderboardWithNames.slice(1);
+            embed.addFields({
+                name: '🏅 **Outros jogadores no Top 10**',
+                value: otherPlayers
+                    .map(
+                        (user, index) => `**#${index + 2}** - ${user.username}: 💰 ${user.coins.toLocaleString()} moedas`,
+                    )
+                    .join('\n'),
+                inline: false, // Listagem completa abaixo
+            });
+        }
 
         // Envia o ranking
         await interaction.reply({ embeds: [embed] });
