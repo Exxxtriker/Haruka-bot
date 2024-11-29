@@ -269,7 +269,7 @@ module.exports = {
 
             collector.on('end', (_, reason) => {
                 if (reason === 'time') {
-                    interaction.followUp('O tempo do combate acabou!');
+                    interaction.followUp('Você fugiu do combate, covarde !!!');
                 }
             });
         };
