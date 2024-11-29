@@ -57,7 +57,7 @@ module.exports = {
             const quantity = Math.floor(Math.random() * 5) + 1;
 
             // Verificar se o jogador tem uma picareta de diamante
-            const hasDiamondPickaxe = user.inventory.picareta >= 1;
+            const hasDiamondPickaxe = user.inventory.Picareta >= 1;
 
             // Chance de minerar um recurso refinado
             let refinedMineral = null;
