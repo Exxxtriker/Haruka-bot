@@ -47,14 +47,9 @@ module.exports = {
 
         // Atualizar estamina após o tempo de recarga
         if (timeDifference >= STAMINA_RECHARGE_TIME) {
-            userData.stamina = Math.min(userData.stamina + 1, 15); // Max estamina = 15
+            userData.stamina = Math.min(userData.stamina + 15, 15); // Max estamina = 15
             userData.lastInteraction = currentTime;
             fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
-        }
-
-        // Recarregar estamina automaticamente, se necessário
-        if (timeDifference >= STAMINA_RECHARGE_TIME) {
-            dataManager.rechargeStamina(userId);
         }
 
         // Verificar se jogador tem estamina suficiente
