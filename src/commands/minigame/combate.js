@@ -212,7 +212,7 @@ module.exports = {
             await interaction.editReply({ embeds: [embed], components: [row] });
 
             const filter = (i) => i.customId === 'nextTurn' && i.user.id === interaction.user.id;
-            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 1 * 60 * 1000 }); // 1 Minuto
+            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5 * 60 * 1000 }); // 1 Minuto
 
             collector.on('collect', async (i) => {
                 const atacante = turno % 2 === 0 ? jogador : inimigo;
