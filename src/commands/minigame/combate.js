@@ -276,10 +276,32 @@ module.exports = {
 
         // Função para ganhar loot e atualizar o inventário
         function ganharLoot() {
-            const minerios = ['Diamante', 'Ouro', 'Ferro', 'Pedra'];
-            const itemAleatorio = minerios[Math.floor(Math.random() * minerios.length)];
-            const quantity = Math.floor(Math.random() * 5) + 1;
-            const coins = Math.floor(Math.random() * 30) + 20;
+            const itens = ['Diamante', 'Ouro', 'Ferro', 'Pedra', 'Chave [NULL]', 'Espada de ferro'];
+            const itemChances = {
+                Diamante: 5, // 5% de chance
+                Ouro: 20, // 20% de chance
+                Ferro: 30, // 30% de chance
+                Pedra: 45, // 45% de chance
+                'Chave [NULL]': 1, // 1% de chance
+                'Espada de ferro': 10, // 10% de chance
+            };
+
+            // Função para selecionar um item com base nas chances
+            function selectItem() {
+                const randomNum = Math.random() * 100; // Gera um número aleatório entre 0 e 100
+                let cumulativeChance = 0;
+
+                for (const item of itens) {
+                    cumulativeChance += itemChances[item];
+                    if (randomNum < cumulativeChance) {
+                        return item; // Retorna o item selecionado
+                    }
+                }
+            }
+
+            const itemAleatorio = selectItem(); // Seleciona o item
+            const quantity = Math.floor(Math.random() * 5) + 1; // Define a quantidade
+            const coins = Math.floor(Math.random() * 30) + 20; // Gera moedas
 
             // Atualizar apenas o inventário aqui
             if (!userData.inventory[itemAleatorio]) {
