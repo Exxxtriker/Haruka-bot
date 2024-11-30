@@ -62,7 +62,7 @@ module.exports = {
             // Chance de minerar um recurso refinado
             let refinedMineral = null;
             if (hasDiamondPickaxe) {
-                const refinedChance = 35; // 35% de chance de minerar recurso refinado
+                const refinedChance = 50; // 50% de chance de minerar recurso refinado
                 if (Math.random() * 100 < refinedChance) {
                     refinedMineral = refinedResources[mined];
                 }
