@@ -11,12 +11,21 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 const { STAMINA_RECHARGE_TIME, COMBAT_COST } = require('../../utils/config');
 const dataManager = require('../../utils/dataManager');
 
+const activeUsers = new Set(); // Conjunto para rastrear usuários em combate
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('combate')
         .setDescription('Lute contra um inimigo!'),
     async execute(interaction) {
         const userId = interaction.user.id;
+
+        // Verificar se o usuário já está em combate
+        if (activeUsers.has(userId)) {
+            return interaction.reply({ content: 'Você já está em combate! Aguarde até que o combate atual termine.', ephemeral: true });
+        }
+
+        activeUsers.add(userId); // Adiciona o usuário ao conjunto de usuários ativos
 
         // Carregar os dados do jogo
         let data = dataManager.getGameData();
@@ -59,6 +68,7 @@ module.exports = {
                 .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                 .setTimestamp();
 
+            activeUsers.delete(userId); // Remove o usuário do conjunto se não tiver estamina
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
@@ -73,6 +83,7 @@ module.exports = {
         fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
         if (!userData || !userData.inventory) {
+            activeUsers.delete(userId); // Remove o usuário do conjunto se não tiver inventário
             return interaction.reply('Seu inventário está vazio ou você ainda não tem dados registrados!');
         }
 
@@ -91,6 +102,7 @@ module.exports = {
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Aguardo você no campo de batalha!' })
                 .setTimestamp();
+            activeUsers.delete(userId); // Remove o usuário do conjunto se não tiver equipamento
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
@@ -175,7 +187,7 @@ module.exports = {
         // Criar botão para avançar turno
         const btnNextTurn = new ButtonBuilder()
             .setCustomId('nextTurn')
-            .setLabel('Avançar Turno ⏩')
+            .setLabel('Avançar Turn o ⏩')
             .setStyle(1); // 1 = PRIMARY
 
         const row = new ActionRowBuilder().addComponents(btnNextTurn);
@@ -205,7 +217,7 @@ module.exports = {
             await interaction.editReply({ embeds: [embed], components: [row] });
 
             const filter = (i) => i.customId === 'nextTurn' && i.user.id === interaction.user.id;
-            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 1 * 60 * 1000 }); // 5 Minutos
+            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 1 * 60 * 1000 }); // 1 Minuto
 
             collector.on('collect', async (i) => {
                 const atacante = turno % 2 === 0 ? jogador : inimigo;
@@ -230,6 +242,7 @@ module.exports = {
                         ],
                         components: [],
                     });
+                    activeUsers.delete(userId); // Remove o usuário do conjunto após a derrota
                     collector.stop();
                 } else if (inimigo.hp <= 0) {
                     const loot = ganharLoot();
@@ -250,6 +263,7 @@ module.exports = {
                         ],
                         components: [],
                     });
+                    activeUsers.delete(userId); // Remove o usuário do conjunto após a vitória
                     collector.stop();
                 } else {
                     // eslint-disable-next-line no-plusplus
@@ -271,6 +285,7 @@ module.exports = {
             collector.on('end', (_, reason) => {
                 if (reason === 'time') {
                     interaction.followUp('Você fugiu do combate, covarde !!!');
+                    activeUsers.delete(userId); // Remove o usuário do conjunto após o tempo esgotado
                 }
             });
         };
