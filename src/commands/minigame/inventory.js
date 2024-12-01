@@ -58,7 +58,10 @@ module.exports = {
         } else {
             // Listar itens de forma organizada, com um estilo de "pockets" ou "compartimentos"
             let inventoryText = '**Itens armazenados:**\n';
-            for (const [item, quantity] of Object.entries(userInventory)) {
+            // Ordenar os itens do inventário em ordem alfabética
+            const sortedInventory = Object.entries(userInventory).sort(([itemA], [itemB]) => itemA.localeCompare(itemB));
+
+            for (const [item, quantity] of sortedInventory) {
                 inventoryText += `- **${item.charAt(0).toUpperCase() + item.slice(1)}**: ${quantity} unidades\n`;
             }
 
