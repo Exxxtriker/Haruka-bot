@@ -137,15 +137,24 @@ module.exports = {
             if (benção === 'forte') return Math.floor(vidaBase * 1.5);
             return vidaBase; // Benção média (sem alteração)
         }
-
         // Definir estatísticas do jogador
         const bençãoAtual = getBenção(); // Obter a benção da deusa Haruka
         const vidaJogador = calcularVidaInicial(bençãoAtual);
 
+        // Função para calcular a vida inicial do jogador com base na benção
+        function calcularDefesaInicial(benção) {
+            const defesaBase = 20;
+            if (benção === 'fraca') return Math.floor(defesaBase * 0.9);
+            if (benção === 'forte') return Math.floor(defesaBase * 1.5);
+            return defesaBase; // Benção média (sem alteração)
+        }
+        // Definir estatísticas do jogador
+        const defesaBase = calcularDefesaInicial(bençãoAtual);
+
         const jogador = {
             nome: interaction.user.username,
             hp: vidaJogador,
-            defesa: 20,
+            defesa: defesaBase,
             coins: userData.coins || 0,
         };
 
