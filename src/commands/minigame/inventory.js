@@ -30,7 +30,7 @@ module.exports = {
         if (!userData || !userData.inventory) {
             return interaction.reply('Seu inventário está vazio ou você ainda não tem dados registrados!');
         }
-
+        const user = data[userId];
         // Acessar inventário e coins do usuário
         const userInventory = userData.inventory;
         const userCoins = userData.coins || 0;
@@ -47,6 +47,7 @@ module.exports = {
                     value: `**${userCoins.toLocaleString()}** moedas 💰`,
                     inline: true,
                 },
+                { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
             )
             .setFooter({ text: 'Continue explorando e coletando para sua mochila!' })
             .setTimestamp();
