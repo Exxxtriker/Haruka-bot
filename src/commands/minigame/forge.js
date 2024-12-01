@@ -31,7 +31,7 @@ module.exports = {
         // Verificar se o equipamento é válido
         if (!recipes[equipamento]) {
             return interaction.reply(
-                'Equipamento inválido! Utilize o /recipes para ver as receitas dos itens',
+                'Equipamento inválido! Utilize o /receitas para ver as receitas dos itens',
             );
         }
 
