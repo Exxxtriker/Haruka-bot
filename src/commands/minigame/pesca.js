@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const dataManager = require('../../utils/dataManager');
@@ -72,24 +73,28 @@ module.exports = {
                 return interaction.reply({ embeds: [embed], ephemeral: true });
             }
 
-            // Determinar o peixe coletado com base nas chances
+            // Determinar o item coletado com base nas chances
             const randomValue = Math.random() * 100;
-            let caughtFish;
+            let caughtItem;
 
             if (randomValue < fishChances['Peixe mítico']) {
-                caughtFish = 'Peixe mítico';
-            } else if (randomValue < fishChances['Peixe raro'] + fishChances['Peixe mítico']) {
-                caughtFish = 'Peixe raro';
-            } else if (randomValue < fishChances['Peixe lendário'] + fishChances['Peixe raro'] + fishChances['Peixe mítico']) {
-                caughtFish = 'Peixe lendário';
+                caughtItem = 'Peixe mítico';
+            } else if (randomValue < fishChances['Peixe lendário'] + fishChances['Peixe mítico']) {
+                caughtItem = 'Peixe lendário';
+            } else if (randomValue < fishChances.Tesouro + fishChances['Peixe lendário'] + fishChances['Peixe mítico']) {
+                caughtItem = 'Tesouro';
+            } else if (randomValue < fishChances['Peixe raro'] + fishChances.Tesouro + fishChances['Peixe lendário'] + fishChances['Peixe mítico']) {
+                caughtItem = 'Peixe raro';
+            } else if (randomValue < fishChances.Linha + fishChances['Peixe raro'] + fishChances.Tesouro + fishChances['Peixe lendário'] + fishChances['Peixe mítico']) {
+                caughtItem = 'Linha';
             } else {
-                caughtFish = 'Peixe comum';
+                caughtItem = 'Peixe comum';
             }
 
-            const quantity = 1; // Sempre pescar 1 peixe
+            const quantity = 1; // Sempre pescar 1 item
 
-            // Adicionar o peixe coletado ao inventário
-            dataManager.addItemToInventory(userId, caughtFish, quantity);
+            // Adicionar o item coletado ao inventário
+            dataManager.addItemToInventory(userId, caughtItem, quantity);
 
             // Consumir estamina e isca
             user.stamina -= FISHING_COST;
@@ -102,10 +107,10 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor('#4CAF50') // Verde
                 .setTitle('🐟 Pesca bem-sucedida!')
-                .setDescription(`Você pescou **${quantity}x ${caughtFish}**!`)
+                .setDescription(`Você pescou **${quantity}x ${caughtItem}**!`)
                 .addFields(
                     { name: 'Estamina restante', value: `${user.stamina}`, inline: true },
-                    { name: 'Inventário atualizado', value: `${caughtFish}: ${user.inventory[caughtFish] || 0}`, inline: true },
+                    { name: 'Inventário atualizado', value: `${caughtItem}: ${user.inventory[caughtItem] || 0}`, inline: true },
                     { name: 'Isca restante', value: `${user.inventory.Isca}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
