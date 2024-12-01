@@ -62,9 +62,14 @@ module.exports = {
             // Chance de minerar um recurso refinado
             let refinedMineral = null;
             if (hasDiamondPickaxe) {
-                const refinedChance = 50; // 50% de chance de minerar recurso refinado
+                const refinedChance = 35; // 50% de chance de minerar recurso refinado
                 if (Math.random() * 100 < refinedChance) {
-                    refinedMineral = refinedResources[mined];
+                    const lowerCasedMined = mined.toLowerCase();
+                    if (refinedResources[lowerCasedMined]) {
+                        refinedMineral = refinedResources[lowerCasedMined];
+                    } else {
+                        console.warn(`Recurso refinado não encontrado para: ${lowerCasedMined}`);
+                    }
                 }
             }
 
