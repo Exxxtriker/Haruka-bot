@@ -166,7 +166,7 @@ module.exports = {
 
             // Modificar o dano baseado na benção
             if (bençãoAtual === 'fraca') return Math.floor(danoBase * 0.8); // Dano reduzido
-            if (bençãoAtual === 'forte') return Math.floor(danoBase * 1.2); // Dano aumentado
+            if (bençãoAtual === 'forte') return Math.floor(danoBase * 1.5); // Dano aumentado
             return danoBase; // Benção média (sem alteração)
         };
 
