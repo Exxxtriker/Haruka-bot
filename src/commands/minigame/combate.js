@@ -120,7 +120,6 @@ module.exports = {
                 criarInimigo('Lorde das Sombras', 140, 160, 30, 40, 20, 50),
                 criarInimigo('Titanos', 200, 320, 45, 55, 30, 39),
                 criarInimigo('CLThanos', 190, 450, 20, 50, 20, 25),
-            // criarInimigo('Morderkaiser', 2000, 2000, 1, 1, 2000, 2000),
             ];
         }
 
@@ -137,17 +136,19 @@ module.exports = {
             if (benção === 'forte') return Math.floor(vidaBase * 1.5);
             return vidaBase; // Benção média (sem alteração)
         }
+
         // Definir estatísticas do jogador
         const bençãoAtual = getBenção(); // Obter a benção da deusa Haruka
         const vidaJogador = calcularVidaInicial(bençãoAtual);
 
-        // Função para calcular a vida inicial do jogador com base na benção
+        // Função para calcular a defesa inicial do jogador com base na benção
         function calcularDefesaInicial(benção) {
             const defesaBase = 20;
             if (benção === 'fraca') return Math.floor(defesaBase * 0.9);
             if (benção === 'forte') return Math.floor(defesaBase * 1.5);
             return defesaBase; // Benção média (sem alteração)
         }
+
         // Definir estatísticas do jogador
         const defesaBase = calcularDefesaInicial(bençãoAtual);
 
@@ -158,16 +159,24 @@ module.exports = {
             coins: userData.coins || 0,
         };
 
-        // Função para calcular o dano com base na espada e na benção
-        const calcularDano = () => {
-            let danoBase = 0;
-            if (userInventory['Espada de diamante'] > 0) danoBase = 55;
-            if (userInventory['Espada de ferro'] > 0) danoBase = 35;
+        // Função para calcular o dano com base na espada e na bênção
+        const calcularDano = (benção) => {
+            let danoBaseMin = 0;
+            let danoBaseMax = 0;
+            if (userInventory['Espada de diamante'] > 0) {
+                danoBaseMin = 25; // Dano mínimo da espada de diamante
+                danoBaseMax = 60; // Dano máximo da espada de diamante
+            } else if (userInventory['Espada de ferro'] > 0) {
+                danoBaseMin = 15; // Dano mínimo da espada de ferro
+                danoBaseMax = 45; // Dano máximo da espada de ferro
+            }
 
-            // Modificar o dano baseado na benção
-            if (bençãoAtual === 'fraca') return Math.floor(danoBase * 0.8); // Dano reduzido
-            if (bençãoAtual === 'forte') return Math.floor(danoBase * 1.5); // Dano aumentado
-            return danoBase; // Benção média (sem alteração)
+            // Modificar o dano baseado na bênção
+            const dano = getRandomNumber(danoBaseMin, danoBaseMax); // Dano aleatório entre o mínimo e o máximo
+
+            if (benção === 'fraca') return Math.floor(dano * 0.8); // Dano reduzido
+            if (benção === 'forte') return Math.floor(dano * 1.5); // Dano aumentado
+            return dano; // Bênção média (sem alteração)
         };
 
         // Função para obter benção aleatória
@@ -181,8 +190,6 @@ module.exports = {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        const jogadorDano = calcularDano();
-
         // Adiar a resposta da interação
         await interaction.deferReply();
 
@@ -191,7 +198,7 @@ module.exports = {
         // Criar botão para avançar turno
         const btnNextTurn = new ButtonBuilder()
             .setCustomId('nextTurn')
-            .setLabel('Avançar Turn o ⏩')
+            .setLabel('Avançar Turno ⏩')
             .setStyle(1); // 1 = PRIMARY
 
         const row = new ActionRowBuilder().addComponents(btnNextTurn);
@@ -211,7 +218,7 @@ module.exports = {
                 .addFields(
                     { name: '💀 Inimigo', value: `**${inimigo.nome}**\nHP: ${inimigo.hp}\n⚔️ Ataque: ${inimigo.ataque}\n🛡️ Defesa: ${inimigo.defesa}`, inline: true },
                     { name: '🧑 Você', value: `HP: ${jogador.hp}\n🛡️ Defesa: ${jogador.defesa}\n💰 Coins: ${jogador.coins}`, inline: true },
-                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['Espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${jogadorDano}`, inline: false },
+                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['Espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${calcularDano(bençãoAtual)}`, inline: false },
                     { name: '🌟 Benção da Deusa Haruka', value: `Nível de Benção: **${bençãoAtual}**`, inline: false },
                 )
                 .setFooter({ text: 'Clique no botão para avançar o turno!' })
@@ -221,14 +228,18 @@ module.exports = {
             await interaction.editReply({ embeds: [embed], components: [row] });
 
             const filter = (i) => i.customId === 'nextTurn' && i.user.id === interaction.user.id;
-            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5 * 60 * 1000 }); // 1 Minuto
+            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5 * 60 * 1000 }); // 5 Minutos
 
             collector.on('collect', async (i) => {
                 const atacante = turno % 2 === 0 ? jogador : inimigo;
                 const defensor = turno % 2 === 0 ? inimigo : jogador;
 
+                // Calcular dano para o jogador e o inimigo
+                const danoJogador = calcularDano(bençãoAtual);
+                const danoInimigo = getRandomNumber(inimigo.ataque - defensor.defesa, inimigo.ataque); // Dano aleatório do inimigo
+
                 // Calcular dano
-                const dano = Math.max(0, atacante === jogador ? jogadorDano - defensor.defesa : atacante.ataque - defensor.defesa);
+                const dano = Math.max(0, atacante === jogador ? danoJogador - defensor.defesa : danoInimigo - defensor.defesa);
                 defensor.hp -= dano;
 
                 if (jogador.hp <= 0) {
