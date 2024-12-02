@@ -8,8 +8,7 @@ const itemChances = {
     Ouro: 50, // 50% de chance
     Diamante: 40, // 40% de chance
     Joia: 30, // 30% de chance
-    'Chave [NULL]': 3, // 1% de chance
-
+    'Chave [NULL]': 3, // 3% de chance
 };
 
 // Função para selecionar um item com base nas chances
@@ -59,6 +58,10 @@ module.exports = {
             }
 
             // Remover um tesouro do inventário
+            if (typeof dataManager.removeItemFromInventory !== 'function') {
+                console.error('removeItemFromInventory não está definida no dataManager');
+                return interaction.reply({ content: '❌ Ocorreu um erro interno. Tente novamente mais tarde!', ephemeral: true });
+            }
             dataManager.removeItemFromInventory(userId, 'Tesouro', 1);
 
             // Gerar um item aleatório como recompensa

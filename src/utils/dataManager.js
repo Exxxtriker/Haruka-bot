@@ -34,6 +34,15 @@ function saveData() {
     }
 }
 
+function removeItemFromInventory(userId, item, quantity) {
+    if (gameData[userId] && gameData[userId].inventory[item]) {
+        gameData[userId].inventory[item] -= quantity;
+        if (gameData[userId].inventory[item] <= 0) {
+            delete gameData[userId].inventory[item]; // Remove o item se a quantidade for zero ou negativa
+        }
+    }
+}
+
 // Função para inicializar um usuário com dados padrão
 function initializeUser(userId) {
     if (!gameData[userId]) {
@@ -139,6 +148,7 @@ module.exports = {
     initializeUser,
     rechargeStamina,
     addItemToInventory,
+    removeItemFromInventory,
     hasSufficientStamina,
     getTimeRemaining,
     updateStamina,

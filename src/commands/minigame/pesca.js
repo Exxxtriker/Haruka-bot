@@ -8,7 +8,7 @@ const isFishingInProgress = {}; // Para evitar spam
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('pesca')
+        .setName('pescar')
         .setDescription('Pesque para obter peixes e recursos!'),
 
     async execute(interaction) {
