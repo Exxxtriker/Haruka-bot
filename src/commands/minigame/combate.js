@@ -120,6 +120,7 @@ module.exports = {
                 criarInimigo('Lorde das Sombras', 140, 160, 30, 40, 20, 50),
                 criarInimigo('Titanos', 200, 320, 45, 55, 30, 39),
                 criarInimigo('CLThanos', 190, 450, 20, 50, 20, 25),
+                criarInimigo('Morderkaiser', 2000, 2000, 1, 1, 2000, 2000),
             ];
         }
 
