@@ -134,7 +134,7 @@ module.exports = {
         function calcularVidaInicial(benção) {
             const vidaBase = 100;
             if (benção === 'fraca') return Math.floor(vidaBase * 0.9);
-            if (benção === 'forte') return Math.floor(vidaBase * 1.5);
+            if (benção === 'forte') return Math.floor(vidaBase * 1.7);
             return vidaBase; // Benção média (sem alteração)
         }
 
@@ -146,7 +146,7 @@ module.exports = {
         function calcularDefesaInicial(benção) {
             const defesaBase = 20;
             if (benção === 'fraca') return Math.floor(defesaBase * 0.9);
-            if (benção === 'forte') return Math.floor(defesaBase * 1.5);
+            if (benção === 'forte') return Math.floor(defesaBase * 1.7);
             return defesaBase; // Benção média (sem alteração)
         }
 
@@ -166,7 +166,7 @@ module.exports = {
             let danoBaseMax = 0;
             if (userInventory['Espada de diamante'] > 0) {
                 danoBaseMin = 25; // Dano mínimo da espada de diamante
-                danoBaseMax = 60; // Dano máximo da espada de diamante
+                danoBaseMax = 65; // Dano máximo da espada de diamante
             } else if (userInventory['Espada de ferro'] > 0) {
                 danoBaseMin = 15; // Dano mínimo da espada de ferro
                 danoBaseMax = 45; // Dano máximo da espada de ferro
@@ -176,7 +176,7 @@ module.exports = {
             const dano = getRandomNumber(danoBaseMin, danoBaseMax); // Dano aleatório entre o mínimo e o máximo
 
             if (benção === 'fraca') return Math.floor(dano * 0.8); // Dano reduzido
-            if (benção === 'forte') return Math.floor(dano * 1.5); // Dano aumentado
+            if (benção === 'forte') return Math.floor(dano * 1.7); // Dano aumentado
             return dano; // Bênção média (sem alteração)
         };
 
