@@ -42,7 +42,6 @@ module.exports = {
                     { name: '/ban', value: '*Bane um usuário do servidor.* ☠️', inline: true },
                     { name: '/unban', value: '*Desbane um usuário.* 🛠️', inline: true },
                     { name: '/kick', value: '*Expulsa um membro do servidor.* 🚪', inline: true },
-                    { name: '/anuncio', value: '*Envia um anúncio para o servidor.* 📣', inline: true },
                     { name: '/castigar', value: '*Coloca um usuário em castigo (timeout).* 🔇', inline: true },
                     { name: '\u200B', value: '\u200B' }, // Espaço entre categorias
 
