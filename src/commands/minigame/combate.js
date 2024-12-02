@@ -120,7 +120,6 @@ module.exports = {
                 criarInimigo('Lorde das Sombras', 280, 320, 60, 80, 40, 100),
                 criarInimigo('Titanos', 400, 640, 90, 110, 60, 78),
                 criarInimigo('CLThanos', 380, 900, 40, 100, 40, 50),
-                criarInimigo('Morderkaiser', 4000, 4000, 2, 2, 4000, 4000),
             ];
         }
 
@@ -166,10 +165,10 @@ module.exports = {
             let danoBaseMax = 0;
             if (userInventory['Espada de diamante'] > 0) {
                 danoBaseMin = 25; // Dano mínimo da espada de diamante
-                danoBaseMax = 65; // Dano máximo da espada de diamante
+                danoBaseMax = 95; // Dano máximo da espada de diamante
             } else if (userInventory['Espada de ferro'] > 0) {
                 danoBaseMin = 15; // Dano mínimo da espada de ferro
-                danoBaseMax = 45; // Dano máximo da espada de ferro
+                danoBaseMax = 75; // Dano máximo da espada de ferro
             }
 
             // Modificar o dano baseado na bênção
