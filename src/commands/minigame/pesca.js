@@ -23,7 +23,6 @@ module.exports = {
         isFishingInProgress[userId] = true;
 
         try {
-            const fishTypes = ['Peixe comum', 'Peixe raro', 'Tesouro', 'Peixe lendário', 'Peixe mítico', 'Linha'];
             const fishChances = {
                 'Peixe comum': 80,
                 'Peixe raro': 10,
