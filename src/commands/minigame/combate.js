@@ -113,14 +113,14 @@ module.exports = {
         // Função para gerar a lista de inimigos
         function gerarInimigos() {
             return [
-                criarInimigo('Goblin Selvagem', 40, 110, 15, 25, 15, 20),
-                criarInimigo('Ladrão', 60, 150, 25, 35, 20, 40),
-                criarInimigo('Elfo', 50, 120, 16, 45, 30, 50),
-                criarInimigo('Dragão de Fogo', 180, 220, 25, 35, 15, 35),
-                criarInimigo('Lorde das Sombras', 140, 160, 30, 40, 20, 50),
-                criarInimigo('Titanos', 200, 320, 45, 55, 30, 39),
-                criarInimigo('CLThanos', 190, 450, 20, 50, 20, 25),
-                criarInimigo('Morderkaiser', 2000, 2000, 1, 1, 2000, 2000),
+                criarInimigo('Goblin Selvagem', 80, 220, 30, 50, 30, 40),
+                criarInimigo('Ladrão', 120, 300, 50, 70, 40, 80),
+                criarInimigo('Elfo', 100, 240, 32, 90, 60, 100),
+                criarInimigo('Dragão de Fogo', 360, 440, 50, 70, 30, 70),
+                criarInimigo('Lorde das Sombras', 280, 320, 60, 80, 40, 100),
+                criarInimigo('Titanos', 400, 640, 90, 110, 60, 78),
+                criarInimigo('CLThanos', 380, 900, 40, 100, 40, 50),
+                criarInimigo('Morderkaiser', 4000, 4000, 2, 2, 4000, 4000),
             ];
         }
 
