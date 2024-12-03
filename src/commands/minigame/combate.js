@@ -105,7 +105,7 @@ module.exports = {
         const btnUsePotion = new ButtonBuilder()
             .setCustomId('usePotion')
             .setLabel('Usar Poção de Vida 🍷')
-            .setStyle(1); // 1 = PRIMARY
+            .setStyle(4); // 4 = DANGER
 
         const btnNextTurn = new ButtonBuilder()
             .setCustomId('nextTurn')
