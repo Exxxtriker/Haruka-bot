@@ -11,5 +11,10 @@
     "Espada de pedra": 75,
     "Espada de ferro": 110,
     "Espada de diamante": 140,
-    "Vara de pesca": 30
+    "Vara de pesca": 30,
+    "Pedra Refinado": 10,
+    "Ferro Refinado": 40,
+    "Ouro Refinado": 60,
+    "Diamante Refinado": 90,
+    "Poção de Vida":120
 }

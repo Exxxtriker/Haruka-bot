@@ -101,6 +101,19 @@ module.exports = {
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
+        // Criar botão para usar poção de vida
+        const btnUsePotion = new ButtonBuilder()
+            .setCustomId('usePotion')
+            .setLabel('Usar Poção de Vida 🍷')
+            .setStyle(1); // 1 = PRIMARY
+
+        const btnNextTurn = new ButtonBuilder()
+            .setCustomId('nextTurn')
+            .setLabel('Avançar Turno ⏩')
+            .setStyle(1); // 1 = PRIMARY
+
+        const row = new ActionRowBuilder().addComponents(btnNextTurn, btnUsePotion);
+
         function criarInimigo(nome, hpMin, hpMax, ataqueMin, ataqueMax, defesaMin, defesaMax) {
             return {
                 nome,
@@ -113,14 +126,13 @@ module.exports = {
         // Função para gerar a lista de inimigos
         function gerarInimigos() {
             return [
-                criarInimigo('Goblin Selvagem', 80, 220, 30, 50, 30, 40),
-                criarInimigo('Ladrão', 120, 300, 50, 70, 40, 80),
-                criarInimigo('Elfo', 100, 240, 32, 90, 60, 100),
-                criarInimigo('Dragão de Fogo', 360, 440, 50, 70, 30, 70),
-                criarInimigo('Lorde das Sombras', 280, 320, 60, 80, 40, 100),
-                criarInimigo('Titanos', 400, 640, 90, 110, 60, 78),
-                criarInimigo('CLThanos', 380, 900, 40, 100, 40, 50),
-                // criarInimigo('Morderkaiser', 4000, 4000, 2, 2, 4000, 4000),
+                criarInimigo('Goblin Selvagem', 80, 120, 10, 20, 5, 10), // Inimigo fraco
+                criarInimigo('Ladrão', 100, 150, 15, 25, 10, 15), // Inimigo de dificuldade média
+                criarInimigo('Elfo', 120, 180, 20, 30, 15, 20), // Inimigo de dificuldade média
+                criarInimigo('Dragão de Fogo', 200, 300, 25, 35, 20, 30), // Inimigo forte
+                criarInimigo('Lorde das Sombras', 250, 350, 30, 40, 25, 35), // Inimigo muito forte
+                criarInimigo('Titanos', 300, 450, 35, 50, 30, 40), // Inimigo muito forte
+                criarInimigo('CLThanos', 400, 600, 40, 60, 35, 50), // Inimigo extremamente forte
             ];
         }
 
@@ -132,9 +144,9 @@ module.exports = {
 
         // Função para calcular a vida inicial do jogador com base na benção
         function calcularVidaInicial(benção) {
-            const vidaBase = 100;
-            if (benção === 'fraca') return Math.floor(vidaBase * 1.0);
-            if (benção === 'forte') return Math.floor(vidaBase * 1.7);
+            const vidaBase = 120;
+            if (benção === 'fraca') return Math.floor(vidaBase * 0.9);
+            if (benção === 'forte') return Math.floor(vidaBase * 1.5);
             return vidaBase; // Benção média (sem alteração)
         }
 
@@ -144,9 +156,9 @@ module.exports = {
 
         // Função para calcular a defesa inicial do jogador com base na benção
         function calcularDefesaInicial(benção) {
-            const defesaBase = 40;
-            if (benção === 'fraca') return Math.floor(defesaBase * 1.0);
-            if (benção === 'forte') return Math.floor(defesaBase * 1.7);
+            const defesaBase = 20;
+            if (benção === 'fraca') return Math.floor(defesaBase * 0.8);
+            if (benção === 'forte') return Math.floor(defesaBase * 1.5);
             return defesaBase; // Benção média (sem alteração)
         }
 
@@ -196,14 +208,6 @@ module.exports = {
 
         let turno = 0;
 
-        // Criar botão para avançar turno
-        const btnNextTurn = new ButtonBuilder()
-            .setCustomId('nextTurn')
-            .setLabel('Avançar Turno ⏩')
-            .setStyle(1); // 1 = PRIMARY
-
-        const row = new ActionRowBuilder().addComponents(btnNextTurn);
-
         // Função de combate
         const combate = async () => {
             const mensagemTurno = [
@@ -219,19 +223,34 @@ module.exports = {
                 .addFields(
                     { name: '💀 Inimigo', value: `**${inimigo.nome}**\nHP: ${inimigo.hp}\n⚔️ Ataque: ${inimigo.ataque}\n🛡️ Defesa: ${inimigo.defesa}`, inline: true },
                     { name: '🧑 Você', value: `HP: ${jogador.hp}\n🛡️ Defesa: ${jogador.defesa}\n💰 Coins: ${jogador.coins}`, inline: true },
-                    { name: '⚒️ Sua Arma', value: `**Espada:** ${userInventory['Espada de diamante'] > 0 ? '⚔️ Espada de Diamante' : '⚔️ Espada de Ferro'}\n**Dano:** ${calcularDano(bençãoAtual)}`, inline: false },
                     { name: '🌟 Benção da Deusa Haruka', value: `Nível de Benção: **${bençãoAtual}**`, inline: false },
                 )
-                .setFooter({ text: 'Clique no botão para avançar o turno!' })
+                .setFooter({ text: 'Clique no botão para avançar o turno ou usar uma poção!' })
                 .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
                 .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless');
 
             await interaction.editReply({ embeds: [embed], components: [row] });
 
-            const filter = (i) => i.customId === 'nextTurn' && i.user.id === interaction.user.id;
+            const filter = (i) => (i.customId === 'nextTurn' || i.customId === 'usePotion') && i.user.id === interaction.user.id;
             const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5 * 60 * 1000 }); // 5 Minutos
 
             collector.on('collect', async (i) => {
+                if (i.customId === 'usePotion') {
+                    if (userInventory['Poção de Vida'] > 0) {
+                        const cura = 50; // Quantidade de HP recuperada
+                        jogador.hp = Math.min(jogador.hp + cura, vidaJogador); // Não exceder a vida máxima
+                        userInventory['Poção de Vida'] -= 1; // Remove uma poção do inventário
+                        data[userId].inventory = userInventory; // Atualiza o inventário
+
+                        fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
+
+                        await i.reply({ content: `Você usou uma Poção de Vida e recuperou **${cura} HP**!`, ephemeral: true });
+                    } else {
+                        await i.reply({ content: 'Você não tem poções de vida suficientes!', ephemeral: true });
+                    }
+                    return; // Retorna para evitar a execução do código de ataque
+                }
+
                 const atacante = turno % 2 === 0 ? jogador : inimigo;
                 const defensor = turno % 2 === 0 ? inimigo : jogador;
 
