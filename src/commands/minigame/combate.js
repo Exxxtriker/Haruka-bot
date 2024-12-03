@@ -126,9 +126,9 @@ module.exports = {
         // Função para gerar a lista de inimigos
         function gerarInimigos() {
             return [
-                criarInimigo('Goblin Selvagem', 80, 120, 25, 45, 5, 10), // Inimigo fraco
-                criarInimigo('Ladrão', 100, 150, 35, 55, 10, 15), // Inimigo de dificuldade média
-                criarInimigo('Elfo', 120, 180, 35, 65, 15, 20), // Inimigo de dificuldade média
+                criarInimigo('Goblin Selvagem', 80, 120, 25, 45, 5, 20), // Inimigo fraco
+                criarInimigo('Ladrão', 100, 150, 35, 55, 10, 20), // Inimigo de dificuldade média
+                criarInimigo('Elfo', 120, 180, 35, 65, 15, 25), // Inimigo de dificuldade média
                 criarInimigo('Dragão de Fogo', 200, 300, 35, 65, 20, 30), // Inimigo forte
                 criarInimigo('Lorde das Sombras', 250, 350, 30, 65, 25, 35), // Inimigo muito forte
                 criarInimigo('Titanos', 300, 450, 35, 65, 30, 40), // Inimigo muito forte
