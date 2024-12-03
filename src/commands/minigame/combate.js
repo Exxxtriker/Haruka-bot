@@ -1,17 +1,25 @@
-/* eslint-disable no-use-before-define */
+/* eslint-disable no-plusplus */
 /* eslint-disable max-len */
-
 const {
     SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder,
 } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const {
+    gerarInimigos,
+    calcularVidaInicial,
+    calcularDefesaInicial,
+    calcularDano,
+    getBenção,
+    getRandomNumber,
+    ganharLoot,
+} = require('../../utils/datacombat'); // Importando as funções
 
 const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 const { STAMINA_RECHARGE_TIME, COMBAT_COST } = require('../../utils/config');
 const dataManager = require('../../utils/dataManager');
 
-const activeUsers = new Set(); // Conjunto para rastrear usuários em combate
+const activeUsers = new Set();
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,39 +28,30 @@ module.exports = {
     async execute(interaction) {
         const userId = interaction.user.id;
 
-        // Verificar se o usuário já está em combate
         if (activeUsers.has(userId)) {
             return interaction.reply({ content: 'Você já está em combate! Aguarde até que o combate atual termine.', ephemeral: true });
         }
 
-        activeUsers.add(userId); // Adiciona o usuário ao conjunto de usuários ativos
+        activeUsers.add(userId);
 
-        // Carregar os dados do jogo
         let data = dataManager.getGameData();
 
-        // Verificar se o usuário existe nos dados carregados
         if (!data[userId]) {
-            // Se o usuário não existir, inicializar os dados dele
             dataManager.initializeUser(userId);
-            // Carregar novamente os dados após a inicialização
             data = dataManager.getGameData();
         }
 
-        // Obter os dados do usuário
         const userData = data[userId];
-
         const currentTime = Date.now();
         const lastInteractionTime = userData.lastInteraction || 0;
         const timeDifference = currentTime - lastInteractionTime;
 
-        // Atualizar estamina após o tempo de recarga
         if (timeDifference >= STAMINA_RECHARGE_TIME) {
-            userData.stamina = Math.min(userData.stamina + 15, 15); // Max estamina = 15
+            userData.stamina = Math.min(userData.stamina + 15, 15);
             userData.lastInteraction = currentTime;
             fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
         }
 
-        // Verificar se jogador tem estamina suficiente
         if (!dataManager.hasSufficientStamina(userId)) {
             const timeRemaining = dataManager.getTimeRemaining(userId, STAMINA_RECHARGE_TIME);
             const embed = new EmbedBuilder()
@@ -63,22 +62,17 @@ module.exports = {
                 .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                 .setTimestamp();
 
-            activeUsers.delete(userId); // Remove o usuário do conjunto se não tiver estamina
+            activeUsers.delete(userId);
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
-        // Deduzir estamina pelo combate
         const newStamina = Math.max(0, userData.stamina - COMBAT_COST);
         dataManager.updateStamina(userId, newStamina);
-
-        // Atualizar o tempo de última interação
-        dataManager.getTimeRemaining(userId, currentTime);
-
         userData.stamina = newStamina;
         fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
         if (!userData || !userData.inventory) {
-            activeUsers.delete(userId); // Remove o usuário do conjunto se não tiver inventário
+            activeUsers.delete(userId);
             return interaction.reply('Seu inventário está vazio ou você ainda não tem dados registrados!');
         }
 
@@ -97,72 +91,27 @@ module.exports = {
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Aguardo você no campo de batalha!' })
                 .setTimestamp();
-            activeUsers.delete(userId); // Remove o usuário do conjunto se não tiver equipamento
+            activeUsers.delete(userId);
             return interaction.reply({ embeds: [embed], ephemeral: true });
         }
 
-        // Criar botão para usar poção de vida
         const btnUsePotion = new ButtonBuilder()
             .setCustomId('usePotion')
             .setLabel('Usar Poção de Vida 🍷')
-            .setStyle(4); // 4 = DANGER
+            .setStyle(4);
 
         const btnNextTurn = new ButtonBuilder()
             .setCustomId('nextTurn')
             .setLabel('Avançar Turno ⏩')
-            .setStyle(1); // 1 = PRIMARY
+            .setStyle(1);
 
         const row = new ActionRowBuilder().addComponents(btnNextTurn, btnUsePotion);
 
-        function criarInimigo(nome, hpMin, hpMax, ataqueMin, ataqueMax, defesaMin, defesaMax) {
-            return {
-                nome,
-                hp: getRandomNumber(hpMin, hpMax),
-                ataque: getRandomNumber(ataqueMin, ataqueMax),
-                defesa: getRandomNumber(defesaMin, defesaMax),
-            };
-        }
-
-        // Função para gerar a lista de inimigos
-        function gerarInimigos() {
-            return [
-                criarInimigo('Goblin Selvagem', 80, 120, 25, 45, 5, 20), // Inimigo fraco
-                criarInimigo('Ladrão', 100, 150, 35, 55, 10, 20), // Inimigo de dificuldade média
-                criarInimigo('Elfo', 120, 180, 35, 65, 15, 25), // Inimigo de dificuldade média
-                criarInimigo('Dragão de Fogo', 200, 300, 35, 65, 20, 30), // Inimigo forte
-                criarInimigo('Lorde das Sombras', 250, 350, 30, 65, 25, 35), // Inimigo muito forte
-                criarInimigo('Titanos', 300, 450, 35, 65, 30, 40), // Inimigo muito forte
-                criarInimigo('CLThanos', 400, 600, 40, 75, 35, 50), // Inimigo extremamente forte
-            ];
-        }
-
-        // Gerar a lista de inimigos
         const inimigos = gerarInimigos();
-
-        // Escolher um inimigo aleatório
         const inimigo = inimigos[Math.floor(Math.random() * inimigos.length)];
 
-        // Função para calcular a vida inicial do jogador com base na benção
-        function calcularVidaInicial(benção) {
-            const vidaBase = 120;
-            if (benção === 'fraca') return Math.floor(vidaBase * 0.9);
-            if (benção === 'forte') return Math.floor(vidaBase * 1.5);
-            return vidaBase; // Benção média (sem alteração)
-        }
-
-        // Definir estatísticas do jogador
-        const bençãoAtual = getBenção(); // Obter a benção da deusa Haruka
+        const bençãoAtual = getBenção();
         const vidaJogador = calcularVidaInicial(bençãoAtual);
-
-        // Função para calcular a defesa inicial do jogador com base na benção
-        function calcularDefesaInicial(benção) {
-            const defesaBase = 20;
-            if (benção === 'fraca') return Math.floor(defesaBase * 0.8);
-            if (benção === 'forte') return Math.floor(defesaBase * 1.5);
-            return defesaBase; // Benção média (sem alteração)
-        }
-
-        // Definir estatísticas do jogador
         const defesaBase = calcularDefesaInicial(bençãoAtual);
 
         const jogador = {
@@ -172,50 +121,15 @@ module.exports = {
             coins: userData.coins || 0,
         };
 
-        // Função para calcular o dano com base na espada e na bênção
-        const calcularDano = (benção) => {
-            let danoBaseMin = 0;
-            let danoBaseMax = 0;
-            if (userInventory['Espada de diamante'] > 0) {
-                danoBaseMin = 25; // Dano mínimo da espada de diamante
-                danoBaseMax = 95; // Dano máximo da espada de diamante
-            } else if (userInventory['Espada de ferro'] > 0) {
-                danoBaseMin = 15; // Dano mínimo da espada de ferro
-                danoBaseMax = 75; // Dano máximo da espada de ferro
-            }
-
-            // Modificar o dano baseado na bênção
-            const dano = getRandomNumber(danoBaseMin, danoBaseMax); // Dano aleatório entre o mínimo e o máximo
-
-            if (benção === 'fraca') return Math.floor(dano * 0.8); // Dano reduzido
-            if (benção === 'forte') return Math.floor(dano * 1.7); // Dano aumentado
-            return dano; // Bênção média (sem alteração)
-        };
-
-        // Função para obter benção aleatória
-        function getBenção() {
-            const benções = ['fraca', 'média', 'forte'];
-            return benções[Math.floor(Math.random() * benções.length)];
-        }
-
-        // Função para gerar um número aleatório dentro de um intervalo
-        function getRandomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
-        // Adiar a resposta da interação
         await interaction.deferReply();
-
         let turno = 0;
 
-        // Função de combate
         const combate = async () => {
             const mensagemTurno = [
                 `${inimigo.nome} atacou ${jogador.nome}!`,
                 `${jogador.nome} atacou o ${inimigo.nome}!`,
             ];
 
-            // Enviar a mensagem inicial
             const embed = new EmbedBuilder()
                 .setColor('#ff4500')
                 .setTitle('⚔️ Batalha Épica! ⚔️')
@@ -232,15 +146,15 @@ module.exports = {
             await interaction.editReply({ embeds: [embed], components: [row] });
 
             const filter = (i) => (i.customId === 'nextTurn' || i.customId === 'usePotion') && i.user.id === interaction.user.id;
-            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5 * 60 * 1000 }); // 5 Minutos
+            const collector = interaction.channel.createMessageComponentCollector({ filter, time: 5 * 60 * 1000 });
 
             collector.on('collect', async (i) => {
                 if (i.customId === 'usePotion') {
                     if (userInventory['Poção de Vida'] > 0) {
-                        const cura = 50; // Quantidade de HP recuperada
-                        jogador.hp = Math.min(jogador.hp + cura, vidaJogador); // Não exceder a vida máxima
-                        userInventory['Poção de Vida'] -= 1; // Remove uma poção do inventário
-                        data[userId].inventory = userInventory; // Atualiza o inventário
+                        const cura = 50;
+                        jogador.hp = Math.min(jogador.hp + cura, vidaJogador);
+                        userInventory['Poção de Vida'] -= 1;
+                        data[userId].inventory = userInventory;
 
                         fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
@@ -248,22 +162,20 @@ module.exports = {
                     } else {
                         await i.reply({ content: 'Você não tem poções de vida suficientes!', ephemeral: true });
                     }
-                    return; // Retorna para evitar a execução do código de ataque
+                    return;
                 }
 
                 const atacante = turno % 2 === 0 ? jogador : inimigo;
                 const defensor = turno % 2 === 0 ? inimigo : jogador;
 
-                // Calcular dano para o jogador e o inimigo
-                const danoJogador = calcularDano(bençãoAtual);
-                const danoInimigo = getRandomNumber(inimigo.ataque - defensor.defesa, inimigo.ataque); // Dano aleatório do inimigo
+                const danoJogador = calcularDano(userInventory, bençãoAtual);
+                const danoInimigo = getRandomNumber(inimigo.ataque - defensor.defesa, inimigo.ataque);
 
-                // Calcular dano
                 const dano = Math.max(0, atacante === jogador ? danoJogador - defensor.defesa : danoInimigo - defensor.defesa);
                 defensor.hp -= dano;
 
                 if (jogador.hp <= 0) {
-                    jogador.coins = Math.max(jogador.coins - 50, 0); // Garante que as moedas não fiquem negativas
+                    jogador.coins = Math.max(jogador.coins - 50, 0);
                     data[userId].coins = jogador.coins;
                     fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
                     await i.update({
@@ -277,11 +189,10 @@ module.exports = {
                         ],
                         components: [],
                     });
-                    activeUsers.delete(userId); // Remove o usuário do conjunto após a derrota
+                    activeUsers.delete(userId);
                     collector.stop();
                 } else if (inimigo.hp <= 0) {
-                    const loot = ganharLoot();
-                    // Atualize as moedas
+                    const loot = ganharLoot(userData);
                     jogador.coins += loot.coins;
                     data[userId].coins = jogador.coins;
                     fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
@@ -298,10 +209,9 @@ module.exports = {
                         ],
                         components: [],
                     });
-                    activeUsers.delete(userId); // Remove o usuário do conjunto após a vitória
+                    activeUsers.delete(userId);
                     collector.stop();
                 } else {
-                    // eslint-disable-next-line no-plusplus
                     turno++;
                     await i.update({
                         embeds: [
@@ -320,50 +230,11 @@ module.exports = {
             collector.on('end', (_, reason) => {
                 if (reason === 'time') {
                     interaction.followUp('Você fugiu do combate, covarde !!!');
-                    activeUsers.delete(userId); // Remove o usuário do conjunto após o tempo esgotado
+                    activeUsers.delete(userId);
                 }
             });
         };
 
-        // Função para ganhar loot e atualizar o inventário
-        function ganharLoot() {
-            const itens = ['Diamante', 'Ouro', 'Ferro', 'Pedra', 'Chave [NULL]', 'Espada de ferro'];
-            const itemChances = {
-                Diamante: 5, // 5% de chance
-                Ouro: 20, // 20% de chance
-                Ferro: 30, // 30% de chance
-                Pedra: 45, // 45% de chance
-                'Chave [NULL]': 1, // 1% de chance
-                'Espada de ferro': 10, // 10% de chance
-            };
-
-            // Função para selecionar um item com base nas chances
-            function selectItem() {
-                const randomNum = Math.random() * 100; // Gera um número aleatório entre 0 e 100
-                let cumulativeChance = 0;
-
-                for (const item of itens) {
-                    cumulativeChance += itemChances[item];
-                    if (randomNum < cumulativeChance) {
-                        return item; // Retorna o item selecionado
-                    }
-                }
-            }
-
-            const itemAleatorio = selectItem(); // Seleciona o item
-            const quantity = Math.floor(Math.random() * 5) + 1; // Define a quantidade
-            const coins = Math.floor(Math.random() * 30) + 20; // Gera moedas
-
-            // Atualizar apenas o inventário aqui
-            if (!userData.inventory[itemAleatorio]) {
-                userData.inventory[itemAleatorio] = 0; // Inicializa o item se não existir
-            }
-            userData.inventory[itemAleatorio] += quantity;
-
-            data[userId].inventory = userData.inventory;
-
-            return { item: itemAleatorio, quantity, coins };
-        }
         await combate();
         fs.writeFileSync(itemsPath, JSON.stringify(dataManager.getGameData(), null, 2));
     },
