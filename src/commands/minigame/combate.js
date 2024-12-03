@@ -150,10 +150,10 @@ module.exports = {
 
             collector.on('collect', async (i) => {
                 if (i.customId === 'usePotion') {
-                    if (userInventory['Poção de Vida'] > 0) {
+                    if (userInventory['Poção de vida'] > 0) {
                         const cura = 50;
                         jogador.hp = Math.min(jogador.hp + cura, vidaJogador);
-                        userInventory['Poção de Vida'] -= 1;
+                        userInventory['Poção de vida'] -= 1;
                         data[userId].inventory = userInventory;
 
                         fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
