@@ -227,9 +227,20 @@ module.exports = {
                 }
             });
 
-            collector.on('end', (_, reason) => {
+            collector.on('end', async (_, reason) => {
                 if (reason === 'time') {
-                    interaction.followUp('Você fugiu do combate, covarde !!!');
+                    // Define um valor aleatório de moedas a ser perdido, por exemplo, entre 10 e 80
+                    const valorPerdido = getRandomNumber(10, 80); // Você pode ajustar o intervalo conforme necessário
+
+                    // Atualiza a quantidade de moedas do jogador
+                    jogador.coins = Math.max(jogador.coins - valorPerdido, 0); // Certifique-se de não permitir que as moedas fiquem negativas
+                    data[userId].coins = jogador.coins; // Atualiza os dados do usuário
+
+                    // Salva as alterações no arquivo JSON
+                    fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
+
+                    // Envia uma mensagem informando ao usuário sobre a fuga e a perda de moedas
+                    await interaction.followUp(`<@${userId}>, você fugiu do combate! Ao fugir, sua bolsa rasgou e você perdeu **${valorPerdido} moedas**.`);
                     activeUsers.delete(userId);
                 }
             });
