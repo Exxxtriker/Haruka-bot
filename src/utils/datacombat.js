@@ -12,25 +12,25 @@ function criarInimigo(nome, hpMin, hpMax, ataqueMin, ataqueMax, defesaMin, defes
 
 function gerarInimigos() {
     return [
-        criarInimigo('Goblin Selvagem', 80, 120, 25, 45, 5, 20),
-        criarInimigo('Ladrão', 100, 150, 35, 55, 10, 20),
-        criarInimigo('Elfo', 120, 180, 35, 65, 15, 25),
-        criarInimigo('Dragão de Fogo', 200, 300, 35, 65, 20, 30),
-        criarInimigo('Lorde das Sombras', 250, 350, 30, 65, 25, 35),
-        criarInimigo('Titanos', 300, 450, 35, 65, 30, 40),
-        criarInimigo('CLThanos', 400, 600, 40, 75, 35, 50),
+        criarInimigo('Goblin Selvagem', 100, 150, 30, 50, 10, 20), // Aumentado
+        criarInimigo('Ladrão', 120, 180, 40, 60, 15, 25), // Aumentado
+        criarInimigo('Elfo', 150, 220, 45, 70, 20, 30), // Aumentado
+        criarInimigo('Dragão de Fogo', 300, 400, 50, 80, 25, 35), // Aumentado
+        criarInimigo('Lorde das Sombras', 350, 500, 55, 90, 30, 40), // Aumentado
+        criarInimigo('Titanos', 400, 600, 60, 100, 35, 45), // Aumentado
+        criarInimigo('CLThanos', 500, 800, 70, 120, 40, 50), // Aumentado
     ];
 }
 
 function calcularVidaInicial(benção) {
-    const vidaBase = 120;
+    const vidaBase = 200; // Aumentado para 200
     if (benção === 'fraca') return Math.floor(vidaBase * 0.9);
     if (benção === 'forte') return Math.floor(vidaBase * 1.2);
     return vidaBase;
 }
 
 function calcularDefesaInicial(benção) {
-    const defesaBase = 20;
+    const defesaBase = 30; // Aumentado para 30
     if (benção === 'fraca') return Math.floor(defesaBase * 0.8);
     if (benção === 'forte') return Math.floor(defesaBase * 1.2);
     return defesaBase;
@@ -40,11 +40,11 @@ function calcularDano(userInventory, benção) {
     let danoBaseMin = 0;
     let danoBaseMax = 0;
     if (userInventory['Espada de diamante'] > 0) {
-        danoBaseMin = 25;
-        danoBaseMax = 95;
+        danoBaseMin = 30; // Aumentado para 30
+        danoBaseMax = 100; // Aumentado para 100
     } else if (userInventory['Espada de ferro'] > 0) {
-        danoBaseMin = 15;
-        danoBaseMax = 75;
+        danoBaseMin = 20; // Aumentado para 20
+        danoBaseMax = 80; // Aumentado para 80
     }
 
     const dano = getRandomNumber(danoBaseMin, danoBaseMax);
