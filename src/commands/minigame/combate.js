@@ -227,7 +227,7 @@ module.exports = {
                 )
                 .setFooter({ text: 'Clique no botão para avançar o turno ou usar uma poção!' })
                 .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
-                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless');
+                .setThumbnail('https://static.wikia.nocookie.net/a-ordem-rpg/images/9/92/S%C3%ADmbolo_de_Transcender.png/revision/latest?cb=20221025002006&path-prefix=pt-br');
 
             await interaction.editReply({ embeds: [embed], components: [row] });
 
@@ -272,7 +272,7 @@ module.exports = {
                                 .setColor('#ff0000')
                                 .setTitle('☠️ Você foi derrotado! ☠️')
                                 .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
-                                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless')
+                                .setThumbnail('https://static.wikia.nocookie.net/a-ordem-rpg/images/9/92/S%C3%ADmbolo_de_Transcender.png/revision/latest?cb=20221025002006&path-prefix=pt-br')
                                 .setDescription(`O terrível **${inimigo.nome}** foi mais forte...\n\nVocê perdeu **50 coins**. Não desista, melhore suas habilidades e volte à luta!`),
                         ],
                         components: [],
@@ -293,7 +293,7 @@ module.exports = {
                                 .setTitle('🎉 Vitória! 🎉')
                                 .setDescription(`Você derrotou o **${inimigo.nome}**!\n\nVocê recebeu **${loot.coins} coins** e **${loot.quantity}x ${loot.item}**!`)
                                 .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
-                                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless')
+                                .setThumbnail('https://static.wikia.nocookie.net/a-ordem-rpg/images/9/92/S%C3%ADmbolo_de_Transcender.png/revision/latest?cb=20221025002006&path-prefix=pt-br')
                                 .addFields({ name: '🏆 Loot', value: `**${loot.quantity}x ${loot.item}**`, inline: false }),
                         ],
                         components: [],
@@ -309,7 +309,7 @@ module.exports = {
                                 .setColor(turno % 2 === 0 ? '#00bfff' : '#ff6347')
                                 .setTitle('⚔️ Turno em Progresso!')
                                 .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
-                                .setThumbnail('https://media.discordapp.net/attachments/1310325661839392889/1311091475039260743/FMA_Human_Transmutation_Circle.png?ex=67479896&is=67464716&hm=9b76122a5a7614e78819c61a0971b82e8cfcedfe1e8272b10816d055d3098d8e&=&format=webp&quality=lossless')
+                                .setThumbnail('https://static.wikia.nocookie.net/a-ordem-rpg/images/9/92/S%C3%ADmbolo_de_Transcender.png/revision/latest?cb=20221025002006&path-prefix=pt-br')
                                 .setDescription(`☠️${mensagemTurno[turno % 2]}\nDano causado: **${dano}**\n💌 HPs:\n⚔️${jogador.nome}: ${jogador.hp} HP\n\n☠️${inimigo.nome}: ${inimigo.hp} HP`),
                         ],
                         components: [row],
