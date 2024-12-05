@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const dataManager = require('../../utils/dataManager');
 
@@ -58,10 +59,6 @@ module.exports = {
             }
 
             // Remover um tesouro do inventário
-            if (typeof dataManager.removeItemFromInventory !== 'function') {
-                console.error('removeItemFromInventory não está definida no dataManager');
-                return interaction.reply({ content: '❌ Ocorreu um erro interno. Tente novamente mais tarde!', ephemeral: true });
-            }
             dataManager.removeItemFromInventory(userId, 'Tesouro', 1);
 
             // Gerar um item aleatório como recompensa
@@ -71,14 +68,17 @@ module.exports = {
             // Adicionar o item ao inventário do usuário
             dataManager.addItemToInventory(userId, reward, rewardQuantity);
 
+            // Atualizar a quantidade de tesouros restantes
+            const remainingTreasures = user.inventory.Tesouro - 1;
+
             // Embed de sucesso
             const embed = new EmbedBuilder()
                 .setColor('#FFD700') // Ouro
                 .setTitle('🏆 Tesouro aberto!')
                 .setDescription(`Você abriu um tesouro e encontrou **${rewardQuantity}x ${reward}**!`)
                 .addFields(
-                    { name: 'Tesouros restantes', value: `${user.inventory.Tesouro - 1}`, inline: true },
-                    { name: 'Inventário atualizado', value: `${reward}: ${user.inventory[reward] || 0 + rewardQuantity}`, inline: true },
+                    { name: 'Tesouros restantes', value: `${remainingTreasures}`, inline: true },
+                    { name: 'Inventário atualizado', value: `${reward}: ${user.inventory[reward] ? user.inventory[reward] + rewardQuantity : rewardQuantity}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
                 .setFooter({ text: 'Continue explorando para encontrar mais tesouros!' })
