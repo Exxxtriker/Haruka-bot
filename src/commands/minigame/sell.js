@@ -16,7 +16,23 @@ module.exports = {
             .addStringOption((option) => option
                 .setName('item')
                 .setDescription('O item que deseja vender')
-                .setRequired(true))
+                .setRequired(true)
+                .addChoices(
+                    { name: 'Pedra', value: 'Pedra' },
+                    { name: 'Madeira', value: 'Madeira' },
+                    { name: 'Ferro', value: 'Ferro' },
+                    { name: 'Ouro', value: 'Ouro' },
+                    { name: 'Diamante', value: 'Diamante' },
+                    { name: 'Isca', value: 'Isca' },
+                    { name: 'Linha', value: 'Linha' },
+                    { name: 'Machado', value: 'Machado' },
+                    { name: 'Picareta', value: 'Picareta' },
+                    { name: 'Espada de pedra', value: 'Espada de pedra' },
+                    { name: 'Espada de ferro', value: 'Espada de ferro' },
+                    { name: 'Espada de diamante', value: 'Espada de diamante' },
+                    { name: 'Vara de pesca', value: 'Vara de pesca' },
+                    { name: 'Poção de vida', value: 'Poção de vida' },
+                ))
             .addIntegerOption((option) => option
                 .setName('quantidade')
                 .setDescription('Quantidade que deseja vender')

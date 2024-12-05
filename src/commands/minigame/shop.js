@@ -6,6 +6,15 @@ const path = require('path');
 const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 const shopItemsPath = path.join(__dirname, '../../utils/data/shopItems.json');
 
+let shopItems;
+
+// Carregar os itens da loja uma vez ao iniciar o módulo
+try {
+    shopItems = JSON.parse(fs.readFileSync(shopItemsPath, 'utf8'));
+} catch (error) {
+    console.error('Erro ao ler o arquivo de itens da loja:', error);
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('shop')
@@ -16,7 +25,23 @@ module.exports = {
             .addStringOption((option) => option
                 .setName('item')
                 .setDescription('O item que deseja comprar')
-                .setRequired(true))
+                .setRequired(true)
+                .addChoices(
+                    { name: 'Pedra', value: 'Pedra' },
+                    { name: 'Madeira', value: 'Madeira' },
+                    { name: 'Ferro', value: 'Ferro' },
+                    { name: 'Ouro', value: 'Ouro' },
+                    { name: 'Diamante', value: 'Diamante' },
+                    { name: 'Isca', value: 'Isca' },
+                    { name: 'Linha', value: 'Linha' },
+                    { name: 'Machado', value: 'Machado' },
+                    { name: 'Picareta', value: 'Picareta' },
+                    { name: 'Espada de pedra', value: 'Espada de pedra' },
+                    { name: 'Espada de ferro', value: 'Espada de ferro' },
+                    { name: 'Espada de diamante', value: 'Espada de diamante' },
+                    { name: 'Vara de pesca', value: 'Vara de pesca' },
+                    { name: 'Poção de vida', value: 'Poção de vida' },
+                ))
             .addIntegerOption((option) => option
                 .setName('quantidade')
                 .setDescription('Quantidade que deseja comprar')
@@ -26,15 +51,6 @@ module.exports = {
             .setDescription('Mostra a lista de itens disponíveis para compra')),
     async execute(interaction) {
         const subcommand = interaction.options.getSubcommand();
-
-        // Carregar os itens da loja
-        let shopItems;
-        try {
-            shopItems = JSON.parse(fs.readFileSync(shopItemsPath, 'utf8'));
-        } catch (error) {
-            console.error('Erro ao ler o arquivo de itens da loja:', error);
-            return interaction.reply('Erro ao carregar os itens da loja. Tente novamente mais tarde.');
-        }
 
         if (subcommand === 'comprar') {
             const userId = interaction.user.id;
@@ -73,7 +89,7 @@ module.exports = {
                 // Salvar os dados atualizados no arquivo
                 fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
             } catch (error) {
-                console.error('Erro ao salvar os dados no arquivo:', error);
+                console.error(' Erro ao salvar os dados no arquivo:', error);
                 return interaction.reply('Erro ao salvar os dados. Tente novamente mais tarde.');
             }
 
@@ -87,7 +103,7 @@ module.exports = {
                     { name: 'Novo item no inventário', value: `**${item}**: ${user.inventory[item]}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
-                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }); // Logo da loja (exemplo .setTimestamp();
+                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }); // Logo da loja
 
             // Responder com a embed
             await interaction.reply({ embeds: [embed] });
@@ -100,7 +116,7 @@ module.exports = {
                 .addFields(
                     ...Object.entries(shopItems).map(([item, price]) => ({ name: item, value: `${price} moedas`, inline: true })),
                 )
-                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }) // Logo da loja (exemplo)
+                .setFooter({ text: 'Haruka-Shop', iconURL: 'https://images-ext-1.discordapp.net/external/clGiAls8V8fs509nd0OwBkqfI-r72ID0eQFXDnBIlLk/%3Fcb%3D20200304213920/https/static.wikia.nocookie.net/minecraft_gamepedia/images/0/0f/Netherite_Sword_JE2_BE2.png/revision/latest?format=webp&width=143&height=143' }) // Logo da loja
                 .setTimestamp();
 
             // Responder com a embed da lista
