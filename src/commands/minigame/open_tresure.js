@@ -71,6 +71,11 @@ module.exports = {
             // Atualizar a quantidade de tesouros restantes
             const remainingTreasures = user.inventory.Tesouro - 1;
 
+            // Se não houver mais tesouros, definir a quantidade como 0
+            if (remainingTreasures <= 0) {
+                user.inventory.Tesouro = 0; // Define a quantidade de tesouros como 0
+            }
+
             // Embed de sucesso
             const embed = new EmbedBuilder()
                 .setColor('#FFD700') // Ouro
