@@ -15,5 +15,6 @@
     "Pedra refinada": 10,
     "Ferro refinado": 40,
     "Ouro refinado": 60,
-    "Diamante refinado": 90
+    "Diamante refinado": 90,
+    "Chave [NULL]": 10000
 }

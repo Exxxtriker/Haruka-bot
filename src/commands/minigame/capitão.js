@@ -9,9 +9,9 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 const shopItems = {
     'Peixe comum': 10, // Preço do peixe comum
     'Peixe raro': 50, // Preço do peixe raro
-    Tesouro: 100, // Preço do tesouro
-    'Peixe lendário': 200, // Preço do peixe lendário
-    'Peixe mítico': 500, // Preço do peixe mítico
+    Tesouro: 300, // Preço do tesouro
+    'Peixe lendário': 300, // Preço do peixe lendário
+    'Peixe mítico': 10000, // Preço do peixe mítico
 };
 
 module.exports = {
