@@ -35,6 +35,7 @@ module.exports = {
                     { name: 'Espada de ferro', value: 'Espada de ferro' },
                     { name: 'Espada de diamante', value: 'Espada de diamante' },
                     { name: 'Vara de pesca', value: 'Vara de pesca' },
+                    { name: 'Chave [NULL]', value: 'Chave [NULL]' },
                     { name: 'Poção de vida', value: 'Poção de vida' },
                 ))
             .addIntegerOption((option) => option
