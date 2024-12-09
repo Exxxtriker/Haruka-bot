@@ -1,6 +1,6 @@
 {
   "290336401906728961": {
-    "coins": 17147,
+    "coins": 17152,
     "inventory": {
       "Madeira": 4,
       "Picareta": 1,
@@ -14,19 +14,24 @@
       "Graveto": 0,
       "Vara de pesca": 1,
       "Isca": 0,
-      "Ouro refinado": 38,
-      "Pedra": 21,
+      "Ouro refinado": 46,
+      "Pedra": 35,
       "Peixe comum": 9,
-      "Peixe raro": 2
+      "Peixe raro": 2,
+      "Diamante refinado": 10,
+      "Ferro": 2,
+      "Ouro": 5,
+      "Ferro refinado": 7,
+      "Diamante": 3
     },
     "stamina": 0,
-    "lastInteraction": 1733714590389
+    "lastInteraction": 1733774413618
   },
   "424330127036645386": {
     "coins": 17148,
     "inventory": {
       "Madeira": 70,
-      "Ouro": 65,
+      "Ouro": 66,
       "Pedra": 193,
       "Diamante": 105,
       "Ferro": 131,
@@ -34,21 +39,21 @@
       "Machado": 1,
       "Vara de pesca": 1,
       "Espada de diamante": 1,
-      "Isca": 1014,
-      "Peixe comum": 474,
+      "Isca": 1007,
+      "Peixe comum": 477,
       "Ouro refinado": 50,
       "Pedra refinada": 71,
       "Ferro refinado": 51,
-      "Linha": 84,
-      "Joia": 13,
+      "Linha": 85,
+      "Joia": 16,
       "Peixe mítico": 1,
       "Poção de vida": 0,
-      "Peixe raro": 27,
-      "Peixe lendário": 6,
-      "Tesouro": 2
+      "Peixe raro": 29,
+      "Peixe lendário": 7,
+      "Tesouro": 0
     },
-    "stamina": 7,
-    "lastInteraction": 1733771737809
+    "stamina": 0,
+    "lastInteraction": 1733774371814
   },
   "335012394226941966": {
     "coins": 11612,
@@ -156,9 +161,9 @@
       "Tabua": 4,
       "Graveto": 1,
       "Anzol": 0,
-      "Linha": 93,
+      "Linha": 96,
       "Vara de pesca": 1,
-      "Isca": 583,
+      "Isca": 571,
       "Espada de pedra": 0,
       "Espada de ferro": 0,
       "Espada de diamante": 1,
@@ -169,16 +174,16 @@
       "Ouro": 34,
       "Joia": 5,
       "Pedra": 12,
-      "Diamante": 16,
+      "Diamante": 20,
       "Chave [NULL]": 2,
-      "Peixe comum": 67,
+      "Peixe comum": 76,
       "Peixe lendário": 2,
       "Peixe raro": 6,
       "Machado": 1,
       "Tesouro": 0
     },
-    "stamina": 13,
-    "lastInteraction": 1733773005614
+    "stamina": 0,
+    "lastInteraction": 1733774387603
   },
   "318542326366470144": {
     "coins": 16792,
