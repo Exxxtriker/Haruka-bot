@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cls && npm i && node slashBuilder.js && nodemon app.js --ignore C:/Users/Exxtr/Documents/Haruka-bot/src/utils/datagame.json"
+    "start": "cls && npm i && node slashBuilder.js && nodemon app.js --ignore datagame.json"
   },
   "keywords": [],
   "author": "",
