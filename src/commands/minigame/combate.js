@@ -37,7 +37,7 @@ module.exports = {
         let data = dataManager.getGameData();
 
         if (!data[userId]) {
-            dataManager.initializeUser(userId);
+            dataManager.initializeUser (userId);
             data = dataManager.getGameData();
         }
 
@@ -220,7 +220,7 @@ module.exports = {
                                 .setTitle('⚔️ Turno em Progresso!')
                                 .setImage('https://media.discordapp.net/attachments/1310325661839392889/1311091543020666900/i580020.png?ex=674798a6&is=67464726&hm=0b8f80ec7e91b7e57d18eaaae2b61a87c0c5105e0ade8456a0f69d61e1fb6253&=&format=webp&quality=lossless')
                                 .setThumbnail('https://static.wikia.nocookie.net/a-ordem-rpg/images/9/92/S%C3%ADmbolo_de_Transcender.png/revision/latest?cb=20221025002006&path-prefix=pt-br')
-                                .setDescription(`☠️${mensagemTurno[turno % 2]}\nDano causado: **${dano}**\n💌 HPs:\n⚔️${jogador.nome}: ${jogador.hp} HP\n\n☠️${inimigo.nome}: ${inimigo.hp} HP`),
+                                .setDescription(`☠️${mensagemTurno[turno % 2]}\nDano causado: **${dano}** \n💌 HPs:\n⚔️${jogador.nome}: ${jogador.hp} HP\n\n☠️${inimigo.nome}: ${inimigo.hp} HP`),
                         ],
                         components: [row],
                     });
@@ -229,17 +229,11 @@ module.exports = {
 
             collector.on('end', async (_, reason) => {
                 if (reason === 'time') {
-                    // Define um valor aleatório de moedas a ser perdido, por exemplo, entre 10 e 80
-                    const valorPerdido = getRandomNumber(10, 80); // Você pode ajustar o intervalo conforme necessário
-
-                    // Atualiza a quantidade de moedas do jogador
-                    jogador.coins = Math.max(jogador.coins - valorPerdido, 0); // Certifique-se de não permitir que as moedas fiquem negativas
-                    data[userId].coins = jogador.coins; // Atualiza os dados do usuário
-
-                    // Salva as alterações no arquivo JSON
+                    const valorPerdido = getRandomNumber(10, 80);
+                    jogador.coins = Math.max(jogador.coins - valorPerdido, 0);
+                    data[userId].coins = jogador.coins;
                     fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
-                    // Envia uma mensagem informando ao usuário sobre a fuga e a perda de moedas
                     await interaction.followUp(`<@${userId}>, você fugiu do combate! Ao fugir, sua bolsa rasgou e você perdeu **${valorPerdido} moedas**.`);
                     activeUsers.delete(userId);
                 }
