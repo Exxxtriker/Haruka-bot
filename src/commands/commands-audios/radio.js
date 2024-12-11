@@ -7,7 +7,8 @@ const { spawn } = require('child_process');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('radio')
-        .setDescription('Conecta ao canal de voz e reproduz o áudio do desktop do host'),
+        .setDescription('Conecta ao canal de voz e reproduz o áudio do desktop do host')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         if (interaction.user.id !== '335012394226941966') {

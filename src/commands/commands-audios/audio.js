@@ -11,7 +11,8 @@ module.exports = {
         .setDescription('Toca um áudio específico de uma pasta na call (01 / 23)')
         .addStringOption((option) => option.setName('audio')
             .setDescription('Escolha o áudio para tocar (sem extensão)')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         // Captura qualquer erro que ocorra durante a execução do comando
