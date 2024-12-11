@@ -3,12 +3,21 @@ const path = require('path');
 
 // Função para ler as configurações de um arquivo JSON
 function readConfig() {
-    const configPath = path.join(__dirname, 'config.json'); // Certifique-se de que o caminho do arquivo JSON esteja correto
+    // Ajuste o caminho absoluto para o arquivo config.json
+    const configPath = path.resolve(__dirname, '..', 'commands', 'presence.stream', 'config.json');
+
     if (fs.existsSync(configPath)) {
-        const data = fs.readFileSync(configPath);
-        return JSON.parse(data);
+        try {
+            const data = fs.readFileSync(configPath, 'utf-8');
+            return JSON.parse(data);
+        } catch (error) {
+            console.error('❌ Erro ao ler o arquivo config.json:', error.message);
+            return {};
+        }
+    } else {
+        console.error('❌ Arquivo config.json não encontrado no caminho:', configPath);
+        return {};
     }
-    return {}; // Retorna um objeto vazio se o arquivo não for encontrado
 }
 
 module.exports = { readConfig };

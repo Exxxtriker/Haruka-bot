@@ -8,16 +8,16 @@
       "Espada de ferro": 0,
       "Espada de diamante": 2,
       "Pedra refinada": 33,
-      "Linha": 37,
+      "Linha": 44,
       "Anzol": 0,
       "Tabua": 0,
       "Graveto": 0,
       "Vara de pesca": 1,
-      "Isca": 2880,
+      "Isca": 2850,
       "Ouro refinado": 46,
       "Pedra": 35,
-      "Peixe comum": 88,
-      "Peixe raro": 16,
+      "Peixe comum": 109,
+      "Peixe raro": 18,
       "Diamante refinado": 10,
       "Ferro": 2,
       "Ouro": 5,
@@ -27,25 +27,25 @@
       "Tesouro": 1
     },
     "stamina": 0,
-    "lastInteraction": 1733926803686
+    "lastInteraction": 1733945003687
   },
   "424330127036645386": {
     "coins": 308,
     "inventory": {
       "Madeira": 70,
-      "Ouro": 121,
-      "Pedra": 268,
-      "Diamante": 201,
-      "Ferro": 195,
+      "Ouro": 137,
+      "Pedra": 286,
+      "Diamante": 218,
+      "Ferro": 203,
       "Picareta": 1,
       "Machado": 1,
       "Vara de pesca": 1,
       "Espada de diamante": 1,
       "Isca": 1917,
       "Peixe comum": 535,
-      "Ouro refinado": 103,
-      "Pedra refinada": 111,
-      "Ferro refinado": 92,
+      "Ouro refinado": 107,
+      "Pedra refinada": 112,
+      "Ferro refinado": 102,
       "Linha": 99,
       "Joia": 19,
       "Peixe mítico": 1,
@@ -53,10 +53,10 @@
       "Peixe raro": 44,
       "Peixe lendário": 9,
       "Tesouro": 0,
-      "Diamante refinado": 34
+      "Diamante refinado": 60
     },
     "stamina": 0,
-    "lastInteraction": 1733931577890
+    "lastInteraction": 1733947620192
   },
   "335012394226941966": {
     "coins": 11612,
@@ -165,9 +165,9 @@
       "Tabua": 4,
       "Graveto": 1,
       "Anzol": 0,
-      "Linha": 103,
+      "Linha": 106,
       "Vara de pesca": 1,
-      "Isca": 487,
+      "Isca": 473,
       "Espada de pedra": 0,
       "Espada de ferro": 0,
       "Espada de diamante": 1,
@@ -175,28 +175,28 @@
       "Diamante refinado": 11,
       "Ferro refinado": 8,
       "Ouro refinado": 12,
-      "Ouro": 45,
+      "Ouro": 47,
       "Joia": 8,
       "Pedra": 12,
       "Diamante": 20,
       "Chave [NULL]": 4,
-      "Peixe comum": 139,
-      "Peixe lendário": 3,
+      "Peixe comum": 149,
+      "Peixe lendário": 4,
       "Peixe raro": 18,
       "Machado": 1,
       "Tesouro": 0
     },
     "stamina": 0,
-    "lastInteraction": 1733927109028
+    "lastInteraction": 1733949252872
   },
   "318542326366470144": {
     "coins": 15523,
     "inventory": {
-      "Pedra": 68,
-      "Diamante": 57,
+      "Pedra": 83,
+      "Diamante": 62,
       "Madeira": 6,
-      "Ferro": 46,
-      "Ouro": 57,
+      "Ferro": 48,
+      "Ouro": 65,
       "Espada de pedra": 1,
       "Espada de ferro": 0,
       "Espada de diamante": 1,
@@ -209,17 +209,17 @@
       "Isca": 2,
       "Poção de vida": 0,
       "Ouro refinado": 30,
-      "Diamante refinado": 35,
+      "Diamante refinado": 40,
       "Joia": 3,
-      "Ferro refinado": 23,
+      "Ferro refinado": 29,
       "Peixe comum": 57,
-      "Pedra refinada": 44,
+      "Pedra refinada": 50,
       "Peixe raro": 6,
       "Peixe lendário": 2,
       "Tesouro": 0
     },
     "stamina": 0,
-    "lastInteraction": 1733924178941
+    "lastInteraction": 1733937272931
   },
   "372889135381348352": {
     "coins": 256,
@@ -253,7 +253,7 @@
     "inventory": {
       "Ferro": 93,
       "Madeira": 0,
-      "Pedra": 2,
+      "Pedra": 8,
       "Anzol": 3,
       "Linha": 2,
       "Tabua": 1,
@@ -264,14 +264,17 @@
       "Espada de ferro": 0,
       "Espada de diamante": 1,
       "Picareta": 1,
-      "Ferro refinado": 41,
+      "Ferro refinado": 48,
       "Poção de vida": 0,
       "Peixe lendário": 1,
       "Peixe raro": 2,
-      "Ouro": 58,
-      "Diamante": 2
+      "Ouro": 72,
+      "Diamante": 2,
+      "Diamante refinado": 8,
+      "Ouro refinado": 17,
+      "Pedra refinada": 2
     },
     "stamina": 0,
-    "lastInteraction": 1733878399934
+    "lastInteraction": 1733935398775
   }
 }

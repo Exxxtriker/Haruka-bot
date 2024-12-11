@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cls && npm i && node slashBuilder.js && nodemon app.js --ignore datagame.json && config.json"
+    "start": "cls && npm i && node slashBuilder.js && nodemon app.js --ignore datagame.json --ignore config.json"
   },
   "keywords": [],
   "author": "",
