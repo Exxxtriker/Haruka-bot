@@ -7,7 +7,8 @@ module.exports = {
         .setDescription('Exibe informações de um usuário.')
         .addUserOption((option) => option.setName('usuário')
             .setDescription('Selecione o usuário')
-            .setRequired(false)),
+            .setRequired(false))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const user = interaction.options.getUser('usuário') || interaction.user; // Usuário selecionado ou autor do comando
         const member = interaction.guild.members.cache.get(user.id); // Obtém o membro no servidor

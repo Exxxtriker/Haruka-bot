@@ -11,7 +11,8 @@ module.exports = {
         .setDescription('Exibe o avatar de um usuário e oferece um botão para baixá-lo.')
         .addUserOption((option) => option.setName('usuário')
             .setDescription('Selecione o usuário')
-            .setRequired(false)),
+            .setRequired(false))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const user = interaction.options.getUser('usuário') || interaction.user; // Pega o usuário selecionado ou quem executou
         const avatarUrl = user.displayAvatarURL({ dynamic: true, size: 1024 }); // Avatar em alta resolução
