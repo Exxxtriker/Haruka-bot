@@ -13,11 +13,11 @@
       "Tabua": 0,
       "Graveto": 0,
       "Vara de pesca": 1,
-      "Isca": 2895,
+      "Isca": 2880,
       "Ouro refinado": 46,
       "Pedra": 35,
-      "Peixe comum": 75,
-      "Peixe raro": 14,
+      "Peixe comum": 88,
+      "Peixe raro": 16,
       "Diamante refinado": 10,
       "Ferro": 2,
       "Ouro": 5,
@@ -27,24 +27,24 @@
       "Tesouro": 1
     },
     "stamina": 0,
-    "lastInteraction": 1733878728293
+    "lastInteraction": 1733926803686
   },
   "424330127036645386": {
     "coins": 308,
     "inventory": {
       "Madeira": 70,
-      "Ouro": 106,
-      "Pedra": 262,
-      "Diamante": 192,
-      "Ferro": 194,
+      "Ouro": 121,
+      "Pedra": 268,
+      "Diamante": 201,
+      "Ferro": 195,
       "Picareta": 1,
       "Machado": 1,
       "Vara de pesca": 1,
       "Espada de diamante": 1,
       "Isca": 1917,
       "Peixe comum": 535,
-      "Ouro refinado": 94,
-      "Pedra refinada": 107,
+      "Ouro refinado": 103,
+      "Pedra refinada": 111,
       "Ferro refinado": 92,
       "Linha": 99,
       "Joia": 19,
@@ -53,10 +53,10 @@
       "Peixe raro": 44,
       "Peixe lendário": 9,
       "Tesouro": 0,
-      "Diamante refinado": 27
+      "Diamante refinado": 34
     },
     "stamina": 0,
-    "lastInteraction": 1733924051347
+    "lastInteraction": 1733931577890
   },
   "335012394226941966": {
     "coins": 11612,
@@ -160,14 +160,14 @@
     "coins": 6775,
     "inventory": {
       "Madeira": 1,
-      "Ferro": 88,
+      "Ferro": 89,
       "Picareta": 1,
       "Tabua": 4,
       "Graveto": 1,
       "Anzol": 0,
-      "Linha": 102,
+      "Linha": 103,
       "Vara de pesca": 1,
-      "Isca": 501,
+      "Isca": 487,
       "Espada de pedra": 0,
       "Espada de ferro": 0,
       "Espada de diamante": 1,
@@ -180,14 +180,14 @@
       "Pedra": 12,
       "Diamante": 20,
       "Chave [NULL]": 4,
-      "Peixe comum": 129,
+      "Peixe comum": 139,
       "Peixe lendário": 3,
-      "Peixe raro": 15,
+      "Peixe raro": 18,
       "Machado": 1,
       "Tesouro": 0
     },
     "stamina": 0,
-    "lastInteraction": 1733873748583
+    "lastInteraction": 1733927109028
   },
   "318542326366470144": {
     "coins": 15523,
