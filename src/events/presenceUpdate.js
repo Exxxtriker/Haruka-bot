@@ -35,9 +35,9 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setColor('#9146FF') // Cor do Twitch
-                    .setTitle(`${user.username} está ao vivo! 🎉`)
+                    .setTitle(`${user.displayName} está ao vivo! 🎉`)
                     .setURL(streamUrl) // URL da transmissão
-                    .setDescription(`**Categoria:** ${stream.name || 'Desconhecida'}\n**Título da Stream:** ${stream.details || 'Sem título'}\n**Duração:** ${stream.startTimestamp ? new Date(stream.startTimestamp).toLocaleTimeString() : '00:00'}`)
+                    .setDescription(`**Plataforma:** ${stream.name || 'Desconhecida'}\n**Título da Stream:** ${stream.details || 'Sem título'}\n**Duração:** ${stream.startTimestamp ? new Date(stream.startTimestamp).toLocaleTimeString() : '00:00'}\n**Jogo:** ${stream.state || 'Desconhecido'}`) // Adiciona o jogo ou categoria
                     .addFields(
                         { name: '🔗 Link da Stream', value: streamUrl, inline: true },
                         { name: '👁️ Espectadores', value: `${stream.viewerCount || '0'}`, inline: true },
@@ -52,12 +52,12 @@ module.exports = {
                 embed.setTimestamp()
                     .setFooter({
                         text: 'Notificação ao vivo',
-                        iconURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Twitch_logo_2011.svg/600px-Twitch_logo_2011.svg.png',
+                        iconURL: 'https://media.discordapp.net/attachments/1310325661839392889/1312064166277808138/0ef715af51d62dadfa1feaaa625b025c.png?ex=675af47a&is=6759a2fa&hm=a0e832326d0ac64fd57378ef71c029cf616041d0442e3a9febcceffc07824814&=&format=webp&quality=lossless&width=671&height=671',
                     });
 
                 // Envia a embed com o cargo mencionado
                 await channel.send({
-                    content: `${role} 🚨 ${user.username} está ao vivo! Venham conferir a stream!`,
+                    content: `${role}`,
                     embeds: [embed],
                 });
             }
