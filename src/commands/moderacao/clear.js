@@ -4,19 +4,15 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('clear')
         .setDescription('Apaga mensagens recentes de um canal ou de um usuário específico.')
-        .addIntegerOption(option =>
-            option.setName('quantidade')
-                .setDescription('Quantas mensagens deseja apagar (máx. 100).')
-                .setRequired(true)
-        )
-        .addUserOption(option =>
-            option.setName('usuário')
-                .setDescription('Apaga mensagens de um usuário específico.')
-        ),
+        .addIntegerOption((option) => option.setName('quantidade')
+            .setDescription('Quantas mensagens deseja apagar (máx. 100).')
+            .setRequired(true))
+        .addUserOption((option) => option.setName('usuário')
+            .setDescription('Apaga mensagens de um usuário específico.')),
     async execute(interaction) {
         const quantidade = interaction.options.getInteger('quantidade');
         const user = interaction.options.getUser('usuário');
-        const channel = interaction.channel;
+        const { channel } = interaction;
 
         if (quantidade > 100 || quantidade < 1) {
             return interaction.reply({
@@ -24,7 +20,6 @@ module.exports = {
                 ephemeral: true,
             });
         }
-
         // Verificar permissões
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
             return interaction.reply({
@@ -40,7 +35,7 @@ module.exports = {
 
             // Filtra mensagens de um usuário específico, se necessário
             const messagesToDelete = user
-                ? messages.filter(msg => msg.author.id === user.id)
+                ? messages.filter((msg) => msg.author.id === user.id)
                 : messages;
 
             await channel.bulkDelete(messagesToDelete, true); // `true` ignora mensagens antigas
