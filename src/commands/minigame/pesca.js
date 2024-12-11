@@ -9,7 +9,8 @@ const isFishingInProgress = {}; // Para evitar spam
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pescar')
-        .setDescription('Pesque para obter peixes e recursos!'),
+        .setDescription('Pesque para obter peixes e recursos!')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         const userId = interaction.user.id;

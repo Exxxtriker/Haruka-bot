@@ -3,7 +3,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('receitas')
-        .setDescription('Mostrar receitas da forja'),
+        .setDescription('Mostrar receitas da forja')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         // Receitas da forja

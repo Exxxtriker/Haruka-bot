@@ -7,7 +7,8 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('inventario')
-        .setDescription('Mostra o inventário do jogador'),
+        .setDescription('Mostra o inventário do jogador')
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const userId = interaction.user.id;
 

@@ -12,7 +12,8 @@ module.exports = {
         .addStringOption((option) => option
             .setName('equipamento')
             .setDescription('Equipamento que deseja forjar')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const userId = interaction.user.id;
         const equipamento = interaction.options.getString('equipamento');

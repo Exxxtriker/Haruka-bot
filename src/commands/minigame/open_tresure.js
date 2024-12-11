@@ -5,7 +5,8 @@ const dataManager = require('../../utils/dataManager');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('abrir-tesouro')
-        .setDescription('Abra um tesouro e descubra as riquezas dentro dele!'),
+        .setDescription('Abra um tesouro e descubra as riquezas dentro dele!')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         const userId = interaction.user.id;

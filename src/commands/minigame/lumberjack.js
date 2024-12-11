@@ -7,7 +7,8 @@ const isLumberjackInProgress = {}; // Para evitar spam
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('lenhador')
-        .setDescription('Pegue madeira para obter recursos!'),
+        .setDescription('Pegue madeira para obter recursos!')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         const userId = interaction.user.id;

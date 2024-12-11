@@ -44,7 +44,8 @@ module.exports = {
                 .setRequired(true)))
         .addSubcommand((subcommand) => subcommand
             .setName('lista')
-            .setDescription('Mostra a lista de itens disponíveis para venda')),
+            .setDescription('Mostra a lista de itens disponíveis para venda'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const subcommand = interaction.options.getSubcommand();
 

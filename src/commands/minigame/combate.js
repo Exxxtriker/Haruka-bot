@@ -24,7 +24,8 @@ const activeUsers = new Set();
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('combate')
-        .setDescription('Lute contra um inimigo!'),
+        .setDescription('Lute contra um inimigo!')
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const userId = interaction.user.id;
 
@@ -37,7 +38,7 @@ module.exports = {
         let data = dataManager.getGameData();
 
         if (!data[userId]) {
-            dataManager.initializeUser (userId);
+            dataManager.initializeUser(userId);
             data = dataManager.getGameData();
         }
 

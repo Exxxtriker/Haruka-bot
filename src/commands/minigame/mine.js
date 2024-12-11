@@ -7,7 +7,8 @@ const isMiningInProgress = {}; // Para evitar spam
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('minerar')
-        .setDescription('Minere para obter recursos!'),
+        .setDescription('Minere para obter recursos!')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         const userId = interaction.user.id;

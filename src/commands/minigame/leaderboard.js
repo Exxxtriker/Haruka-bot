@@ -8,7 +8,8 @@ const itemsPath = path.join(__dirname, '../../utils/datagame.json');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('leaderboard')
-        .setDescription('Mostra o ranking de jogadores com mais moedas'),
+        .setDescription('Mostra o ranking de jogadores com mais moedas')
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         // Ler o arquivo JSON
         let data;

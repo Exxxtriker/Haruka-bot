@@ -30,7 +30,8 @@ module.exports = {
             ))
         .addIntegerOption((option) => option.setName('quantidade')
             .setDescription('Quantidade de peixes que deseja vender')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         // Responder imediatamente para evitar o timeout
         await interaction.deferReply();
