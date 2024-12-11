@@ -10,7 +10,8 @@ module.exports = {
             .setDescription('Usuario que vai ser banido:')
             .setRequired(true))
         .addStringOption((option) => option.setName('razao')
-            .setDescription('Razão pelo banimento:')),
+            .setDescription('Razão pelo banimento:'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const { id } = interaction.options.getUser('membro');
         const razao = interaction.options.getString('razao') || 'Não há razão do punimento.';

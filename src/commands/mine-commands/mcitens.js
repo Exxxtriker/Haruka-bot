@@ -16,7 +16,8 @@ module.exports = {
         .setDescription('Exibe informações sobre Minecraft.')
         .addStringOption((option) => option.setName('procurar')
             .setDescription('O nome do item (ex: diamante, espada)')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const itemName = normalizeString(interaction.options.getString('procurar')); // Normaliza a entrada
 

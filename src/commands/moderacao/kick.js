@@ -10,7 +10,8 @@ module.exports = {
             .setDescription('Usuario que vai ser expulso.')
             .setRequired(true))
         .addStringOption((option) => option.setName('razao')
-            .setDescription('Razão pela punição.')),
+            .setDescription('Razão pela punição.'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const { id } = await interaction.options.getUser('membro');
         const razao = await interaction.options.getString('razao') || 'Não há razão do punimento.';

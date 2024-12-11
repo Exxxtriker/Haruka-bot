@@ -9,7 +9,8 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
-        .setDescription('*Veja todos os comandos da Haruka*'),
+        .setDescription('*Veja todos os comandos da Haruka*')
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         try {
             const { user, channel } = interaction;

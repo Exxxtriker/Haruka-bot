@@ -7,7 +7,8 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
         .addStringOption((option) => option.setName('userid')
             .setDescription('Insira o id do usuario que quer tirar.')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const userId = await interaction.options.getString('userid');
 

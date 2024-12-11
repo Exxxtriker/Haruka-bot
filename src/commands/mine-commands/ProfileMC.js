@@ -9,8 +9,8 @@ module.exports = {
         .setDescription('Busca o perfil de um jogador no NameMC.')
         .addStringOption((option) => option.setName('username')
             .setDescription('Nome de usuário do Minecraft')
-            .setRequired(true)),
-
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const username = interaction.options.getString('username');
         try {

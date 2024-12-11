@@ -25,7 +25,8 @@ module.exports = {
         .addUserOption((option) => option
             .setName('alvo')
             .setDescription('Marque a pessoa que você deseja abraçar')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         try {
             const { user } = interaction;

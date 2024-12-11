@@ -8,7 +8,8 @@ module.exports = {
             .setDescription('Marque a pessoa que você deseja')
             .setRequired(true))
         .addStringOption((option) => option.setName('duvida')
-            .setDescription('Sua duvida:')),
+            .setDescription('Sua duvida:'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const { id } = await interaction.options.getUser('membro');
         const duvida = interaction.options.getString('duvida') || 'tenho duvida não to de zoação kkkj';

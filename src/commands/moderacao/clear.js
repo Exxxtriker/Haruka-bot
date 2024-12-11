@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
@@ -8,7 +9,8 @@ module.exports = {
             .setDescription('Quantas mensagens deseja apagar (máx. 100).')
             .setRequired(true))
         .addUserOption((option) => option.setName('usuário')
-            .setDescription('Apaga mensagens de um usuário específico.')),
+            .setDescription('Apaga mensagens de um usuário específico.'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const quantidade = interaction.options.getInteger('quantidade');
         const user = interaction.options.getUser('usuário');
@@ -20,7 +22,7 @@ module.exports = {
                 ephemeral: true,
             });
         }
-        // Verificar permissões
+
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
             return interaction.reply({
                 content: 'Você não tem permissão para apagar mensagens!',
@@ -33,12 +35,30 @@ module.exports = {
         try {
             const messages = await channel.messages.fetch({ limit: quantidade });
 
-            // Filtra mensagens de um usuário específico, se necessário
             const messagesToDelete = user
                 ? messages.filter((msg) => msg.author.id === user.id)
                 : messages;
 
-            await channel.bulkDelete(messagesToDelete, true); // `true` ignora mensagens antigas
+            const oldMessages = messagesToDelete.filter((msg) => msg.createdTimestamp < Date.now() - 14 * 24 * 60 * 60 * 1000);
+            const recentMessages = messagesToDelete.filter((msg) => msg.createdTimestamp >= Date.now() - 14 * 24 * 60 * 60 * 1000);
+
+            // Apagar mensagens recentes em massa
+            if (recentMessages.size > 0) {
+                await channel.bulkDelete(recentMessages, true);
+            }
+
+            // Apagar mensagens antigas individualmente
+            for (const message of oldMessages.values()) {
+                try {
+                    await message.delete();
+                } catch (error) {
+                    if (error.code !== 10008) {
+                        // Loga apenas erros diferentes de "Unknown Message"
+                        console.error(`Erro ao apagar mensagem: ${error}`);
+                    }
+                }
+            }
+
             interaction.editReply({
                 content: user
                     ? `Apagadas **${messagesToDelete.size} mensagens** de **${user.tag}** no canal ${channel}.`

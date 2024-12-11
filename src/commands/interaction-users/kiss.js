@@ -32,7 +32,8 @@ module.exports = {
         .setDescription('*Marque a pessoa que você quer beijar*')
         .addUserOption((option) => option.setName('alvo')
             .setDescription('Marque a pessoa que você deseja')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         try {
             const { user, channel } = interaction;

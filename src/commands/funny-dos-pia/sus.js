@@ -3,7 +3,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('sadness')
-        .setDescription('*Utilize sabiamente,(lembrando que o bot naõ esta incentivando o TAL ATO)*'),
+        .setDescription('*Utilize sabiamente,(lembrando que o bot naõ esta incentivando o TAL ATO)*')
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         const embed = new EmbedBuilder()

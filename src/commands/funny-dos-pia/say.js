@@ -8,7 +8,8 @@ module.exports = {
         .setDescription('O bot diz uma mensagem (apenas para o dono).')
         .addStringOption((option) => option.setName('mensagem')
             .setDescription('A mensagem que o bot deve dizer, use \\n para pular linhas')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
         // Verifica se o autor da interação é o dono do bot

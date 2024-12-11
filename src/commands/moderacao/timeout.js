@@ -15,7 +15,8 @@ module.exports = {
         .addIntegerOption((option) => option.setName('minutos')
             .setDescription('Número de minutos.'))
         .addStringOption((option) => option.setName('razao')
-            .setDescription('Razão para o castigo.')),
+            .setDescription('Razão para o castigo.'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const user = interaction.options.getUser('membro');
         const days = interaction.options.getInteger('dias') || 0;

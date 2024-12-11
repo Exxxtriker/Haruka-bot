@@ -36,7 +36,8 @@ module.exports = {
         .addStringOption((option) => option
             .setName('crafting')
             .setDescription('Receita de crafting da ferramenta.')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         // Verifica se o usuário é autorizado
         if (interaction.user.id !== '335012394226941966') {

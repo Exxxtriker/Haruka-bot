@@ -11,7 +11,8 @@ module.exports = {
             .setDescription('O IP do servidor de Minecraft.')
             .setRequired(true))
         .addIntegerOption((option) => option.setName('porta')
-            .setDescription('A porta do servidor (padrão: 25565).')),
+            .setDescription('A porta do servidor (padrão: 25565).'))
+        .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
         const ip = interaction.options.getString('ip');
         const port = interaction.options.getInteger('porta') || 25565;
