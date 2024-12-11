@@ -28,7 +28,8 @@ module.exports = {
             .setRequired(true))
         .addRoleOption((option) => option.setName('cargo')
             .setDescription('Escolha o cargo para ser mencionado nas notificações')
-            .setRequired(true)),
+            .setRequired(true))
+        .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
     // Verifica se o usuário tem permissão para configurar
