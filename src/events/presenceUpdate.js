@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const { Events, EmbedBuilder } = require('discord.js');
-const { readConfig } = require('../utils/utilspresence'); // Ajuste o caminho para onde a função readConfig está localizada
+const { readConfig } = require('../utils/utils'); // Ajuste o caminho para onde a função readConfig está localizada
 
 module.exports = {
     name: Events.PresenceUpdate,
