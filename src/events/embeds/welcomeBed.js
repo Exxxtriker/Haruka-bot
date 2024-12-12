@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 module.exports = (member) => ({
     color: '000000',
     title: 'Seja bem vindo ao MotoClub',
     author: {
         name: 'Haruka',
-        icon_url: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
+        icon_url: 'https://media.discordapp.net/attachments/1310325661839392889/1312064166277808138/0ef715af51d62dadfa1feaaa625b025c.png?ex=675b9d3a&is=675a4bba&hm=5b253e7becc2b400f4a260e923a662beb1da7cb34df7c4c952e7468a14ad2744&=&format=webp&quality=lossless&width=397&height=397',
     },
     description: `**<@${member.user.id}> \n **Por favor visite o canal** <#1100060121868030023>**`,
     thumbnail: {
@@ -27,6 +28,6 @@ module.exports = (member) => ({
     footer: {
         text: 'Todos os direitos reservados á Exxxtriker',
         // eslint-disable-next-line max-len
-        icon_url: 'https://cdn.discordapp.com/attachments/1084488222278688890/1100868552203980810/73f39cb8-c234-451f-b7e3-e9d820a39681-profile_image-300x300.png',
+        icon_url: 'https://media.discordapp.net/attachments/1310325661839392889/1312064166277808138/0ef715af51d62dadfa1feaaa625b025c.png?ex=675b9d3a&is=675a4bba&hm=5b253e7becc2b400f4a260e923a662beb1da7cb34df7c4c952e7468a14ad2744&=&format=webp&quality=lossless&width=397&height=397',
     },
 });
