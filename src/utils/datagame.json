@@ -192,11 +192,11 @@
   "318542326366470144": {
     "coins": 15523,
     "inventory": {
-      "Pedra": 88,
-      "Diamante": 79,
+      "Pedra": 93,
+      "Diamante": 82,
       "Madeira": 6,
-      "Ferro": 62,
-      "Ouro": 88,
+      "Ferro": 67,
+      "Ouro": 91,
       "Espada de pedra": 1,
       "Espada de ferro": 0,
       "Espada de diamante": 1,
@@ -208,8 +208,8 @@
       "Vara de pesca": 1,
       "Isca": 2,
       "Poção de vida": 0,
-      "Ouro refinado": 30,
-      "Diamante refinado": 50,
+      "Ouro refinado": 35,
+      "Diamante refinado": 55,
       "Joia": 3,
       "Ferro refinado": 32,
       "Peixe comum": 57,
@@ -218,8 +218,8 @@
       "Peixe lendário": 2,
       "Tesouro": 0
     },
-    "stamina": 0,
-    "lastInteraction": 1733975889509
+    "stamina": 7,
+    "lastInteraction": 1734010108334
   },
   "372889135381348352": {
     "coins": 256,

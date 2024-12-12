@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const {
     ActionRowBuilder,
     ButtonBuilder,
@@ -90,7 +91,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({
                     text: 'Haruka Harano 運',
-                    iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
+                    iconURL: 'https://media.discordapp.net/attachments/1310325661839392889/1312064166277808138/0ef715af51d62dadfa1feaaa625b025c.png?ex=675b9d3a&is=675a4bba&hm=5b253e7becc2b400f4a260e923a662beb1da7cb34df7c4c952e7468a14ad2744&=&format=webp&quality=lossless&width=427&height=427',
                 });
 
             const row = new ActionRowBuilder().addComponents(aceita, recusa);
