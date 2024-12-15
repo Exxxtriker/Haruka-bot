@@ -1,41 +1,63 @@
 const { Events } = require('discord.js');
-const { joinVoiceChannel, VoiceConnectionStatus } = require('@discordjs/voice');
+const { joinVoiceChannel, VoiceConnectionStatus, entersState } = require('@discordjs/voice');
 
 module.exports = {
     name: Events.ClientReady,
     once: true,
     async execute(client) {
-        const canal = client.channels.cache.get('1118565067127005185'); // coloque o ID do canal de voz
+        const canal = client.channels.cache.get('1118565067127005185'); // Substitua pelo ID do seu canal
 
-        const joinChannel = () => {
-            const connection = joinVoiceChannel({
-                channelId: canal.id,
-                guildId: canal.guild.id,
-                adapterCreator: canal.guild.voiceAdapterCreator,
-            });
+        if (!canal || !canal.isVoiceBased()) return;
 
-            connection.on(VoiceConnectionStatus.Ready, () => {
-                // O bot entrou no canal de voz com sucesso
-            });
+        let connection;
 
-            connection.on(VoiceConnectionStatus.Disconnected, (oldState, newState) => {
-                // O bot foi desconectado do canal de voz, tenta reconectar
-                if (newState.status === VoiceConnectionStatus.Disconnected) {
-                    setTimeout(joinChannel, 5000); // Tenta reconectar após 5 segundos
+        const joinChannel = async () => {
+            try {
+                if (connection) {
+                    // Remove os ouvintes antigos antes de criar uma nova conexão
+                    connection.removeAllListeners();
                 }
-            });
-        };
 
-        // Tenta entrar no canal de voz ao iniciar
-        joinChannel();
+                connection = joinVoiceChannel({
+                    channelId: canal.id,
+                    guildId: canal.guild.id,
+                    adapterCreator: canal.guild.voiceAdapterCreator,
+                });
 
-        // Escuta o evento de mudança de estado de voz
-        client.on(Events.VoiceStateUpdate, (oldState, newState) => {
-            // Verifica se o bot saiu do canal de voz
-            if (oldState.channelId === canal.id && newState.channelId === null) {
-                // O bot saiu do canal de voz, tenta reconectar
+                // Ajusta o limite de ouvintes para evitar o aviso
+                connection.setMaxListeners(20);
+
+                // Adiciona ouvintes necessários apenas uma vez
+                connection.on('error', (error) => {
+                    // eslint-disable-next-line no-useless-return
+                    if (error.message.includes('Cannot perform IP discovery')) return;
+                });
+
+                await entersState(connection, VoiceConnectionStatus.Ready, 30000); // Aguarda até 30 segundos para conectar
+            } catch {
                 setTimeout(joinChannel, 5000); // Tenta reconectar após 5 segundos
             }
+        };
+
+        // Inicia a conexão ao canal de voz
+        joinChannel();
+
+        // Escuta o evento de desconexão
+        client.on(Events.VoiceStateUpdate, (oldState, newState) => {
+            if (oldState.channelId === canal.id && newState.channelId === null) {
+                setTimeout(joinChannel, 5000);
+            }
         });
+
+        // Monitora o estado da conexão
+        if (connection) {
+            connection.on(VoiceConnectionStatus.Disconnected, async () => {
+                try {
+                    await entersState(connection, VoiceConnectionStatus.Connecting, 5000);
+                } catch {
+                    joinChannel();
+                }
+            });
+        }
     },
 };
