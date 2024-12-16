@@ -34,7 +34,7 @@ module.exports = {
             // URLs para o perfil e renderização
             const nameMCUrl = `https://namemc.com/profile/${uuid}`;
             const skinPreviewUrl = `https://minotar.net/armor/body/${uuid}.png`; // Renderização da skin
-            const facePreviewUrl = `https://minotar.net/helm/${uuid}.png`; // Rosto da skin
+            const facePreviewUrl = `https://minotar.net/avatar/${uuid}.png`; // Rosto da skin
             const skinDownloadUrl = `https://minotar.net/download/${uuid}`; // URL para download da skin
 
             // Criar embed personalizada
