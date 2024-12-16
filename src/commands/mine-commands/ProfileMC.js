@@ -1,12 +1,14 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const {
+    SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle,
+} = require('discord.js');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('namemc')
-        .setDescription('Busca o perfil de um jogador no NameMC.')
+        .setName('mcprofile')
+        .setDescription('Busca o perfil de um jogador do minecraft')
         .addStringOption((option) => option.setName('username')
             .setDescription('Nome de usuário do Minecraft')
             .setRequired(true))
@@ -33,13 +35,14 @@ module.exports = {
             const nameMCUrl = `https://namemc.com/profile/${uuid}`;
             const skinPreviewUrl = `https://minotar.net/armor/body/${uuid}.png`; // Renderização da skin
             const facePreviewUrl = `https://minotar.net/helm/${uuid}.png`; // Rosto da skin
+            const skinDownloadUrl = `https://minotar.net/download/${uuid}`; // URL para download da skin
 
             // Criar embed personalizada
             const embed = new EmbedBuilder()
                 .setColor(0x5fb041)
                 .setTitle('**Perfil do Minecraft**')
                 .setDescription(
-                    `**Jogador:** ${username} 👤 \n**Perfil:** [Clique aqui](${nameMCUrl}) 🔗 \n\n **Skin Preview:** 🎮`,
+                    `**Jogador:** ${username} 👤 \n**Perfil NameMc:** [Clique aqui](${nameMCUrl}) 🔗 \n\n **Skin Preview:** 🎮`,
                 )
                 .setImage(skinPreviewUrl)
                 .setThumbnail(facePreviewUrl) // Definir o rosto como thumbnail
@@ -49,12 +52,23 @@ module.exports = {
                 })
                 .setTimestamp();
 
-            // Enviar embed com o ícone anexado
+            // Criar botão para baixar a skin
+            const downloadButton = new ButtonBuilder()
+                .setLabel('Baixar Skin')
+                .setStyle(ButtonStyle.Link)
+                .setURL(skinDownloadUrl);
+
+            // Criar linha de ação para o botão
+            const row = new ActionRowBuilder().addComponents(downloadButton);
+
+            // Enviar embed com o ícone anexado e o botão
             await interaction.reply({
                 embeds: [embed],
                 files: [{ attachment: iconPath, name: 'server-icon.png' }], // Anexa o ícone
+                components: [row], // Adiciona o botão
             });
-        } catch {
+        } catch (error) {
+            console.error(error); // Log do erro para depuração
             await interaction.reply({
                 content: '❌ Não foi possível encontrar o jogador. Tente novamente.',
                 ephemeral: true,
