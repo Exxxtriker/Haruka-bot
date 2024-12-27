@@ -15,6 +15,7 @@
     "axios": "^1.7.7",
     "cheerio": "^1.0.0",
     "discord-gamecord": "^4.4.1",
+    "discord-rpc": "^4.0.1",
     "discord.js": "^14.16.3",
     "distube": "^5.0.4",
     "dotenv": "^16.0.3",
