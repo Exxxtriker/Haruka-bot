@@ -34,30 +34,30 @@
     "coins": 308,
     "inventory": {
       "Madeira": 70,
-      "Ouro": 271,
+      "Ouro": 286,
       "Pedra": 405,
-      "Diamante": 304,
+      "Diamante": 319,
       "Ferro": 312,
       "Picareta": 1,
       "Machado": 1,
       "Vara de pesca": 1,
       "Espada de diamante": 1,
-      "Isca": 1611,
-      "Peixe comum": 740,
+      "Isca": 1477,
+      "Peixe comum": 839,
       "Ouro refinado": 172,
       "Pedra refinada": 171,
       "Ferro refinado": 177,
-      "Linha": 144,
-      "Joia": 19,
+      "Linha": 162,
+      "Joia": 23,
       "Peixe mítico": 1,
       "Poção de vida": 100,
-      "Peixe raro": 80,
-      "Peixe lendário": 17,
-      "Tesouro": 7,
+      "Peixe raro": 92,
+      "Peixe lendário": 18,
+      "Tesouro": 0,
       "Diamante refinado": 118
     },
     "stamina": 0,
-    "lastInteraction": 1735324630313
+    "lastInteraction": 1735515718107
   },
   "335012394226941966": {
     "coins": 11112,
@@ -81,7 +81,7 @@
       "Espada de ferro": 0,
       "Espada de diamante": 1,
       "Supra MK4 Shiny ⭐": 1,
-      "Pedra refinada": 27,
+      "Pedra refinada": 30,
       "Ouro refinado": 46,
       "Diamante refinado": 13,
       "Joia": 24,
@@ -90,8 +90,8 @@
       "Ferro refinado": 21,
       "Chave [NULL]": 1
     },
-    "stamina": 12,
-    "lastInteraction": 1735311782747
+    "stamina": 14,
+    "lastInteraction": 1735423578941
   },
   "289885393933959168": {
     "coins": 845,
