@@ -11,13 +11,17 @@ module.exports = {
         .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
+        // Deferindo a resposta imediatamente
+        await interaction.deferReply();
+
         if (interaction.user.id !== '335012394226941966') {
-            return interaction.reply('Você não tem permissão para usar este comando!');
+            return interaction.editReply('Você não tem permissão para usar este comando!');
         }
+
         const voiceChannel = interaction.member.voice.channel;
 
         if (!voiceChannel) {
-            return interaction.reply('Você precisa estar em um canal de voz para usar este comando!');
+            return interaction.editReply('Você precisa estar em um canal de voz para usar este comando!');
         }
 
         try {
@@ -63,9 +67,10 @@ module.exports = {
             // Reproduzir o recurso de áudio
             player.play(resource);
 
-            await interaction.reply(`Reproduzindo o áudio de "Haruka" no canal de voz: ${voiceChannel.name}`);
+            await interaction.editReply(`Reproduzindo o áudio de "Haruka" no canal de voz: ${voiceChannel.name}`);
 
             player.on(AudioPlayerStatus.Playing, () => {
+                console.log('Reprodução iniciada.');
             });
 
             player.on(AudioPlayerStatus.Idle, () => {
@@ -74,7 +79,8 @@ module.exports = {
                 ffmpeg.kill(); // Finaliza o processo do FFmpeg
             });
         } catch (error) {
-            await interaction.reply('Ocorreu um erro ao tentar reproduzir o áudio.');
+            console.error(error);
+            await interaction.editReply('Ocorreu um erro ao tentar reproduzir o áudio.');
         }
     },
 };
