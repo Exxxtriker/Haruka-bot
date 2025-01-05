@@ -69,10 +69,6 @@ module.exports = {
 
             await interaction.editReply(`Reproduzindo o áudio de "Haruka" no canal de voz: ${voiceChannel.name}`);
 
-            player.on(AudioPlayerStatus.Playing, () => {
-                console.log('Reprodução iniciada.');
-            });
-
             player.on(AudioPlayerStatus.Idle, () => {
                 console.log('Reprodução finalizada. Desconectando...');
                 connection.destroy();
