@@ -35,7 +35,7 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setColor('#9146FF') // Cor do Twitch
-                    .setTitle(`${user.displayName} está ao vivo! 🎉`)
+                    .setTitle(`${user.displayName} está ao vivo!`)
                     .setURL(streamUrl) // URL da transmissão
                     .setDescription(`**Plataforma:** ${stream.name || 'Desconhecida'}\n**Título da Stream:** ${stream.details || 'Sem título'}\n**Duração:** ${stream.startTimestamp ? new Date(stream.startTimestamp).toLocaleTimeString() : '00:00'}\n**Jogo:** ${stream.state || 'Desconhecido'}`) // Adiciona o jogo ou categoria
                     .addFields(
