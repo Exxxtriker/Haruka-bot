@@ -63,6 +63,6 @@ node index.js
 - Personalize comandos e permissões no arquivo de configuração do bot.
 
 ## Licença
-Este projeto está licenciado sob os termos da [GNU General Public License v3.0](LICENSE).
+Este projeto está licenciado sob os termos da [GNU General Public License v3.0](Licence).
 
 
