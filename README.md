@@ -34,7 +34,7 @@ Este bot do Discord foi desenvolvido para oferecer funcionalidades de moderaçã
 - Consulta de informações sobre servidores de Minecraft.
 
 ### 🎵 Sound Pad
-- Sistema de efeitos sonoros ativados por comando.
+- Sistema de efeitos sonoros ativados por comando (01/24).
 - Possibilidade de tocar áudios específicos para animação no chat de voz.
 - Personalização de áudios pré-definidos.
 
