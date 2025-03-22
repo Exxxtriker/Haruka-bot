@@ -1,5 +1,3 @@
-# Haruka.bot
-
 # Discord Bot - Gerenciador & Entretenimento
 
 ## Sobre o Bot
