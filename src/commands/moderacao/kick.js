@@ -17,7 +17,7 @@ module.exports = {
         const razao = await interaction.options.getString('razao') || 'Não há razão do punimento.';
 
         const memberToKick = await interaction.guild.members.cache.get(id);
-        if (!memberToKick) return interaction.reply({ content: 'usuário não encontrado, verifique se ele está no servidor', ephemeral: true });
+        if (!memberToKick) return interaction.reply({ content: 'usuário não encontrado, verifique se ele está no servidor', flags: 64 });
 
         if (verifiPermission(interaction, memberToKick)) {
             const errEmbed = new EmbedBuilder()

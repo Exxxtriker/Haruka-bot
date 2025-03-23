@@ -15,7 +15,7 @@ module.exports = {
 
         // Verificar se o comando está sendo executado
         if (isLumberjackInProgress[userId]) {
-            return interaction.reply({ content: '⛔ Você já está pegando madeira. Por favor, espere antes de tentar novamente!', ephemeral: true });
+            return interaction.reply({ content: '⛔ Você já está pegando madeira. Por favor, espere antes de tentar novamente!', flags: 64 });
         }
 
         // Definir o usuário como em progresso
@@ -52,7 +52,7 @@ module.exports = {
                     .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                     .setTimestamp();
 
-                return interaction.reply({ embeds: [embed], ephemeral: true });
+                return interaction.reply({ embeds: [embed], flags: 64 });
             }
 
             // Adicionar o recurso coletado ao inventário
@@ -80,7 +80,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error('Erro ao executar o comando de coleta de madeira:', error);
-            interaction.reply({ content: '❌ Ocorreu um erro ao tentar coletar madeira. Tente novamente mais tarde!', ephemeral: true });
+            interaction.reply({ content: '❌ Ocorreu um erro ao tentar coletar madeira. Tente novamente mais tarde!', flags: 64 });
         } finally {
             // Liberar o bloqueio
             isLumberjackInProgress[userId] = false;

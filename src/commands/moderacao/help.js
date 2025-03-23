@@ -104,7 +104,7 @@ module.exports = {
 
             const row = new ActionRowBuilder().addComponents(pag01, pag02, pag03);
 
-            await interaction.reply({ embeds: [pagina01], components: [row], ephemeral: true });
+            await interaction.reply({ embeds: [pagina01], components: [row], flags: 64 });
 
             // Criar coletor exclusivo para a interação atual
             const collector = channel.createMessageComponentCollector({
@@ -138,13 +138,13 @@ module.exports = {
                             iconURL: 'https://cdn.discordapp.com/attachments/1084488222278688890/1092202988828893296/a.png',
                         });
 
-                    await buttonInteraction.update({ embeds: [pagina02], components: [row], ephemeral: true });
+                    await buttonInteraction.update({ embeds: [pagina02], components: [row], flags: 64 });
                 } else if (buttonInteraction.customId === `pag01-${interaction.id}`) {
                     // Voltar para a página 1
-                    await buttonInteraction.update({ embeds: [pagina01], components: [row], ephemeral: true });
+                    await buttonInteraction.update({ embeds: [pagina01], components: [row], flags: 64 });
                 } else if (buttonInteraction.customId === `pag03-${interaction.id}`) {
                     // Página Minigame
-                    await buttonInteraction.update({ embeds: [paginaMinigame], components: [row], ephemeral: true });
+                    await buttonInteraction.update({ embeds: [paginaMinigame], components: [row], flags: 64 });
                 }
             });
 
@@ -160,7 +160,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: '❌ Ocorreu um erro ao executar o comando.',
-                ephemeral: true,
+                flags: 64,
             });
         }
     },

@@ -21,7 +21,7 @@ module.exports = (member) => ({
         {
             name: '**Passe pela categoria 👻・Mini Games onde temos:**',
             // eslint-disable-next-line max-len
-            value: '<#1140631807495258172> :game_die: \n <#1140631849023049800> :game_die: \n <#1140706806373552209> :game_die: \n <#1140717410257731764> :game_die: \n \n **Fique atento no canal** <#1100043571081531493> \n **Para receber as notificações das Lives!**',
+            value: '<#1353008903226396684> :game_die: \n <#1353015818585116753> :game_die: \n <#1140706806373552209> :game_die: \n <#1140717410257731764> :game_die: \n \n **Fique atento no canal** <#1100043571081531493> \n **Para receber as notificações das Lives!**',
         },
     ],
     timestamp: new Date().toISOString(),

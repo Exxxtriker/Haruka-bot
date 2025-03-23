@@ -40,7 +40,7 @@ module.exports = {
                     const remainingTime = ((expirationTime - Date.now()) / 1000).toFixed(1);
                     return interaction.reply({
                         content: `❌ Você está em cooldown. Por favor, espere mais ${remainingTime} segundos.`,
-                        ephemeral: true,
+                        flags: 64,
                     });
                 }
             }
@@ -119,7 +119,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: '❌ Ocorreu um erro ao executar o comando.',
-                ephemeral: true,
+                flags: 64,
             });
         }
     },

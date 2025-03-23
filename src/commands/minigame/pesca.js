@@ -17,7 +17,7 @@ module.exports = {
 
         // Verificar se o comando está sendo executado
         if (isFishingInProgress[userId]) {
-            return interaction.reply({ content: '⛔ Você já está pescando. Por favor, espere antes de tentar novamente!', ephemeral: true });
+            return interaction.reply({ content: '⛔ Você já está pescando. Por favor, espere antes de tentar novamente!', flags: 64 });
         }
 
         // Definir o usuário como em progresso
@@ -46,12 +46,12 @@ module.exports = {
 
             // Verificar se o usuário tem a vara de pesca
             if (!user.inventory['Vara de pesca'] || user.inventory['Vara de pesca'] <= 0) {
-                return interaction.reply({ content: '⛔ Você não tem uma vara de pesca! Adquira uma antes de tentar pescar.', ephemeral: true });
+                return interaction.reply({ content: '⛔ Você não tem uma vara de pesca! Adquira uma antes de tentar pescar.', flags: 64 });
             }
 
             // Verificar se o usuário tem isca
             if (!user.inventory.Isca || user.inventory.Isca <= 0) {
-                return interaction.reply({ content: '⛔ Você não tem isca! Adquira isca antes de tentar pescar.', ephemeral: true });
+                return interaction.reply({ content: '⛔ Você não tem isca! Adquira isca antes de tentar pescar.', flags: 64 });
             }
 
             // Recarregar estamina, se necessário
@@ -70,7 +70,7 @@ module.exports = {
                     .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                     .setTimestamp();
 
-                return interaction.reply({ embeds: [embed], ephemeral: true });
+                return interaction.reply({ embeds: [embed], flags: 64 });
             }
 
             // Determinar o item coletado com base nas chances
@@ -120,7 +120,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error('Erro ao executar o comando de pesca:', error);
-            interaction.reply({ content: '❌ Ocorreu um erro ao tentar pescar. Tente novamente mais tarde!', ephemeral: true });
+            interaction.reply({ content: '❌ Ocorreu um erro ao tentar pescar. Tente novamente mais tarde!', flags: 64 });
         } finally {
             // Liberar o bloqueio
             isFishingInProgress[userId] = false;

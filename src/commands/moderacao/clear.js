@@ -19,18 +19,18 @@ module.exports = {
         if (quantidade > 100 || quantidade < 1) {
             return interaction.reply({
                 content: 'Você deve fornecer um número entre 1 e 100.',
-                ephemeral: true,
+                flags: 64,
             });
         }
 
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
             return interaction.reply({
                 content: 'Você não tem permissão para apagar mensagens!',
-                ephemeral: true,
+                flags: 64,
             });
         }
 
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ flags: 64 });
 
         try {
             const messages = await channel.messages.fetch({ limit: quantidade });

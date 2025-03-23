@@ -21,7 +21,7 @@ module.exports = {
             if (!user.inventory[treasureKey] || user.inventory[treasureKey] <= 0) {
                 return interaction.reply({
                     content: '⛔ Você não possui nenhum tesouro para abrir!',
-                    ephemeral: true,
+                    flags: 64,
                 });
             }
 
@@ -78,7 +78,7 @@ module.exports = {
             console.error('Erro ao executar o comando de abrir-tesouro:', error);
             interaction.reply({
                 content: '❌ Ocorreu um erro ao tentar abrir o tesouro. Tente novamente mais tarde!',
-                ephemeral: true,
+                flags: 64,
             });
         }
     },

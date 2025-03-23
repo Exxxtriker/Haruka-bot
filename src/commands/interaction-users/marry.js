@@ -63,7 +63,7 @@ module.exports = {
                     const remainingTime = ((expirationTime - Date.now()) / 1000).toFixed(1);
                     return interaction.reply({
                         content: `❌ Você está em cooldown. Espere ${remainingTime} segundos.`,
-                        ephemeral: true,
+                        flags: 64,
                     });
                 }
                 cooldowns.delete(interaction.user.id);
@@ -105,7 +105,7 @@ module.exports = {
 
             collector.on('collect', async (buttonInteraction) => {
                 if (buttonInteraction.user.id !== targetUser.id) {
-                    return buttonInteraction.reply({ content: 'Apenas o alvo pode interagir com este botão!', ephemeral: true });
+                    return buttonInteraction.reply({ content: 'Apenas o alvo pode interagir com este botão!', flags: 64 });
                 }
 
                 if (buttonInteraction.customId === `aceita-${interaction.id}`) {
@@ -142,7 +142,7 @@ module.exports = {
             cooldowns.set(interaction.user.id, Date.now() + cooldownTime);
         } catch (error) {
             console.error(error);
-            interaction.reply({ content: 'Ocorreu um erro ao executar o comando.', ephemeral: true });
+            interaction.reply({ content: 'Ocorreu um erro ao executar o comando.', flags: 64 });
         }
     },
 };

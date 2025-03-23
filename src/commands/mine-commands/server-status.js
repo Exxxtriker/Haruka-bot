@@ -69,7 +69,7 @@ module.exports = {
             console.error(error);
             return interaction.editReply({
                 content: '❌ Não foi possível obter informações do servidor. Verifique o IP e a porta.',
-                ephemeral: true,
+                flags: 64,
             });
         }
     },

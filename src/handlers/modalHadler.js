@@ -41,7 +41,7 @@ module.exports = (client) => {
             await modals.execute(interaction);
         } catch (error) {
             console.log(error);
-            await interaction.reply({ content: 'Houve um erro ao usar este comando.', ephemeral: true });
+            await interaction.reply({ content: 'Houve um erro ao usar este comando.', flags: 64 });
         }
     });
 };

@@ -30,7 +30,7 @@ module.exports = {
         if (timeoutDuration <= 0 || timeoutDuration > 28 * 24 * 60 * 60 * 1000) { // Máximo de 28 dias
             return interaction.reply({
                 content: 'Por favor, insira um tempo válido. O máximo permitido é de 28 dias.',
-                ephemeral: true,
+                flags: 64,
             });
         }
 
@@ -39,7 +39,7 @@ module.exports = {
         if (!memberToPunish) {
             return interaction.reply({
                 content: 'Usuário não encontrado no servidor.',
-                ephemeral: true,
+                flags: 64,
             });
         }
 
@@ -47,7 +47,7 @@ module.exports = {
         if (memberToPunish.permissions.has(PermissionFlagsBits.Administrator)) {
             return interaction.reply({
                 content: 'Você não pode aplicar timeout em um administrador.',
-                ephemeral: true,
+                flags: 64,
             });
         }
 
@@ -66,7 +66,7 @@ module.exports = {
             console.error(error);
             return interaction.reply({
                 content: 'Ocorreu um erro ao tentar aplicar o timeout. Verifique se tenho permissões suficientes.',
-                ephemeral: true,
+                flags: 64,
             });
         }
     },

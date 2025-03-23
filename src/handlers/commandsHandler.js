@@ -37,7 +37,7 @@ module.exports = async (client) => {
             await command.execute(interaction);
         } catch (e) {
             console.error(e);
-            await interaction.reply({ content: 'Houve um erro ao executar este comando.', ephemeral: true });
+            await interaction.reply({ content: 'Houve um erro ao executar este comando.', flags: 64 });
         }
     });
 };

@@ -55,6 +55,6 @@ module.exports = {
         saveConfig(config);
 
         // Responde com a confirmação
-        return interaction.reply({ content: `Configurações atualizadas! As notificações de live serão enviadas para o canal ${canal} e o cargo ${cargo} será mencionado.`, ephemeral: true });
+        return interaction.reply({ content: `Configurações atualizadas! As notificações de live serão enviadas para o canal ${canal} e o cargo ${cargo} será mencionado.`, flags: 64 });
     },
 };

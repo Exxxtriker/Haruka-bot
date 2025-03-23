@@ -43,7 +43,7 @@ module.exports = {
         if (interaction.user.id !== '335012394226941966') {
             return interaction.reply({
                 content: '❌ Você não tem permissão para usar este comando.',
-                ephemeral: true,
+                flags: 64,
             });
         }
 

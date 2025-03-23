@@ -30,7 +30,7 @@ module.exports = {
         const userId = interaction.user.id;
 
         if (activeUsers.has(userId)) {
-            return interaction.reply({ content: 'Você já está em combate! Aguarde até que o combate atual termine.', ephemeral: true });
+            return interaction.reply({ content: 'Você já está em combate! Aguarde até que o combate atual termine.', flags: 64 });
         }
 
         activeUsers.add(userId);
@@ -64,7 +64,7 @@ module.exports = {
                 .setTimestamp();
 
             activeUsers.delete(userId);
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            return interaction.reply({ embeds: [embed], flags: 64 });
         }
 
         const newStamina = Math.max(0, userData.stamina - COMBAT_COST);
@@ -93,7 +93,7 @@ module.exports = {
                 .setFooter({ text: 'Aguardo você no campo de batalha!' })
                 .setTimestamp();
             activeUsers.delete(userId);
-            return interaction.reply({ embeds: [embed], ephemeral: true });
+            return interaction.reply({ embeds: [embed], flags: 64 });
         }
 
         const btnUsePotion = new ButtonBuilder()
@@ -159,9 +159,9 @@ module.exports = {
 
                         fs.writeFileSync(itemsPath, JSON.stringify(data, null, 2));
 
-                        await i.reply({ content: `Você usou uma Poção de Vida e recuperou **${cura} HP**!`, ephemeral: true });
+                        await i.reply({ content: `Você usou uma Poção de Vida e recuperou **${cura} HP**!`, flags: 64 });
                     } else {
-                        await i.reply({ content: 'Você não tem poções de vida suficientes!', ephemeral: true });
+                        await i.reply({ content: 'Você não tem poções de vida suficientes!', flags: 64 });
                     }
                     return;
                 }

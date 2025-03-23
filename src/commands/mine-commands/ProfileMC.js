@@ -23,7 +23,7 @@ module.exports = {
             if (!fs.existsSync(iconPath)) {
                 return interaction.reply({
                     content: '❌ O ícone do servidor não foi encontrado.',
-                    ephemeral: true,
+                    flags: 64,
                 });
             }
 
@@ -71,7 +71,7 @@ module.exports = {
             console.error(error); // Log do erro para depuração
             await interaction.reply({
                 content: '❌ Não foi possível encontrar o jogador. Tente novamente.',
-                ephemeral: true,
+                flags: 64,
             });
         }
     },
