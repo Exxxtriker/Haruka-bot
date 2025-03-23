@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cls && npm i && node slashBuilder.js && nodemon app.js --ignore datagame.json --ignore config.json"
-  },
+  "start": "cls && yarn install && cls && node slashBuilder.js && nodemon app.js --ignore datagame.json --ignore config.json"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
