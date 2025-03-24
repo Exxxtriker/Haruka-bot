@@ -5,6 +5,8 @@ const {
 const fs = require('fs');
 const path = require('path');
 
+let isRadioActive = false; // Variable to track if radio is active
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('audio')
@@ -12,11 +14,14 @@ module.exports = {
         .addStringOption((option) => option.setName('audio')
             .setDescription('Escolha o áudio para tocar (sem extensão)')
             .setRequired(true))
-        .setDMPermission(false), // Desabilita o comando na DM
+        .setDMPermission(false),
 
     async execute(interaction) {
-        // Captura qualquer erro que ocorra durante a execução do comando
         try {
+            if (isRadioActive) {
+                return interaction.reply({ content: 'O comando /radio está ativo. Não é possível usar o comando /audio agora.', flags: 64 });
+            }
+
             const audioName = interaction.options.getString('audio');
             const voiceChannel = interaction.member.voice.channel;
             if (!voiceChannel) {
@@ -28,18 +33,9 @@ module.exports = {
                 return interaction.reply({ content: 'A pasta de áudios não foi encontrada!', flags: 64 });
             }
 
-            // Lista as extensões de áudio que o bot suporta
             const supportedExtensions = ['.mp3', '.ogg', '.wav'];
-
-            // Verifica se existe um arquivo com o nome fornecido + cada uma das extensões
-            let audioPath = null;
-            for (const ext of supportedExtensions) {
-                const fullPath = path.join(audioFolderPath, audioName + ext);
-                if (fs.existsSync(fullPath)) {
-                    audioPath = fullPath;
-                    break;
-                }
-            }
+            const audioPath = supportedExtensions.map((ext) => path.join(audioFolderPath, audioName + ext))
+                .find((fullPath) => fs.existsSync(fullPath));
 
             if (!audioPath) {
                 return interaction.reply({ content: `O áudio "${audioName}" não foi encontrado com as extensões suportadas!`, flags: 64 });
