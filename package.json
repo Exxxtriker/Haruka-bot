@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-  "start": "cls && yarn install && cls && node slashBuilder.js && nodemon app.js --ignore datagame.json --ignore config.json"
-},
+    "start": "cls && yarn install && cls && node slashBuilder.js && nodemon app.js --ignore datagame.json --ignore config.json"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "minecraft-server-util": "^5.4.4",
     "moment": "^2.30.1",
     "opusscript": "^0.0.8",
+    "sqlite3": "^5.1.7",
     "uuid": "^11.0.3"
   },
   "devDependencies": {
