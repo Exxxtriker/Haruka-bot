@@ -67,35 +67,38 @@ module.exports = {
                 user.petInventory = {};
             }
 
-            // Verificar se o jogador ganha um pet
-            const petRandom = Math.random() * 100;
-            cumulative = 0;
+            // Verificar se o jogador já possui um pet
             let pet = null;
+            let petId = null;
 
-            for (const [petName, chance] of Object.entries(petChances)) {
-                cumulative += chance;
-                if (petRandom <= cumulative) {
-                    pet = petName;
-                    break;
+            if (Object.keys(user.petInventory).length === 0) {
+                // Verificar se o jogador ganha um pet
+                const petRandom = Math.random() * 100;
+                cumulative = 0;
+
+                for (const [petName, chance] of Object.entries(petChances)) {
+                    cumulative += chance;
+                    if (petRandom <= cumulative) {
+                        pet = petName;
+                        break;
+                    }
                 }
-            }
 
-            let petId = null; // Inicializar petId como null
+                // Se o jogador ganhou um pet, adicionar ao inventário de pets
+                if (pet) {
+                    petId = uuidv4(); // Gerar um ID único para o pet
+                    user.petInventory[petId] = {
+                        id: petId,
+                        name: pet,
+                        hunger: 50,
+                        thirst: 50,
+                        affection: 50,
+                    };
 
-            // Se o jogador ganhou um pet, adicionar ao inventário de pets
-            if (pet) {
-                petId = uuidv4(); // Gerar um ID único para o pet
-                user.petInventory[petId] = {
-                    id: petId,
-                    name: pet,
-                    hunger: 50,
-                    thirst: 50,
-                    affection: 50,
-                };
-
-                // Se o jogador não tiver um pet ativo, definir o novo pet como ativo
-                if (!user.pet) {
-                    user.pet = user.petInventory[petId];
+                    // Se o jogador não tiver um pet ativo, definir o novo pet como ativo
+                    if (!user.pet) {
+                        user.pet = user.petInventory[petId];
+                    }
                 }
             }
 

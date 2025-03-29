@@ -16,7 +16,7 @@ module.exports = {
         // Carregar os dados do usuário do datagame.json
         const user = dataManager.getGameData()[userId];
 
-        if (!user || !user.petInventory || !user.pet) {
+        if (!user || !user.petInventory || Object.keys(user.petInventory).length === 0) {
             const embed = new EmbedBuilder()
                 .setColor('#FF0000')
                 .setTitle('⛔ Erro')
@@ -55,6 +55,7 @@ module.exports = {
                     { name: '🍖 Fome', value: `${pet.hunger}/100`, inline: true },
                     { name: '💧 Sede', value: `${pet.thirst}/100`, inline: true },
                     { name: '❤️ Afeto', value: `${pet.affection}/100`, inline: true },
+                    { name: '🆔 ID do Pet', value: `${petId}`, inline: false }, // Adicionado o ID do pet
                 );
 
             // Adicionar imagem grande se o pet for o Megalodon
