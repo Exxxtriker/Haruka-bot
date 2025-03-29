@@ -32,10 +32,10 @@ module.exports = {
 
             // Sistema de chances de drop
             const itemChances = {
-                ouro: 50, // 50% de chance
-                diamante: 40, // 40% de chance
-                joia: 30, // 30% de chance
-                'chave [null]': 1, // 1% de chance
+                Ouro: 50, // 50% de chance
+                Diamante: 40, // 40% de chance
+                Joia: 30, // 30% de chance
+                'Chave [null]': 1, // 1% de chance
             };
 
             const petChances = {
