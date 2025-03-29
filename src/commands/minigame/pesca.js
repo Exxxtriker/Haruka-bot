@@ -45,7 +45,7 @@ module.exports = {
             const user = data[userId];
 
             // Verificar se o usuário tem a vara de pesca
-            if (!user.inventory['Vara de pesca'] || user.inventory['Vara de pesca'] <= 0) {
+            if (!user.inventory['vara de pesca'] || user.inventory['vara de pesca'] <= 0) {
                 return interaction.reply({ content: '⛔ Você não tem uma vara de pesca! Adquira uma antes de tentar pescar.', flags: 64 });
             }
 

@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { v4: uuidv4 } = require('uuid'); // Para gerar IDs únicos
 const dataManager = require('../../utils/dataManager');
 
 module.exports = {
@@ -17,7 +19,7 @@ module.exports = {
             const user = dataManager.getGameData()[userId];
 
             // Verificar se o jogador possui um tesouro para abrir
-            const treasureKey = 'Tesouro';
+            const treasureKey = 'tesouro';
             if (!user.inventory[treasureKey] || user.inventory[treasureKey] <= 0) {
                 return interaction.reply({
                     content: '⛔ Você não possui nenhum tesouro para abrir!',
@@ -30,10 +32,18 @@ module.exports = {
 
             // Sistema de chances de drop
             const itemChances = {
-                Ouro: 50, // 50% de chance
-                Diamante: 40, // 40% de chance
-                Joia: 30, // 30% de chance
-                'Chave [NULL]': 1, // 1% de chance
+                ouro: 50, // 50% de chance
+                diamante: 40, // 40% de chance
+                joia: 30, // 30% de chance
+                'chave [null]': 1, // 1% de chance
+            };
+
+            const petChances = {
+                Megalodon: 100, // 0.01% de chance (Lendário)
+                Cachorro: 0.05, // 0.05% de chance (Normal)
+                Gato: 0.05, // 0.05% de chance (Normal)
+                'Peixe-Beta': 0.03, // 0.03% de chance (Exótico)
+                Axolot: 0.02, // 0.02% de chance (Exótico)
             };
 
             const items = Object.keys(itemChances);
@@ -49,6 +59,43 @@ module.exports = {
                 if (random <= cumulative) {
                     droppedItem = items[i];
                     break;
+                }
+            }
+
+            // Inicializar o inventário de pets, se necessário
+            if (!user.petInventory) {
+                user.petInventory = {};
+            }
+
+            // Verificar se o jogador ganha um pet
+            const petRandom = Math.random() * 100;
+            cumulative = 0;
+            let pet = null;
+
+            for (const [petName, chance] of Object.entries(petChances)) {
+                cumulative += chance;
+                if (petRandom <= cumulative) {
+                    pet = petName;
+                    break;
+                }
+            }
+
+            let petId = null; // Inicializar petId como null
+
+            // Se o jogador ganhou um pet, adicionar ao inventário de pets
+            if (pet) {
+                petId = uuidv4(); // Gerar um ID único para o pet
+                user.petInventory[petId] = {
+                    id: petId,
+                    name: pet,
+                    hunger: 50,
+                    thirst: 50,
+                    affection: 50,
+                };
+
+                // Se o jogador não tiver um pet ativo, definir o novo pet como ativo
+                if (!user.pet) {
+                    user.pet = user.petInventory[petId];
                 }
             }
 
@@ -69,7 +116,7 @@ module.exports = {
                     { name: 'Inventário atualizado', value: `${droppedItem}: ${user.inventory[droppedItem] || quantity}`, inline: true },
                 )
                 .setThumbnail(interaction.user.displayAvatarURL())
-                .setFooter({ text: 'Continue explorando para encontrar mais tesouros!' })
+                .setFooter({ text: pet ? `Parabéns! Você ganhou um pet: ${pet}! (ID: ${petId})` : 'Continue explorando para encontrar mais tesouros!' })
                 .setTimestamp();
 
             // Responder a interação com o embed

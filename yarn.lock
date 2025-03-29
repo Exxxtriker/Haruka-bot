@@ -801,6 +801,11 @@ discord-api-types@^0.37.114, discord-api-types@^0.37.119:
   resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.37.119.tgz"
   integrity sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==
 
+discord.js-collector-utils@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/discord.js-collector-utils/-/discord.js-collector-utils-1.9.1.tgz"
+  integrity sha512-X0/Xdx3kB0Ei4Tx+drujYTuMGzGwy8OagaIv7abnQ6dh/bNlR3SdF/uj5A9puHBDaPLdK2EkKEAFMpj0qf/CEA==
+
 discord.js@^14.16.3:
   version "14.18.0"
   resolved "https://registry.npmjs.org/discord.js/-/discord.js-14.18.0.tgz"
