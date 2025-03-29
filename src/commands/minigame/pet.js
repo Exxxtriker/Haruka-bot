@@ -68,7 +68,7 @@ module.exports = {
             } else if (pet.name === 'Peixe-Beta') {
                 embed.setImage('https://www.petz.com.br/blog/wp-content/uploads/2021/03/qual-peixe-posso-colocar-junto-com-o-beta2.jpg');
             } else if (pet.name === 'Axolot') {
-                embed.setImage('https://static.wikia.nocookie.net/unanything/images/2/2e/Axolotl.png/revision/latest?cb=20230509182537https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzk4cTliZGl0aGNydXI5NnBzcW1pZGgxdTgzbnAxbXZhNnRzbGJ6dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RLfzG8z3pVWlF5VJix/giphy.gif');
+                embed.setImage('https://i.pinimg.com/originals/1c/36/87/1c36870979d4001daa4f475164c1c203.gif');
             }
 
             return embed;
