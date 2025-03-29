@@ -60,6 +60,14 @@ module.exports = {
             // Adicionar imagem grande se o pet for o Megalodon
             if (pet.name === 'Megalodon') {
                 embed.setImage('https://static.wikia.nocookie.net/unanything/images/a/ad/Jeff_the_Shark.webp/revision/latest?cb=2');
+            } else if (pet.name === 'Cachorro') {
+                embed.setImage('https://www.patasdacasa.com.br/sites/default/files/styles/article_detail_1200/public/2024-08/golden-retriever-filhote.jpg.webp?itok=RpsL0yBq');
+            } else if (pet.name === 'Gato') {
+                embed.setImage('https://i0.statig.com.br/bancodeimagens/8s/9n/ug/8s9nugjvjc236jbubjhq50b5o.jpg');
+            } else if (pet.name === 'Peixe-Beta') {
+                embed.setImage('https://www.petz.com.br/blog/wp-content/uploads/2021/03/qual-peixe-posso-colocar-junto-com-o-beta2.jpg');
+            } else if (pet.name === 'Axolot') {
+                embed.setImage('https://static.wikia.nocookie.net/unanything/images/2/2e/Axolotl.png/revision/latest?cb=20230509182537https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzk4cTliZGl0aGNydXI5NnBzcW1pZGgxdTgzbnAxbXZhNnRzbGJ6dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RLfzG8z3pVWlF5VJix/giphy.gif');
             }
 
             return embed;
