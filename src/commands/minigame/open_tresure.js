@@ -19,7 +19,7 @@ module.exports = {
             const user = dataManager.getGameData()[userId];
 
             // Verificar se o jogador possui um tesouro para abrir
-            const treasureKey = 'tesouro';
+            const treasureKey = 'Tesouro';
             if (!user.inventory[treasureKey] || user.inventory[treasureKey] <= 0) {
                 return interaction.reply({
                     content: '⛔ Você não possui nenhum tesouro para abrir!',
