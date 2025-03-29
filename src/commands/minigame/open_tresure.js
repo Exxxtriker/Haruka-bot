@@ -39,11 +39,11 @@ module.exports = {
             };
 
             const petChances = {
-                Megalodon: 100, // 0.01% de chance (Lendário)
-                Cachorro: 0.05, // 0.05% de chance (Normal)
-                Gato: 0.05, // 0.05% de chance (Normal)
-                'Peixe-Beta': 0.03, // 0.03% de chance (Exótico)
-                Axolot: 0.02, // 0.02% de chance (Exótico)
+                Megalodon: 1, // 0.01% de chance (Lendário)
+                Cachorro: 9, // 0.05% de chance (Normal)
+                Gato: 7, // 0.05% de chance (Normal)
+                'Peixe-Beta': 10, // 0.03% de chance (Exótico)
+                Axolot: 6, // 0.02% de chance (Exótico)
             };
 
             const items = Object.keys(itemChances);
