@@ -110,11 +110,11 @@ module.exports = {
             } else if (action === 'alimentar') {
                 // Verificar os itens necessários para alimentar o pet
                 const foodRequirements = {
-                    Megalodon: { item: 'peixe comum', amount: 20 },
-                    Cachorro: { item: 'ração de cachorro', amount: 10 },
-                    Gato: { item: 'ração de gato', amount: 10 },
-                    'Peixe-Beta': { item: 'ração de peixe', amount: 5 },
-                    Axolot: { item: 'algas', amount: 5 },
+                    Megalodon: { item: 'Peixe comum', amount: 20 },
+                    Cachorro: { item: 'Ração de cachorro', amount: 10 },
+                    Gato: { item: 'Ração de gato', amount: 10 },
+                    'Peixe-Beta': { item: 'Ração de peixe', amount: 5 },
+                    Axolot: { item: 'Algas', amount: 5 },
                 };
 
                 const food = foodRequirements[pet.name];
