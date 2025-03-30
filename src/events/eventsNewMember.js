@@ -10,10 +10,6 @@ module.exports = {
 
             // Buscar o papel
             const memberRole = member.guild.roles.cache.find((role) => role.id === '1100053777907712101');
-            if (!memberRole) {
-                console.error('Papel com ID 1100053777907712101 não encontrado.');
-                return;
-            }
 
             // Adicionar o papel ao novo membro
             await member.roles.add(memberRole);
