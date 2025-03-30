@@ -4,6 +4,23 @@ const {
 } = require('discord.js');
 const dataManager = require('../../utils/dataManager');
 
+// Função para diminuir os status do pet ao longo do tempo
+const degradePetStatus = (userId, petId) => {
+    const user = dataManager.getGameData()[userId];
+    if (!user || !user.petInventory || !user.petInventory[petId]) return;
+
+    const pet = user.petInventory[petId];
+
+    // Reduzir os status do pet
+    pet.hunger = Math.max(0, pet.hunger - 5);
+    pet.thirst = Math.max(0, pet.thirst - 5);
+    pet.affection = Math.max(0, pet.affection - 2);
+
+    // Atualizar os dados do usuário
+    user.petInventory[petId] = pet;
+    dataManager.setGameData({ [userId]: user });
+};
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pet')
@@ -89,6 +106,9 @@ module.exports = {
 
         // Enviar a embed inicial com o menu suspenso
         await interaction.reply({ embeds: [createPetEmbed()], components: [row] });
+
+        // Chamar a função de degradação periodicamente
+        setInterval(() => degradePetStatus(userId, petId), 60 * 1000); // A cada 1 minuto
 
         // Criar coletor para o menu suspenso
         const collector = interaction.channel.createMessageComponentCollector({
