@@ -108,7 +108,7 @@ module.exports = {
         await interaction.reply({ embeds: [createPetEmbed()], components: [row] });
 
         // Chamar a função de degradação periodicamente
-        setInterval(() => degradePetStatus(userId, petId), 60 * 1000); // A cada 1 minuto
+        setInterval(() => degradePetStatus(userId, petId), 20 * 60 * 1000); // A cada 20 minutos
 
         // Criar coletor para o menu suspenso
         const collector = interaction.channel.createMessageComponentCollector({
@@ -118,10 +118,19 @@ module.exports = {
 
         collector.on('collect', async (menuInteraction) => {
             if (menuInteraction.user.id !== userId) {
-                return menuInteraction.reply({
-                    content: '⛔ Este menu não é para você!',
-                    flags: 64,
-                });
+                try {
+                    await menuInteraction.reply({
+                        content: '⛔ Este menu não é para você!',
+                        flags: 64,
+                    });
+                } catch (error) {
+                    if (error.code === 10062) {
+                        console.error('A interação expirou antes de responder.');
+                    } else {
+                        console.error('Erro ao responder à interação:', error);
+                    }
+                }
+                return;
             }
 
             const action = menuInteraction.values[0];
@@ -134,7 +143,11 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    console.error('Erro ao atualizar a mensagem:', error);
+                    if (error.code === 10062) {
+                        console.error('A interação expirou antes de atualizar.');
+                    } else {
+                        console.error('Erro ao atualizar a interação:', error);
+                    }
                 }
             } else if (action === 'alimentar') {
                 // Verificar os itens necessários para alimentar o pet
@@ -148,25 +161,52 @@ module.exports = {
 
                 const food = foodRequirements[pet.name];
                 if (!food) {
-                    return menuInteraction.reply({
-                        content: `⛔ Não foi possível determinar o alimento necessário para **${pet.name}**.`,
-                        flags: 64,
-                    });
+                    try {
+                        await menuInteraction.reply({
+                            content: `⛔ Não foi possível determinar o alimento necessário para **${pet.name}**.`,
+                            flags: 64,
+                        });
+                    } catch (error) {
+                        if (error.code === 10062) {
+                            console.error('A interação expirou antes de responder.');
+                        } else {
+                            console.error('Erro ao responder à interação:', error);
+                        }
+                    }
+                    return;
                 }
 
                 const userFoodAmount = user.inventory[food.item] || 0;
                 if (userFoodAmount < food.amount) {
-                    return menuInteraction.reply({
-                        content: `⛔ Você não possui comida suficiente para alimentar **${pet.name}**. Necessário: **${food.amount}x ${food.item}**.`,
-                        flags: 64,
-                    });
+                    try {
+                        await menuInteraction.reply({
+                            content: `⛔ Você não possui comida suficiente para alimentar **${pet.name}**. Necessário: **${food.amount}x ${food.item}**.`,
+                            flags: 64,
+                        });
+                    } catch (error) {
+                        if (error.code === 10062) {
+                            console.error('A interação expirou antes de responder.');
+                        } else {
+                            console.error('Erro ao responder à interação:', error);
+                        }
+                    }
+                    return;
                 }
 
                 if (pet.hunger >= 100) {
-                    return menuInteraction.reply({
-                        content: '🍖 Seu pet já está bem alimentado!',
-                        flags: 64,
-                    });
+                    try {
+                        await menuInteraction.reply({
+                            content: '🍖 Seu pet já está bem alimentado!',
+                            flags: 64,
+                        });
+                    } catch (error) {
+                        if (error.code === 10062) {
+                            console.error('A interação expirou antes de responder.');
+                        } else {
+                            console.error('Erro ao responder à interação:', error);
+                        }
+                    }
+                    return;
                 }
 
                 // Consumir a comida e alimentar o pet
@@ -182,14 +222,27 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    console.error('Erro ao atualizar a mensagem:', error);
+                    if (error.code === 10062) {
+                        console.error('A interação expirou antes de atualizar.');
+                    } else {
+                        console.error('Erro ao atualizar a interação:', error);
+                    }
                 }
             } else if (action === 'hidratar') {
                 if (pet.thirst >= 100) {
-                    return menuInteraction.reply({
-                        content: '💧 Seu pet já está bem hidratado!',
-                        flags: 64,
-                    });
+                    try {
+                        await menuInteraction.reply({
+                            content: '💧 Seu pet já está bem hidratado!',
+                            flags: 64,
+                        });
+                    } catch (error) {
+                        if (error.code === 10062) {
+                            console.error('A interação expirou antes de responder.');
+                        } else {
+                            console.error('Erro ao responder à interação:', error);
+                        }
+                    }
+                    return;
                 }
                 pet.thirst = Math.min(100, pet.thirst + 20);
                 user.petInventory[petId] = pet; // Atualizar no inventário
@@ -201,14 +254,27 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    console.error('Erro ao atualizar a mensagem:', error);
+                    if (error.code === 10062) {
+                        console.error('A interação expirou antes de atualizar.');
+                    } else {
+                        console.error('Erro ao atualizar a interação:', error);
+                    }
                 }
             } else if (action === 'brincar') {
                 if (pet.affection >= 100) {
-                    return menuInteraction.reply({
-                        content: '❤️ Seu pet já está muito feliz!',
-                        flags: 64,
-                    });
+                    try {
+                        await menuInteraction.reply({
+                            content: '❤️ Seu pet já está muito feliz!',
+                            flags: 64,
+                        });
+                    } catch (error) {
+                        if (error.code === 10062) {
+                            console.error('A interação expirou antes de responder.');
+                        } else {
+                            console.error('Erro ao responder à interação:', error);
+                        }
+                    }
+                    return;
                 }
                 pet.affection = Math.min(100, pet.affection + 20);
                 user.petInventory[petId] = pet; // Atualizar no inventário
@@ -220,7 +286,11 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    console.error('Erro ao atualizar a mensagem:', error);
+                    if (error.code === 10062) {
+                        console.error('A interação expirou antes de atualizar.');
+                    } else {
+                        console.error('Erro ao atualizar a interação:', error);
+                    }
                 }
             }
         });
