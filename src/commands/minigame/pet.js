@@ -124,11 +124,11 @@ module.exports = {
                         flags: 64,
                     });
                 } catch (error) {
-                    if (error.code === 10062) {
-                        console.error('A interação expirou antes de responder.');
-                    } else {
-                        console.error('Erro ao responder à interação:', error);
+                    if (error.code === 10062 || error.code === 10008) {
+                        // Ignorar erros de interação expirada ou mensagem não encontrada
+                        return;
                     }
+                    console.error('Erro ao processar a interação:', error);
                 }
                 return;
             }
@@ -143,11 +143,11 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    if (error.code === 10062) {
-                        console.error('A interação expirou antes de atualizar.');
-                    } else {
-                        console.error('Erro ao atualizar a interação:', error);
+                    if (error.code === 10062 || error.code === 10008) {
+                        // Ignorar erros de interação expirada ou mensagem não encontrada
+                        return;
                     }
+                    console.error('Erro ao processar a interação:', error);
                 }
             } else if (action === 'alimentar') {
                 // Verificar os itens necessários para alimentar o pet
@@ -167,11 +167,11 @@ module.exports = {
                             flags: 64,
                         });
                     } catch (error) {
-                        if (error.code === 10062) {
-                            console.error('A interação expirou antes de responder.');
-                        } else {
-                            console.error('Erro ao responder à interação:', error);
+                        if (error.code === 10062 || error.code === 10008) {
+                            // Ignorar erros de interação expirada ou mensagem não encontrada
+                            return;
                         }
+                        console.error('Erro ao processar a interação:', error);
                     }
                     return;
                 }
@@ -184,11 +184,11 @@ module.exports = {
                             flags: 64,
                         });
                     } catch (error) {
-                        if (error.code === 10062) {
-                            console.error('A interação expirou antes de responder.');
-                        } else {
-                            console.error('Erro ao responder à interação:', error);
+                        if (error.code === 10062 || error.code === 10008) {
+                            // Ignorar erros de interação expirada ou mensagem não encontrada
+                            return;
                         }
+                        console.error('Erro ao processar a interação:', error);
                     }
                     return;
                 }
@@ -200,11 +200,11 @@ module.exports = {
                             flags: 64,
                         });
                     } catch (error) {
-                        if (error.code === 10062) {
-                            console.error('A interação expirou antes de responder.');
-                        } else {
-                            console.error('Erro ao responder à interação:', error);
+                        if (error.code === 10062 || error.code === 10008) {
+                            // Ignorar erros de interação expirada ou mensagem não encontrada
+                            return;
                         }
+                        console.error('Erro ao processar a interação:', error);
                     }
                     return;
                 }
@@ -222,11 +222,11 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    if (error.code === 10062) {
-                        console.error('A interação expirou antes de atualizar.');
-                    } else {
-                        console.error('Erro ao atualizar a interação:', error);
+                    if (error.code === 10062 || error.code === 10008) {
+                        // Ignorar erros de interação expirada ou mensagem não encontrada
+                        return;
                     }
+                    console.error('Erro ao processar a interação:', error);
                 }
             } else if (action === 'hidratar') {
                 if (pet.thirst >= 100) {
@@ -236,11 +236,11 @@ module.exports = {
                             flags: 64,
                         });
                     } catch (error) {
-                        if (error.code === 10062) {
-                            console.error('A interação expirou antes de responder.');
-                        } else {
-                            console.error('Erro ao responder à interação:', error);
+                        if (error.code === 10062 || error.code === 10008) {
+                            // Ignorar erros de interação expirada ou mensagem não encontrada
+                            return;
                         }
+                        console.error('Erro ao processar a interação:', error);
                     }
                     return;
                 }
@@ -254,11 +254,11 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    if (error.code === 10062) {
-                        console.error('A interação expirou antes de atualizar.');
-                    } else {
-                        console.error('Erro ao atualizar a interação:', error);
+                    if (error.code === 10062 || error.code === 10008) {
+                        // Ignorar erros de interação expirada ou mensagem não encontrada
+                        return;
                     }
+                    console.error('Erro ao processar a interação:', error);
                 }
             } else if (action === 'brincar') {
                 if (pet.affection >= 100) {
@@ -268,11 +268,11 @@ module.exports = {
                             flags: 64,
                         });
                     } catch (error) {
-                        if (error.code === 10062) {
-                            console.error('A interação expirou antes de responder.');
-                        } else {
-                            console.error('Erro ao responder à interação:', error);
+                        if (error.code === 10062 || error.code === 10008) {
+                            // Ignorar erros de interação expirada ou mensagem não encontrada
+                            return;
                         }
+                        console.error('Erro ao processar a interação:', error);
                     }
                     return;
                 }
@@ -286,11 +286,11 @@ module.exports = {
                         components: [row],
                     });
                 } catch (error) {
-                    if (error.code === 10062) {
-                        console.error('A interação expirou antes de atualizar.');
-                    } else {
-                        console.error('Erro ao atualizar a interação:', error);
+                    if (error.code === 10062 || error.code === 10008) {
+                        // Ignorar erros de interação expirada ou mensagem não encontrada
+                        return;
                     }
+                    console.error('Erro ao processar a interação:', error);
                 }
             }
         });
@@ -302,10 +302,10 @@ module.exports = {
                 await interaction.editReply({ components: [disabledRow] });
             } catch (error) {
                 if (error.code === 10008) {
-                    console.error('A mensagem original não foi encontrada (Unknown Message).');
-                } else {
-                    console.error('Erro ao desativar o menu:', error);
+                    // Ignorar erro de mensagem não encontrada
+                    return;
                 }
+                console.error('Erro ao desativar o menu:', error);
             }
         });
     },
