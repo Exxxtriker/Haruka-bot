@@ -108,7 +108,7 @@ module.exports = {
         await interaction.reply({ embeds: [createPetEmbed()], components: [row] });
 
         // Chamar a função de degradação periodicamente
-        setInterval(() => degradePetStatus(userId, petId), 20 * 60 * 1000); // A cada 20 minutos
+        setInterval(() => degradePetStatus(userId, petId), 50 * 60 * 1000); // A cada 20 minutos
 
         // Criar coletor para o menu suspenso
         const collector = interaction.channel.createMessageComponentCollector({
