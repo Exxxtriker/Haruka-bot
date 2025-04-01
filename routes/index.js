@@ -284,4 +284,26 @@ router.get('/api/commands', async (req, res) => {
     }
 });
 
+router.get('/api/bot-profile', (req, res) => {
+    const { bot } = req.app.locals;
+
+    if (!bot || !bot.readyAt) {
+        return res.status(500).json({ error: 'Bot is not ready. Please try again later.' });
+    }
+
+    const avatarURL = bot.user.displayAvatarURL({ dynamic: true, size: 128 });
+    const name = bot.user.username;
+    const { id } = bot.user;
+    const servers = bot.guilds.cache.size;
+    const users = bot.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+    const { ping } = bot.ws;
+    const createdAt = bot.user.createdAt.toLocaleDateString();
+    const uptime = `${Math.floor(bot.uptime / 3600000)}h ${Math.floor((bot.uptime % 3600000) / 60000)}m`;
+    const memoryUsage = `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`;
+
+    res.json({
+        avatarURL, name, id, servers, users, ping, createdAt, uptime, memoryUsage,
+    });
+});
+
 module.exports = router;

@@ -205,3 +205,24 @@ body {
     color: white;
     word-wrap: break-word;
 }
+
+.scrollable-content {
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox: Make the scrollbar thin */
+    scrollbar-color: purple #2a1a1a; /* For Firefox: Purple thumb and dark track */
+}
+
+/* For WebKit-based browsers (Chrome, Edge, Safari) */
+.scrollable-content::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background: #2a1a1a; /* Dark background for the track */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background-color: purple; /* Purple color for the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners for the thumb */
+    border: 2px solid #2a1a1a; /* Add a border to match the track */
+}

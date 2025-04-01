@@ -41,13 +41,32 @@
                 </li>
             </ul>
         </aside>
-        <main class="main-content">
+        <main class="main-content scrollable-content">
             <header class="header">
                 <div class="welcome-container">
                     <h1>Bem-vindo(a), Haruka Harano</h1>
                 </div>
             </header>
             <section class="content">
+                <!-- Bot Profile Container -->
+                <div class="bot-profile-container">
+                    <div class="title-container">
+                        <h3>Perfil do Bot</h3>
+                    </div>
+                    <div class="bot-profile-content">
+                        <img id="bot-avatar" alt="Bot Avatar" class="bot-avatar">
+                        <div class="bot-details">
+                            <p><strong>Nome:</strong> <span id="bot-name"></span></p>
+                            <p><strong>ID:</strong> <span id="bot-id"></span></p>
+                            <p><strong>Servidores:</strong> <span id="bot-servers"></span></p>
+                            <p><strong>Usuários Monitorados:</strong> <span id="bot-users"></span></p>
+                            <p><strong>Ping:</strong> <span id="bot-ping"></span> ms</p>
+                            <p><strong>Data de Criação:</strong> <span id="bot-created"></span></p>
+                            <p><strong>Tempo de Atividade:</strong> <span id="bot-uptime"></span></p>
+                            <p><strong>Uso de Memória:</strong> <span id="bot-memory"></span></p>
+                        </div>
+                    </div>
+                </div>
                 <div class="commands-container">
                     <div class="title-container" onclick="toggleCommands()">
                         <h3>Comandos Carregados</h3>
@@ -78,6 +97,22 @@
                         }
                     }
                 }
+
+                // Fetch bot profile data
+                fetch('/api/bot-profile')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('bot-avatar').src = data.avatarURL || '/images/default-bot-icon.png';
+                        document.getElementById('bot-name').textContent = data.name;
+                        document.getElementById('bot-id').textContent = data.id;
+                        document.getElementById('bot-servers').textContent = data.servers;
+                        document.getElementById('bot-users').textContent = data.users;
+                        document.getElementById('bot-ping').textContent = data.ping;
+                        document.getElementById('bot-created').textContent = data.createdAt;
+                        document.getElementById('bot-uptime').textContent = data.uptime;
+                        document.getElementById('bot-memory').textContent = data.memoryUsage;
+                    })
+                    .catch(error => console.error('Error fetching bot profile:', error));
             </script>
         </main>
     </div>
