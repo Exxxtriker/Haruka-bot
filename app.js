@@ -68,7 +68,12 @@ function isAuthenticated(req, res, next) {
 
 // Rotas
 app.get('/', isAuthenticated, (req, res) => {
-    res.render('home', { botName: client.user?.username || 'Bot', servers: client.guilds.cache.size, users: client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0) });
+    res.render('home', {
+        botName: client.user?.username || 'Bot',
+        servers: client.guilds.cache.size,
+        users: client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0),
+        serversLink: '/servers', // Add link to servers page
+    });
 });
 
 app.get('/login', (req, res) => {

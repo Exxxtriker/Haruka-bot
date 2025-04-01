@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servidores</title>
+    <link rel="stylesheet" href="/styles/servers.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="bot-icon-container">
+                <img src="/images/bot-profile.webp" alt="Bot Icon" class="bot-icon">
+            </div>
+            <h2>Menu</h2>
+            <ul>
+                <li>
+                    <div class="sidebar-option">
+                        <a href="/home">🏠 Home</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="sidebar-option">
+                        <a href="/dashboard">📊 Dashboard</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="sidebar-option">
+                        <a href="/minigame">🎮 Minigame</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="sidebar-option">
+                        <a href="/servers">🌐 Servidores</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="sidebar-option">
+                        <a href="/logout">🚪 Sair</a>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <div class="welcome-container">
+                    <h1>Servidores</h1>
+                </div>
+            </header>
+            <section class="content">
+                <ul>
+                    <% servers.forEach(server => { %>
+                        <li class="server-container" onclick="toggleMembers('<%= server.id %>')">
+                            <img src="<%= server.iconURL || '/images/default-server-icon.png' %>" alt="Server Icon" class="server-icon">
+                            <strong><%= server.name %></strong> (ID: <%= server.id %>)
+                        </li>
+                        <ul id="members-<%= server.id %>" class="members-list" style="max-height: 0; overflow: hidden;"></ul>
+                    <% }); %>
+                </ul>
+            </section>
+            <script>
+                function toggleMembers(serverId) {
+                    const membersList = document.getElementById(`members-${serverId}`);
+                    if (membersList.style.maxHeight) {
+                        membersList.style.maxHeight = null; // Retract the list
+                    } else {
+                        fetch(`/servers/${serverId}/members`)
+                            .then(response => response.json())
+                            .then(data => {
+                                membersList.innerHTML = data.members.map(member => `
+                                    <li class="member-item">
+                                        <img src="${member.avatarURL || '/images/default-user-icon.png'}" alt="User Avatar" class="member-avatar">
+                                        <span>${member.username}</span>
+                                    </li>
+                                `).join('');
+                                membersList.style.maxHeight = membersList.scrollHeight + "px"; // Expand the list
+                            })
+                            .catch(error => console.error('Error fetching members:', error));
+                    }
+                }
+            </script>
+        </main>
+    </div>
+</body>
+</html>

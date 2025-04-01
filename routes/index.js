@@ -192,4 +192,35 @@ router.get('/minigame/excel', async (req, res) => {
     res.end();
 });
 
+router.get('/servers', (req, res) => {
+    const { bot } = req.app.locals;
+
+    if (!bot || !bot.readyAt) {
+        return res.status(500).send('Bot is not ready. Please try again later.');
+    }
+
+    const servers = bot.guilds.cache.map((guild) => ({
+        id: guild.id,
+        name: guild.name,
+        iconURL: guild.iconURL({ dynamic: true, size: 64 }), // Fetch server icon URL
+    }));
+
+    res.render('servers', { servers });
+});
+
+router.get('/servers/:id/members', (req, res) => {
+    const { bot } = req.app.locals;
+    const guild = bot.guilds.cache.get(req.params.id);
+
+    if (!guild) {
+        return res.status(404).json({ error: 'Servidor não encontrado' });
+    }
+
+    const members = guild.members.cache.map((member) => ({
+        username: member.user.username,
+        avatarURL: member.user.displayAvatarURL({ dynamic: true, size: 64 }),
+    }));
+    res.json({ members });
+});
+
 module.exports = router;
