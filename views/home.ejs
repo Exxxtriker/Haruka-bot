@@ -48,8 +48,37 @@
                 </div>
             </header>
             <section class="content">
-                <!-- Content removed -->
+                <div class="commands-container">
+                    <div class="title-container" onclick="toggleCommands()">
+                        <h3>Comandos Carregados</h3>
+                    </div>
+                    <ul class="commands-list" id="commands-list"></ul>
+                </div>
             </section>
+            <script>
+                function toggleCommands() {
+                    const commandsList = document.getElementById('commands-list');
+                    if (commandsList.style.maxHeight) {
+                        commandsList.style.maxHeight = null; // Retract the list
+                    } else {
+                        if (!commandsList.hasChildNodes()) {
+                            fetch('/api/commands')
+                                .then(response => response.json())
+                                .then(data => {
+                                    commandsList.innerHTML = data.commands.map(command => `
+                                        <li class="command-item">
+                                            <strong>${command.name}</strong> = ${command.description}
+                                        </li>
+                                    `).join('');
+                                    commandsList.style.maxHeight = commandsList.scrollHeight + "px"; // Expand the list
+                                })
+                                .catch(error => console.error('Error fetching commands:', error));
+                        } else {
+                            commandsList.style.maxHeight = commandsList.scrollHeight + "px"; // Expand the list
+                        }
+                    }
+                }
+            </script>
         </main>
     </div>
 </body>

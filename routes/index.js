@@ -25,6 +25,7 @@ router.get('/home', (req, res) => {
     const { ping } = bot.ws; // Bot ping
     const monitoredUsers = bot.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0); // Total users being monitored
     const servers = bot.guilds.cache.map((guild) => guild.name); // List of server names
+    const commands = bot.commands.map((cmd) => cmd.name); // Get the names of all commands
 
     botLogger('HOME_PAGE', { ping, monitoredUsers, serversCount: servers.length });
 
@@ -36,7 +37,7 @@ router.get('/home', (req, res) => {
     };
 
     res.render('home', {
-        ping, monitoredUsers, servers, osInfo,
+        ping, monitoredUsers, servers, osInfo, commands,
     });
 });
 
@@ -256,6 +257,30 @@ router.get('/servers/:id/members', async (req, res) => {
             console.error(`Failed to fetch members for guild ${guild.id}:`, error.message);
         }
         res.status(500).json({ error: 'Failed to fetch members. Please try again later.' });
+    }
+});
+
+router.get('/api/commands', async (req, res) => {
+    const { bot } = req.app.locals; // Access the bot instance
+
+    if (!bot || !bot.readyAt) {
+        return res.status(500).json({ error: 'Bot is not ready. Please try again later.' });
+    }
+
+    try {
+        // Fetch global application commands using Discord API
+        const commands = await bot.application.commands.fetch();
+        const commandDetails = commands
+            .map(command => ({
+                name: command.name,
+                description: command.description,
+            }))
+            .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically by name
+
+        res.json({ commands: commandDetails });
+    } catch (error) {
+        console.error('Error fetching commands:', error);
+        res.status(500).json({ error: 'Failed to fetch commands. Please try again later.' });
     }
 });
 

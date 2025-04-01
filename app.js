@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable max-len */
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, Collection } = require('discord.js'); // Add Collection
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -23,6 +23,12 @@ const client = new Client({
         GatewayIntentBits.GuildVoiceStates,
     ],
 });
+
+// Initialize a Collection to store commands
+client.commands = new Collection();
+
+// Load commands into the Collection
+require('./src/handlers/commandsHandler')(client);
 
 client.commandsExecuted = 0; // Initialize commandsExecuted
 client.messagesProcessed = 0; // Initialize messagesProcessed
@@ -105,7 +111,6 @@ client.once('ready', () => {
 });
 
 require('./src/handlers/eventsHandler')(client);
-require('./src/handlers/commandsHandler')(client);
 require('./src/handlers/modalHadler')(client);
 
 const server = http.createServer(app); // Create an HTTP server for WebSocket support

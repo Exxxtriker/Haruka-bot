@@ -268,3 +268,54 @@ body {
     margin: 0;
     text-align: center;
 }
+
+.commands-container {
+    background-color: #2a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px 5px rgba(128, 0, 128, 0.5);
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.commands-container .title-container {
+    cursor: pointer;
+    background-color: #3a2a2a;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.commands-container .title-container h3 {
+    font-size: 20px;
+    color: #d4a373;
+    margin: 0;
+}
+
+.commands-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0; /* Start collapsed */
+    overflow: hidden; /* Hide overflowing content */
+    transition: max-height 0.3s ease-out; /* Smooth sliding effect */
+}
+
+.command-item {
+    background-color: #1e1e1e;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    text-align: left; /* Align text to the left for better readability */
+    line-height: 1.5; /* Improve readability */
+}
+
+.command-item strong {
+    color: #d4a373; /* Highlight the command name */
+}
