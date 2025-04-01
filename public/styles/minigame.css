@@ -1,7 +1,7 @@
 body {
     background-color: #1c1212;
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: 'Cinzel', serif; /* Medieval-style font */
     margin: 0;
     padding: 0;
     display: flex;
