@@ -58,13 +58,28 @@ body {
     padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow effect */
 }
 
 .sidebar ul li a:hover {
-    background-color: purple;
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background-color: purple; /* Highlight on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+.sidebar-option {
+    background-color: #2a1a1a; /* Match sidebar background */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Space between options */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+.sidebar-option:hover {
+    background-color: purple; /* Highlight on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
 }
 
 .main-content {

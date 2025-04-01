@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const os = require('os'); // For memory usage
 const express = require('express');
 const fs = require('fs');
@@ -122,15 +123,30 @@ router.get('/minigame', async (req, res) => {
     const players = await Promise.all(
         Object.entries(playersData).map(async ([id, player]) => {
             const totalItems = Object.values(player.inventory).reduce((sum, quantity) => sum + quantity, 0);
-            let username = id; // Default to ID if username cannot be fetched
+            let displayName = id; // Default to ID if displayName cannot be fetched
             try {
-                const user = await bot.users.fetch(id);
-                username = user.username;
-            } catch (error) {
-                console.error(`Failed to fetch username for ID ${id}:`, error);
+                // Attempt to fetch the user from all guilds the bot is in
+                for (const guild of bot.guilds.cache.values()) {
+                    try {
+                        const guildMember = await guild.members.fetch(id);
+                        displayName = guildMember?.displayName || guildMember?.user.username || id;
+                        break; // Stop searching once the user is found
+                    } catch (guildError) {
+                        if (guildError.code !== 10007) { // Suppress "Unknown Member" logs
+                            console.warn(`Failed to fetch member ${id} in guild ${guild.id}:`, guildError.message);
+                        }
+                    }
+                }
+                // Fallback to fetching the user directly if not found in any guild
+                if (displayName === id) {
+                    const user = await bot.users.fetch(id);
+                    displayName = user.username; // Use username if available
+                }
+            } catch (userError) {
+                console.warn(`Failed to fetch user for ID ${id}:`, userError.message);
             }
             return {
-                username,
+                displayName,
                 coins: player.coins,
                 totalItems,
                 inventory: player.inventory,
@@ -208,19 +224,35 @@ router.get('/servers', (req, res) => {
     res.render('servers', { servers });
 });
 
-router.get('/servers/:id/members', (req, res) => {
+router.get('/servers/:id/members', async (req, res) => {
     const { bot } = req.app.locals;
+
+    if (!bot || !bot.readyAt) {
+        return res.status(500).json({ error: 'Bot is not ready. Please try again later.' });
+    }
+
     const guild = bot.guilds.cache.get(req.params.id);
 
     if (!guild) {
         return res.status(404).json({ error: 'Servidor não encontrado' });
     }
 
-    const members = guild.members.cache.map((member) => ({
-        username: member.user.username,
-        avatarURL: member.user.displayAvatarURL({ dynamic: true, size: 64 }),
-    }));
-    res.json({ members });
+    try {
+        // Fetch all members explicitly
+        await guild.members.fetch();
+
+        const members = guild.members.cache.map((member) => ({
+            displayName: member.displayName || member.user.username, // Use displayName or fallback to username
+            avatarURL: member.user.displayAvatarURL({ dynamic: true, size: 64 }),
+        }));
+
+        res.json({ members });
+    } catch (error) {
+        if (error.code !== 10007) { // Suppress "Unknown Member" logs
+            console.error(`Failed to fetch members for guild ${guild.id}:`, error.message);
+        }
+        res.status(500).json({ error: 'Failed to fetch members. Please try again later.' });
+    }
 });
 
 module.exports = router;

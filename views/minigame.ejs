@@ -67,7 +67,7 @@
                         <tbody>
                             <% players.forEach(player => { %>
                                 <tr>
-                                    <td><%= player.username %></td>
+                                    <td><%= player.displayName %></td>
                                     <td><%= player.coins %></td>
                                     <% Array.from(allItems).sort().forEach(item => { %>
                                         <td><%= player.inventory[item] || 0 %></td>

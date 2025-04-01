@@ -70,7 +70,7 @@
                                 membersList.innerHTML = data.members.map(member => `
                                     <li class="member-item">
                                         <img src="${member.avatarURL || '/images/default-user-icon.png'}" alt="User Avatar" class="member-avatar">
-                                        <span>${member.username}</span>
+                                        <span>${member.displayName}</span>
                                     </li>
                                 `).join('');
                                 membersList.style.maxHeight = membersList.scrollHeight + "px"; // Expand the list

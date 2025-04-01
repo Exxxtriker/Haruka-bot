@@ -211,29 +211,6 @@ tbody tr:hover {
     background-color: #444; /* Highlight row on hover */
 }
 
-.container {
-    background-color: #2a1a1a; /* Darker background for containers */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px 5px rgba(128, 0, 128, 0.5); /* Add purple aura */
-    text-align: center;
-    width: 100%; /* Ensure containers fit within the grid */
-    max-width: 300px; /* Optional: Limit the width of each container */
-    word-wrap: break-word; /* Handle long text gracefully */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    min-height: 150px; /* Ensure a minimum height */
-    height: auto; /* Allow height to adjust dynamically */
-    transition: transform 0.3s, box-shadow 0.3s; /* Add hover effects */
-}
-
-.container:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px 8px rgba(128, 0, 128, 0.7); /* Enhance purple aura on hover */
-}
-
 .welcome-container {
     background-color: #2a1a1a; /* Darker background for the welcome container */
     padding: 20px;
