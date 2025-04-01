@@ -49,53 +49,33 @@
                 </div>
             </header>
             <section class="content">
-                <div class="table-container">
-                    <table id="minigameTable">
-                        <thead>
-                            <tr>
-                                <th onclick="sortTable(0)">Nome do Jogador</th>
-                                <th onclick="sortTable(1)">Coins</th>
-                                <% const allItems = new Set(); %>
-                                <% players.forEach(player => { %>
-                                    <% Object.keys(player.inventory).forEach(item => allItems.add(item)); %>
+                <div class="players-container">
+                    <% players.forEach(player => { %>
+                        <div class="player-card">
+                            <div class="player-header" onclick="toggleInventory('<%= player.displayName %>')">
+                                <img src="<%= player.avatarURL %>" alt="Avatar" class="player-avatar">
+                                <span class="player-name"><%= player.displayName %></span>
+                            </div>
+                            <div class="player-inventory" id="inventory-<%= player.displayName %>">
+                                <div class="item-container">
+                                    <span class="item-name">Coins</span>
+                                    <span class="item-quantity"><%= player.coins %></span>
+                                </div>
+                                <% Object.entries(player.inventory).forEach(([item, quantity]) => { %>
+                                    <div class="item-container">
+                                        <span class="item-name"><%= item %></span>
+                                        <span class="item-quantity"><%= quantity %></span>
+                                    </div>
                                 <% }); %>
-                                <% Array.from(allItems).sort().forEach((item, index) => { %>
-                                    <th onclick="sortTable('<%= index + 2 %>')"><%= item %></th>
-                                <% }); %>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% players.forEach(player => { %>
-                                <tr>
-                                    <td><%= player.displayName %></td>
-                                    <td><%= player.coins %></td>
-                                    <% Array.from(allItems).sort().forEach(item => { %>
-                                        <td><%= player.inventory[item] || 0 %></td>
-                                    <% }); %>
-                                </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
+                            </div>
+                        </div>
+                    <% }); %>
                 </div>
             </section>
             <script>
-                function sortTable(columnIndex) {
-                    const table = document.getElementById('minigameTable');
-                    const rows = Array.from(table.rows).slice(1); // Exclude the header row
-                    const isAscending = table.getAttribute('data-sort-order') !== 'asc';
-                    table.setAttribute('data-sort-order', isAscending ? 'asc' : 'desc');
-
-                    rows.sort((a, b) => {
-                        const aText = a.cells[columnIndex].textContent.trim();
-                        const bText = b.cells[columnIndex].textContent.trim();
-
-                        if (!isNaN(aText) && !isNaN(bText)) {
-                            return isAscending ? aText - bText : bText - aText;
-                        }
-                        return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
-                    });
-
-                    rows.forEach(row => table.tBodies[0].appendChild(row));
+                function toggleInventory(playerName) {
+                    const inventory = document.getElementById(`inventory-${playerName}`);
+                    inventory.style.display = inventory.style.display === 'none' ? 'block' : 'none';
                 }
             </script>
         </main>

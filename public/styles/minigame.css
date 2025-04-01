@@ -36,7 +36,7 @@ body {
 
 .sidebar h2 {
     font-size: 20px;
-    color: purple;
+    color: #d4a373; /* Changed to a more readable shade */
     margin-bottom: 20px;
     text-align: center;
 }
@@ -96,7 +96,7 @@ body {
 
 .header h1 {
     font-size: 32px;
-    color: purple;
+    color: #d4a373; /* Changed to a more readable shade */
 }
 
 .content table {
@@ -113,7 +113,7 @@ body {
 
 .content th {
     background-color: #2a1a1a;
-    color: purple;
+    color: #d4a373; /* Changed to a more readable shade */
     position: sticky; /* Keep the header row fixed */
     top: 0; /* Stick to the top of the table container */
     z-index: 2; /* Ensure it stays above other content */
@@ -124,7 +124,7 @@ body {
 
 .content thead th {
     background-color: #2a1a1a;
-    color: purple;
+    color: #d4a373; /* Changed to a more readable shade */
     position: sticky; /* Keep the header row fixed */
     top: 0; /* Stick to the top of the table container */
     z-index: 2; /* Ensure it stays above other content */
@@ -188,7 +188,7 @@ th, td {
 
 th {
     background-color: #2a1a1a;
-    color: purple;
+    color: #d4a373; /* Changed to a more readable shade */
     cursor: pointer; /* Indicate that headers are clickable */
     position: sticky; /* Keep headers visible while scrolling */
     top: 0;
@@ -224,4 +224,74 @@ tbody tr:hover {
     font-size: 32px;
     color: purple; /* Highlighted title */
     margin: 0;
+}
+
+.players-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.player-card {
+    background-color: #2a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.player-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #1e1e1e;
+    transition: background-color 0.3s;
+}
+
+.player-header:hover {
+    background-color: #444;
+}
+
+.player-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.player-name {
+    font-size: 18px;
+    color: white;
+}
+
+.player-inventory {
+    display: none;
+    padding: 10px;
+    background-color: #292929;
+    border-radius: 5px;
+}
+
+.item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    background-color: #1e1e1e;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.item-container:hover {
+    background-color: #444;
+}
+
+.item-name {
+    font-size: 14px;
+    color: #d4a373; /* Changed to a more readable shade */
+}
+
+.item-quantity {
+    font-size: 14px;
+    color: white;
 }

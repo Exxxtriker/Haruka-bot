@@ -124,12 +124,14 @@ router.get('/minigame', async (req, res) => {
         Object.entries(playersData).map(async ([id, player]) => {
             const totalItems = Object.values(player.inventory).reduce((sum, quantity) => sum + quantity, 0);
             let displayName = id; // Default to ID if displayName cannot be fetched
+            let avatarURL = null; // Default to null if avatarURL cannot be fetched
             try {
                 // Attempt to fetch the user from all guilds the bot is in
                 for (const guild of bot.guilds.cache.values()) {
                     try {
                         const guildMember = await guild.members.fetch(id);
                         displayName = guildMember?.displayName || guildMember?.user.username || id;
+                        avatarURL = guildMember?.user.displayAvatarURL({ dynamic: true, size: 64 }) || null;
                         break; // Stop searching once the user is found
                     } catch (guildError) {
                         if (guildError.code !== 10007) { // Suppress "Unknown Member" logs
@@ -141,12 +143,14 @@ router.get('/minigame', async (req, res) => {
                 if (displayName === id) {
                     const user = await bot.users.fetch(id);
                     displayName = user.username; // Use username if available
+                    avatarURL = user.displayAvatarURL({ dynamic: true, size: 64 }) || null;
                 }
             } catch (userError) {
                 console.warn(`Failed to fetch user for ID ${id}:`, userError.message);
             }
             return {
                 displayName,
+                avatarURL,
                 coins: player.coins,
                 totalItems,
                 inventory: player.inventory,
