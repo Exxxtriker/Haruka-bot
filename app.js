@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable max-len */
 const { Client, GatewayIntentBits, Collection } = require('discord.js'); // Add Collection
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const os = require('os'); // For system information
+// eslint-disable-next-line import/no-extraneous-dependencies
 const WebSocket = require('ws');
 const http = require('http');
 const { requestLogger, registerWebSocketClient, logToFile } = require('./logger'); // Import the request logger and WebSocket registration

@@ -271,7 +271,7 @@ router.get('/api/commands', async (req, res) => {
         // Fetch global application commands using Discord API
         const commands = await bot.application.commands.fetch();
         const commandDetails = commands
-            .map(command => ({
+            .map((command) => ({
                 name: command.name,
                 description: command.description,
             }))
