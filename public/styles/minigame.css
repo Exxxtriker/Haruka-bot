@@ -21,6 +21,19 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
+.bot-icon-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bot-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Make the icon circular */
+    border: 2px solid purple; /* Add a border around the icon */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
 .sidebar h2 {
     font-size: 20px;
     color: purple;
@@ -51,10 +64,29 @@ body {
     background-color: purple;
 }
 
+.sidebar-option {
+    background-color: #2a1a1a; /* Match sidebar background */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Space between options */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+.sidebar-option:hover {
+    background-color: purple; /* Highlight on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
 .main-content {
-    flex: 1;
+    flex: 1; /* Take up remaining space */
     padding: 20px;
     overflow-y: auto;
+    background-image: url('/images/BG2.jpg'); /* Corrected path to the image */
+    background-size: cover; /* Ensure the image covers the entire area */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
 .header {
@@ -177,4 +209,27 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
     background-color: #444; /* Highlight row on hover */
+}
+
+.container {
+    background-color: #2a1a1a; /* Darker background for containers */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px 5px rgba(128, 0, 128, 0.5); /* Add purple aura */
+    text-align: center;
+    width: 100%; /* Ensure containers fit within the grid */
+    max-width: 300px; /* Optional: Limit the width of each container */
+    word-wrap: break-word; /* Handle long text gracefully */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    min-height: 150px; /* Ensure a minimum height */
+    height: auto; /* Allow height to adjust dynamically */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add hover effects */
+}
+
+.container:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px 8px rgba(128, 0, 128, 0.7); /* Enhance purple aura on hover */
 }

@@ -454,3 +454,270 @@
 [2025-04-01T00:10:02.636Z] HTTP GET /minigame
 [2025-04-01T00:11:05.853Z] HTTP GET /minigame
 [2025-04-01T00:11:09.696Z] Message processed: Eu so mineroca
+[2025-04-01T00:13:19.061Z] HTTP GET /api/stats
+[2025-04-01T00:13:19.061Z] BOT EVENT: API_STATS - {"ping":140,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:13:19.859Z] HTTP GET /home
+[2025-04-01T00:13:19.860Z] BOT EVENT: HOME_PAGE - {"ping":140,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:13:19.895Z] HTTP GET /api/stats
+[2025-04-01T00:13:19.896Z] BOT EVENT: API_STATS - {"ping":140,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:13:23.754Z] HTTP GET /dashboard
+[2025-04-01T00:13:23.754Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:13:23.789Z] WebSocket client connected
+[2025-04-01T00:13:23.790Z] HTTP GET /api/dashboard
+[2025-04-01T00:13:23.791Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:13:51.918Z] HTTP GET /dashboard
+[2025-04-01T00:13:51.918Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:13:51.942Z] HTTP GET /api/dashboard
+[2025-04-01T00:13:51.943Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:13:51.944Z] WebSocket client connected
+[2025-04-01T00:14:03.457Z] HTTP GET /dashboard
+[2025-04-01T00:14:03.458Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:14:03.478Z] WebSocket client connected
+[2025-04-01T00:14:03.479Z] HTTP GET /api/dashboard
+[2025-04-01T00:14:03.480Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:14:08.299Z] HTTP GET /dashboard
+[2025-04-01T00:14:08.300Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:14:08.320Z] WebSocket client connected
+[2025-04-01T00:14:08.322Z] HTTP GET /api/dashboard
+[2025-04-01T00:14:08.322Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:14:09.890Z] HTTP GET /home
+[2025-04-01T00:14:09.891Z] BOT EVENT: HOME_PAGE - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:14:09.920Z] HTTP GET /api/stats
+[2025-04-01T00:14:09.921Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:14:58.124Z] HTTP GET /dashboard
+[2025-04-01T00:14:58.125Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:14:58.160Z] WebSocket client connected
+[2025-04-01T00:14:58.162Z] HTTP GET /api/dashboard
+[2025-04-01T00:14:58.162Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:14:59.642Z] HTTP GET /minigame
+[2025-04-01T00:15:01.452Z] HTTP GET /home
+[2025-04-01T00:15:01.453Z] BOT EVENT: HOME_PAGE - {"ping":155,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:15:01.493Z] HTTP GET /api/stats
+[2025-04-01T00:15:01.494Z] BOT EVENT: API_STATS - {"ping":155,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:15:31.158Z] HTTP GET /home
+[2025-04-01T00:15:31.159Z] BOT EVENT: HOME_PAGE - {"ping":131,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:15:31.183Z] HTTP GET /api/stats
+[2025-04-01T00:15:31.183Z] BOT EVENT: API_STATS - {"ping":131,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:15:40.154Z] HTTP GET /dashboard
+[2025-04-01T00:15:40.154Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:15:40.185Z] WebSocket client connected
+[2025-04-01T00:15:40.186Z] HTTP GET /api/dashboard
+[2025-04-01T00:15:40.186Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":3}
+[2025-04-01T00:15:45.698Z] HTTP GET /home
+[2025-04-01T00:15:45.698Z] BOT EVENT: HOME_PAGE - {"ping":131,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:15:45.728Z] HTTP GET /api/stats
+[2025-04-01T00:15:45.729Z] BOT EVENT: API_STATS - {"ping":131,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:17:05.615Z] HTTP GET /home
+[2025-04-01T00:17:05.616Z] BOT EVENT: HOME_PAGE - {"ping":136,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:17:05.643Z] HTTP GET /api/stats
+[2025-04-01T00:17:05.644Z] BOT EVENT: API_STATS - {"ping":136,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:18:19.048Z] HTTP GET /api/stats
+[2025-04-01T00:18:19.049Z] BOT EVENT: API_STATS - {"ping":135,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:18:55.480Z] HTTP GET /home
+[2025-04-01T00:18:55.480Z] BOT EVENT: HOME_PAGE - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:18:55.512Z] HTTP GET /path/to/image.jpg
+[2025-04-01T00:18:55.519Z] HTTP GET /api/stats
+[2025-04-01T00:18:55.519Z] BOT EVENT: API_STATS - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:18:59.291Z] HTTP GET /home
+[2025-04-01T00:18:59.292Z] BOT EVENT: HOME_PAGE - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:18:59.314Z] HTTP GET /api/stats
+[2025-04-01T00:18:59.315Z] BOT EVENT: API_STATS - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:00.209Z] HTTP GET /minigame
+[2025-04-01T00:19:00.243Z] HTTP GET /path/to/image.jpg
+[2025-04-01T00:19:01.138Z] HTTP GET /home
+[2025-04-01T00:19:01.138Z] BOT EVENT: HOME_PAGE - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:01.167Z] HTTP GET /api/stats
+[2025-04-01T00:19:01.167Z] BOT EVENT: API_STATS - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:15.753Z] HTTP GET /home
+[2025-04-01T00:19:15.753Z] BOT EVENT: HOME_PAGE - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:15.776Z] HTTP GET /api/stats
+[2025-04-01T00:19:15.777Z] BOT EVENT: API_STATS - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:15.777Z] HTTP GET /path/to/image.jpg
+[2025-04-01T00:19:26.301Z] HTTP GET /
+[2025-04-01T00:19:26.310Z] HTTP GET /login
+[2025-04-01T00:19:30.806Z] HTTP POST /login
+[2025-04-01T00:19:30.806Z] BOT EVENT: LOGIN - {"user":"admin"}
+[2025-04-01T00:19:30.810Z] HTTP GET /home
+[2025-04-01T00:19:30.811Z] BOT EVENT: HOME_PAGE - {"ping":-1,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:30.849Z] HTTP GET /api/stats
+[2025-04-01T00:19:30.850Z] BOT EVENT: API_STATS - {"ping":-1,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:30.853Z] HTTP GET /path/to/image.jpg
+[2025-04-01T00:19:33.850Z] HTTP GET /dashboard
+[2025-04-01T00:19:33.851Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:19:33.884Z] WebSocket client connected
+[2025-04-01T00:19:33.886Z] HTTP GET /api/dashboard
+[2025-04-01T00:19:33.886Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:19:33.887Z] HTTP GET /path/to/image.jpg
+[2025-04-01T00:19:36.401Z] HTTP GET /minigame
+[2025-04-01T00:19:36.436Z] HTTP GET /path/to/image.jpg
+[2025-04-01T00:19:38.737Z] HTTP GET /home
+[2025-04-01T00:19:38.737Z] BOT EVENT: HOME_PAGE - {"ping":133,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:19:38.767Z] HTTP GET /api/stats
+[2025-04-01T00:19:38.768Z] BOT EVENT: API_STATS - {"ping":133,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:21:39.080Z] HTTP GET /home
+[2025-04-01T00:21:39.080Z] BOT EVENT: HOME_PAGE - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:21:39.104Z] HTTP GET /api/stats
+[2025-04-01T00:21:39.105Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:21:42.953Z] HTTP GET /dashboard
+[2025-04-01T00:21:42.953Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:21:42.989Z] WebSocket client connected
+[2025-04-01T00:21:42.990Z] HTTP GET /api/dashboard
+[2025-04-01T00:21:42.990Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:21:44.969Z] HTTP GET /minigame
+[2025-04-01T00:21:52.018Z] HTTP GET /home
+[2025-04-01T00:21:52.019Z] BOT EVENT: HOME_PAGE - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:21:52.047Z] HTTP GET /api/stats
+[2025-04-01T00:21:52.048Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:21:59.681Z] HTTP GET /dashboard
+[2025-04-01T00:21:59.681Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:21:59.710Z] WebSocket client connected
+[2025-04-01T00:21:59.711Z] HTTP GET /api/dashboard
+[2025-04-01T00:21:59.712Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:22:07.673Z] HTTP GET /home
+[2025-04-01T00:22:07.674Z] BOT EVENT: HOME_PAGE - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:22:07.703Z] HTTP GET /api/stats
+[2025-04-01T00:22:07.703Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:22:55.898Z] HTTP GET /dashboard
+[2025-04-01T00:22:55.899Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:22:55.930Z] HTTP GET /api/dashboard
+[2025-04-01T00:22:55.930Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:22:55.932Z] WebSocket client connected
+[2025-04-01T00:22:56.993Z] HTTP GET /minigame
+[2025-04-01T00:22:58.562Z] HTTP GET /home
+[2025-04-01T00:22:58.563Z] BOT EVENT: HOME_PAGE - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:22:58.594Z] HTTP GET /api/stats
+[2025-04-01T00:22:58.594Z] BOT EVENT: API_STATS - {"ping":129,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:18.328Z] HTTP GET /home
+[2025-04-01T00:23:18.328Z] BOT EVENT: HOME_PAGE - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:18.352Z] HTTP GET /api/stats
+[2025-04-01T00:23:18.353Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:19.049Z] HTTP GET /api/stats
+[2025-04-01T00:23:19.049Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:42.605Z] HTTP GET /minigame
+[2025-04-01T00:23:43.609Z] HTTP GET /home
+[2025-04-01T00:23:43.609Z] BOT EVENT: HOME_PAGE - {"ping":134,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:43.638Z] HTTP GET /api/stats
+[2025-04-01T00:23:43.639Z] BOT EVENT: API_STATS - {"ping":134,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:45.081Z] HTTP GET /minigame
+[2025-04-01T00:23:46.290Z] HTTP GET /home
+[2025-04-01T00:23:46.290Z] BOT EVENT: HOME_PAGE - {"ping":134,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:46.320Z] HTTP GET /api/stats
+[2025-04-01T00:23:46.321Z] BOT EVENT: API_STATS - {"ping":134,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:23:47.201Z] HTTP GET /minigame
+[2025-04-01T00:23:49.121Z] HTTP GET /dashboard
+[2025-04-01T00:23:49.121Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:23:49.154Z] WebSocket client connected
+[2025-04-01T00:23:49.155Z] HTTP GET /api/dashboard
+[2025-04-01T00:23:49.155Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:24:16.053Z] HTTP GET /api/stats
+[2025-04-01T00:24:16.053Z] BOT EVENT: API_STATS - {"ping":134,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:24:54.795Z] HTTP GET /dashboard
+[2025-04-01T00:24:54.796Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:24:54.818Z] WebSocket client connected
+[2025-04-01T00:24:54.819Z] HTTP GET /api/dashboard
+[2025-04-01T00:24:54.819Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:25:01.466Z] HTTP GET /minigame
+[2025-04-01T00:25:09.547Z] HTTP GET /home
+[2025-04-01T00:25:09.547Z] BOT EVENT: HOME_PAGE - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:25:09.580Z] HTTP GET /api/stats
+[2025-04-01T00:25:09.581Z] BOT EVENT: API_STATS - {"ping":127,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:26:51.217Z] HTTP GET /minigame
+[2025-04-01T00:26:52.313Z] HTTP GET /home
+[2025-04-01T00:26:52.314Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:26:52.347Z] HTTP GET /api/stats
+[2025-04-01T00:26:52.347Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:26:53.915Z] HTTP GET /dashboard
+[2025-04-01T00:26:53.916Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:26:53.954Z] WebSocket client connected
+[2025-04-01T00:26:53.955Z] HTTP GET /api/dashboard
+[2025-04-01T00:26:53.956Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:26:56.986Z] HTTP GET /home
+[2025-04-01T00:26:56.986Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:26:57.016Z] HTTP GET /api/stats
+[2025-04-01T00:26:57.017Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:26:58.138Z] HTTP GET /minigame
+[2025-04-01T00:26:59.265Z] HTTP GET /home
+[2025-04-01T00:26:59.265Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:26:59.294Z] HTTP GET /api/stats
+[2025-04-01T00:26:59.295Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:27:00.801Z] HTTP GET /dashboard
+[2025-04-01T00:27:00.802Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:27:00.837Z] WebSocket client connected
+[2025-04-01T00:27:00.838Z] HTTP GET /api/dashboard
+[2025-04-01T00:27:00.838Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:27:03.248Z] HTTP GET /home
+[2025-04-01T00:27:03.249Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:27:03.280Z] HTTP GET /api/stats
+[2025-04-01T00:27:03.280Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:27:21.728Z] HTTP GET /home
+[2025-04-01T00:27:21.729Z] BOT EVENT: HOME_PAGE - {"ping":124,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:27:21.744Z] HTTP GET /images/bot-icon.png
+[2025-04-01T00:27:21.757Z] HTTP GET /api/stats
+[2025-04-01T00:27:21.757Z] BOT EVENT: API_STATS - {"ping":124,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:27:48.222Z] HTTP GET /minigame
+[2025-04-01T00:28:07.186Z] HTTP GET /home
+[2025-04-01T00:28:07.187Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:28:07.225Z] HTTP GET /api/stats
+[2025-04-01T00:28:07.226Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:28:10.312Z] HTTP GET /minigame
+[2025-04-01T00:28:11.710Z] HTTP GET /minigame
+[2025-04-01T00:28:14.304Z] HTTP GET /home
+[2025-04-01T00:28:14.305Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:28:14.335Z] HTTP GET /api/stats
+[2025-04-01T00:28:14.335Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:28:19.051Z] HTTP GET /api/stats
+[2025-04-01T00:28:19.051Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:29:16.053Z] HTTP GET /api/stats
+[2025-04-01T00:29:16.054Z] BOT EVENT: API_STATS - {"ping":132,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:30:04.402Z] HTTP GET /home
+[2025-04-01T00:30:04.402Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:30:04.429Z] HTTP GET /api/stats
+[2025-04-01T00:30:04.429Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:31:16.102Z] HTTP GET /home
+[2025-04-01T00:31:16.102Z] BOT EVENT: HOME_PAGE - {"ping":133,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:31:16.127Z] HTTP GET /api/stats
+[2025-04-01T00:31:16.127Z] BOT EVENT: API_STATS - {"ping":133,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:31:17.688Z] HTTP GET /dashboard
+[2025-04-01T00:31:17.689Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:31:17.725Z] WebSocket client connected
+[2025-04-01T00:31:17.727Z] HTTP GET /api/dashboard
+[2025-04-01T00:31:17.728Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:31:20.568Z] HTTP GET /minigame
+[2025-04-01T00:31:22.968Z] HTTP GET /home
+[2025-04-01T00:31:22.969Z] BOT EVENT: HOME_PAGE - {"ping":133,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:31:23.005Z] HTTP GET /api/stats
+[2025-04-01T00:31:23.005Z] BOT EVENT: API_STATS - {"ping":133,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:31:56.991Z] HTTP GET /
+[2025-04-01T00:31:57.023Z] HTTP GET /login
+[2025-04-01T00:31:57.377Z] HTTP GET /favicon.ico
+[2025-04-01T00:31:57.405Z] HTTP GET /favicon.ico
+[2025-04-01T00:32:05.109Z] HTTP POST /login
+[2025-04-01T00:32:05.110Z] BOT EVENT: LOGIN - {"user":"admin"}
+[2025-04-01T00:32:05.116Z] HTTP GET /home
+[2025-04-01T00:32:05.116Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:32:05.158Z] HTTP GET /api/stats
+[2025-04-01T00:32:05.159Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:32:18.601Z] HTTP GET /dashboard
+[2025-04-01T00:32:18.602Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:32:18.639Z] WebSocket client connected
+[2025-04-01T00:32:18.641Z] HTTP GET /api/dashboard
+[2025-04-01T00:32:18.641Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:32:25.026Z] HTTP GET /home
+[2025-04-01T00:32:25.027Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:32:25.067Z] HTTP GET /api/stats
+[2025-04-01T00:32:25.068Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:32:26.696Z] HTTP GET /minigame
+[2025-04-01T00:32:28.377Z] HTTP GET /home
+[2025-04-01T00:32:28.377Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:32:28.418Z] HTTP GET /api/stats
+[2025-04-01T00:32:28.418Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:32:30.063Z] HTTP GET /minigame
+[2025-04-01T00:33:17.039Z] HTTP GET /dashboard
+[2025-04-01T00:33:17.040Z] BOT EVENT: DASHBOARD_PAGE - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:33:17.072Z] WebSocket client connected
+[2025-04-01T00:33:17.075Z] HTTP GET /api/dashboard
+[2025-04-01T00:33:17.076Z] BOT EVENT: API_DASHBOARD - {"monitoredUsers":153,"serverCount":7,"commandsExecuted":0,"messagesProcessed":0}
+[2025-04-01T00:33:18.624Z] HTTP GET /home
+[2025-04-01T00:33:18.625Z] BOT EVENT: HOME_PAGE - {"ping":125,"monitoredUsers":153,"serversCount":7}
+[2025-04-01T00:33:18.658Z] HTTP GET /api/stats
+[2025-04-01T00:33:18.659Z] BOT EVENT: API_STATS - {"ping":125,"monitoredUsers":153,"serversCount":7}

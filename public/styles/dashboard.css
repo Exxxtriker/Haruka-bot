@@ -28,6 +28,19 @@ body {
     text-align: center;
 }
 
+.bot-icon-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bot-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Make the icon circular */
+    border: 2px solid purple; /* Add a border around the icon */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
 .sidebar ul {
     list-style: none;
     padding: 0;
@@ -51,10 +64,29 @@ body {
     background-color: purple; /* Highlight on hover */
 }
 
+.sidebar-option {
+    background-color: #2a1a1a; /* Match sidebar background */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Space between options */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+.sidebar-option:hover {
+    background-color: purple; /* Highlight on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
 .main-content {
     flex: 1; /* Take up remaining space */
     padding: 20px;
     overflow-y: auto;
+    background-image: url('/images/BG2.jpg'); /* Corrected path to the image */
+    background-size: cover; /* Ensure the image covers the entire area */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
 .header {
@@ -99,7 +131,7 @@ body {
     background-color: #2a1a1a; /* Darker background for containers */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px 5px rgba(128, 0, 128, 0.5); /* Add purple aura */
     text-align: center;
     width: 100%; /* Ensure containers fit within the grid */
     max-width: 300px; /* Optional: Limit the width of each container */
@@ -115,7 +147,7 @@ body {
 
 .container:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px 8px rgba(128, 0, 128, 0.7); /* Enhance purple aura on hover */
 }
 
 .container p {
@@ -132,12 +164,18 @@ body {
     background-color: #2a1a1a;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px 5px rgba(128, 0, 128, 0.5); /* Add purple aura */
     max-width: 800px; /* Limit the width of the console */
     width: 100%; /* Ensure it spans the full width of the parent */
     max-height: 300px;
     overflow-y: auto;
     text-align: left; /* Align text to the left for better readability */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add hover effects */
+}
+
+.console-container:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px 8px rgba(128, 0, 128, 0.7); /* Enhance purple aura on hover */
 }
 
 .console {
