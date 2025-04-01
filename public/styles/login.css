@@ -1,0 +1,114 @@
+body {
+    background-image: url('/images/BG2.jpg'); /* Set the provided image as background */
+    background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+.container {
+    background-color: rgba(23, 15, 15, 0.9); /* Semi-transparent with opacity */
+    color: white; /* White text for better contrast */
+    padding: 40px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 400px; /* Adjusted width */
+    text-align: left; /* Align text to the left */
+    animation: purple-aura 3s infinite; /* Apply the intensified aura animation */
+}
+
+.title {
+    font-size: 24px; /* Proper font size for the title */
+    font-weight: bold;
+    color: #333; /* Dark gray text */
+    margin-bottom: 20px; /* Space between title and form */
+    text-align: center; /* Center the title */
+    display: block; /* Ensure it doesn't overlap */
+    position: relative; /* Prevent unintended positioning */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px; /* Slightly larger font size */
+    font-family: 'Cinzel', serif; /* Medieval-style font */
+    color: #ddd; /* Light gray text for better contrast */
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%; /* Full width of the container */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Slightly rounded corners */
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333; /* Dark gray text */
+}
+
+button {
+    padding: 10px 0;
+    background-color: #28a745; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold; /* Bold text */
+    text-align: center;
+}
+
+button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #555; /* Medium gray text */
+    margin-top: 10px;
+}
+
+.options a {
+    color: #007BFF; /* Blue link */
+    text-decoration: none;
+}
+
+.options a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #555; /* Medium gray text */
+}
+
+.checkbox input {
+    margin-right: 5px;
+}
+
+@keyframes purple-aura {
+    0% {
+        box-shadow: 0 0 20px rgba(128, 0, 128, 0.7), 0 0 40px rgba(128, 0, 128, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(128, 0, 128, 1), 0 0 80px rgba(128, 0, 128, 0.9);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(128, 0, 128, 0.7), 0 0 40px rgba(128, 0, 128, 0.6);
+    }
+}

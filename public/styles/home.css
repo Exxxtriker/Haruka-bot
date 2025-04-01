@@ -1,0 +1,238 @@
+body {
+    background-color: #1c1212; /* Dark background */
+    color: white; /* White text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    background-color: #2a1a1a; /* Darker background for the sidebar */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    color: purple; /* Highlighted title */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: purple; /* Highlight on hover */
+}
+
+.main-content {
+    flex: 1; /* Take up remaining space */
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: purple; /* Highlighted title */
+}
+
+.content {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 14px;
+    color: #aaa; /* Subtle footer text */
+}
+
+.stats {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #2a1a1a; /* Match container background */
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Rounded corners for consistency */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.stats canvas {
+    display: none; /* Hide the canvas as it's no longer needed */
+}
+
+.stats .legend {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the legend */
+    gap: 10px; /* Add spacing between legend items */
+    margin-top: 10px; /* Space above the legend */
+}
+
+.stats .legend div {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between color box and text */
+}
+
+.stats .legend div span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px; /* Rounded corners for color boxes */
+}
+
+.stats .legend div p {
+    margin: 0;
+    font-size: 14px; /* Adjust font size for readability */
+    color: white; /* Match text color */
+}
+
+.stats p, .stats ul {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.stats ul {
+    list-style: none;
+    padding: 0;
+}
+
+.stats ul li {
+    margin: 5px 0;
+}
+
+.wrapper {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: calc(100vh - 40px); /* Adjust height to fit within the viewport, accounting for padding */
+    width: 100%; /* Take full width of the parent */
+    padding: 0; /* Remove extra padding */
+    margin: 0 auto; /* Center the wrapper within the page */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+.grid {
+    display: grid; /* Use CSS Grid for precise alignment */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible columns with equal width */
+    gap: 20px; /* Space between containers */
+    justify-items: center; /* Center child containers horizontally */
+    align-items: start; /* Align child containers at the top */
+    width: 100%; /* Ensure the grid spans the full width */
+    max-width: 800px; /* Limit the maximum width of the grid for better centering */
+    margin: 0 auto; /* Center the grid within the page */
+    padding: 20px; /* Add padding around the grid */
+}
+
+.container {
+    margin-top: 0; /* Remove unnecessary margin */
+    background-color: #2a1a1a; /* Darker background for containers */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center;
+    width: 100%; /* Ensure containers fit within the grid */
+    max-width: 300px; /* Optional: Limit the width of each container */
+    word-wrap: break-word; /* Handle long text gracefully */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    min-height: 150px; /* Ensure a minimum height */
+    height: auto; /* Allow height to adjust dynamically */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add hover effects */
+}
+
+.container:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+.container p {
+    margin: 10px 0;
+}
+
+.container h3 {
+    font-size: 20px;
+    color: purple; /* Highlighted section titles */
+    margin-bottom: 10px;
+}
+
+.container p, .container ul {
+    font-size: 16px;
+    color: white;
+    margin: 0;
+}
+
+.container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left; /* Align list items to the left for better readability */
+}
+
+.container ul li {
+    margin: 5px 0;
+}
+
+.welcome-container {
+    background-color: #2a1a1a; /* Darker background for the welcome container */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center;
+    margin-bottom: 20px; /* Space below the welcome container */
+}
+
+.welcome-container h1 {
+    font-size: 32px;
+    color: purple; /* Highlighted title */
+    margin: 0;
+}
+
+.title-container {
+    background-color: #3a2a2a; /* Slightly lighter background for the title */
+    padding: 10px 15px; /* Add padding for a rectangular shape */
+    border-radius: 15px; /* Rounded corners for a softer look */
+    margin-bottom: 10px; /* Space between the title and the content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for separation */
+    text-align: center;
+}
+
+.title-container h3 {
+    font-size: 20px;
+    color: purple; /* Highlighted section titles */
+    margin: 0;
+    text-align: center;
+}

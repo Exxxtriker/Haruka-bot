@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/home.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/minigame">Minigame</a></li>
+                <li><a href="/logout">Sair</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <div class="welcome-container">
+                    <h1>Bem-vindo(a), Haruka Harano</h1>
+                </div>
+            </header>
+            <section class="content">
+                <div class="wrapper">
+                    <div class="stats grid">
+                        <div class="container" title="Mostra o ping atual do bot">
+                            <div class="title-container">
+                                <h3>Ping</h3>
+                            </div>
+                            <p><strong>Ping Atual:</strong> <span id="ping"><%= ping %></span> ms</p>
+                        </div>
+                        <div class="container" title="Número total de pessoas monitoradas pelo bot">
+                            <div class="title-container">
+                                <h3>Pessoas Monitoradas</h3>
+                            </div>
+                            <p><strong>Total:</strong> <span id="monitoredUsers"><%= monitoredUsers %></span></p>
+                        </div>
+                        <div class="container" title="Lista de servidores onde o bot está presente">
+                            <div class="title-container">
+                                <h3>Servidores</h3>
+                            </div>
+                            <ul id="serverList"></ul>
+                            <p id="additionalServers" style="display: none;">... + <span id="additionalCount"></span> mais</p>
+                        </div>
+                        <div class="container" title="Informações do sistema operacional do host">
+                            <div class="title-container">
+                                <h3>Informações do Sistema</h3>
+                            </div>
+                            <p><strong>Plataforma:</strong> <span id="osPlatform"><%= osInfo.platform %></span></p>
+                            <p><strong>Arquitetura:</strong> <span id="osArch"><%= osInfo.arch %></span></p>
+                            <p><strong>Tempo de Atividade:</strong> <span id="osUptime"><%= osInfo.uptime %></span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        function updateStats() {
+            fetch('/api/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('ping').textContent = data.ping;
+                    document.getElementById('monitoredUsers').textContent = data.monitoredUsers;
+
+                    const serverList = document.getElementById('serverList');
+                    serverList.innerHTML = ''; // Clear the current list
+                    data.servers.slice(0, 3).forEach(server => {
+                        const li = document.createElement('li');
+                        li.textContent = server;
+                        serverList.appendChild(li);
+                    });
+
+                    const additionalServers = document.getElementById('additionalServers');
+                    if (data.servers.length > 3) {
+                        document.getElementById('additionalCount').textContent = data.servers.length - 3;
+                        additionalServers.style.display = 'block';
+                    } else {
+                        additionalServers.style.display = 'none';
+                    }
+
+                    document.getElementById('osPlatform').textContent = data.osInfo.platform;
+                    document.getElementById('osArch').textContent = data.osInfo.arch;
+                    document.getElementById('osUptime').textContent = data.osInfo.uptime;
+                })
+                .catch(error => console.error('Error fetching stats:', error));
+        }
+
+        // Fetch stats on page load
+        updateStats();
+
+        // Update stats every 5 minutes (300,000 milliseconds)
+        setInterval(updateStats, 300000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minigame</title>
+    <link rel="stylesheet" href="/styles/minigame.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/minigame">Minigame</a></li>
+                <li><a href="/logout">Sair</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <div class="welcome-container">
+                    <h1>Minigame - Dados dos Jogadores</h1>
+                    <a href="/minigame/excel" class="download-button">Baixar Excel</a>
+                </div>
+            </header>
+            <section class="content">
+                <div class="table-container">
+                    <table id="minigameTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable(0)">Nome do Jogador</th>
+                                <th onclick="sortTable(1)">Coins</th>
+                                <% const allItems = new Set(); %>
+                                <% players.forEach(player => { %>
+                                    <% Object.keys(player.inventory).forEach(item => allItems.add(item)); %>
+                                <% }); %>
+                                <% Array.from(allItems).sort().forEach((item, index) => { %>
+                                    <th onclick="sortTable('<%= index + 2 %>')"><%= item %></th>
+                                <% }); %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% players.forEach(player => { %>
+                                <tr>
+                                    <td><%= player.username %></td>
+                                    <td><%= player.coins %></td>
+                                    <% Array.from(allItems).sort().forEach(item => { %>
+                                        <td><%= player.inventory[item] || 0 %></td>
+                                    <% }); %>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <script>
+                function sortTable(columnIndex) {
+                    const table = document.getElementById('minigameTable');
+                    const rows = Array.from(table.rows).slice(1); // Exclude the header row
+                    const isAscending = table.getAttribute('data-sort-order') !== 'asc';
+                    table.setAttribute('data-sort-order', isAscending ? 'asc' : 'desc');
+
+                    rows.sort((a, b) => {
+                        const aText = a.cells[columnIndex].textContent.trim();
+                        const bText = b.cells[columnIndex].textContent.trim();
+
+                        if (!isNaN(aText) && !isNaN(bText)) {
+                            return isAscending ? aText - bText : bText - aText;
+                        }
+                        return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                    });
+
+                    rows.forEach(row => table.tBodies[0].appendChild(row));
+                }
+            </script>
+        </main>
+    </div>
+</body>
+</html>

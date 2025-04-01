@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="title" style="text-align: center; font-family: 'Cinzel', serif;">
+            <img src="/images/bot-profile.webp" alt="Logo do Bot" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px;">
+            <div style="color: purple;">Haruka Harano</div>
+        </div>
+        <form action="/login" method="POST">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
