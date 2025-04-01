@@ -56,7 +56,9 @@ module.exports = {
             }
 
             // Adicionar o recurso coletado ao inventário
-            dataManager.addItemToInventory(userId, resource, quantity);
+            if (quantity > 0) {
+                dataManager.addItemToInventory(userId, resource, quantity);
+            }
 
             // Consumir estamina
             user.stamina -= WOOD_COST;

@@ -98,7 +98,9 @@ module.exports = {
 
             // Consumir estamina e isca
             user.stamina -= FISHING_COST;
-            user.inventory.Isca -= 1; // Consumir 1 isca
+            if (user.inventory.Isca > 0) {
+                user.inventory.Isca -= 1; // Consumir 1 isca
+            }
             user.lastInteraction = Date.now();
             // Salvar os dados atualizados no banco de dados (ou arquivo)
             dataManager.setGameData({ [userId]: user });

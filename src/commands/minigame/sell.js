@@ -65,6 +65,10 @@ module.exports = {
             const item = interaction.options.getString('item');
             const quantity = interaction.options.getInteger('quantidade');
 
+            if (quantity <= 0) {
+                return interaction.editReply('A quantidade deve ser maior que zero.');
+            }
+
             if (!shopItems[item]) {
                 return interaction.editReply(`Item inválido! Os itens disponíveis para venda são: ${Object.keys(shopItems).join(', ')}.`);
             }

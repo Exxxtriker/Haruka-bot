@@ -89,6 +89,10 @@ function updateStamina(userId, newStamina) {
 
 // Função para adicionar itens ao inventário do usuário
 function addItemToInventory(userId, item, quantity) {
+    if (quantity <= 0) {
+        console.error('Quantidade inválida fornecida para addItemToInventory:', quantity);
+        return;
+    }
     const user = gameData[userId];
     if (user) {
         user.inventory[item] = (user.inventory[item] || 0) + quantity;

@@ -13,26 +13,27 @@ module.exports = {
             .setDescription('Razão pela punição.'))
         .setDMPermission(false), // Desabilita o comando na DM
     async execute(interaction) {
-        const { id } = await interaction.options.getUser('membro');
-        const razao = await interaction.options.getString('razao') || 'Não há razão do punimento.';
+        const memberToKick = interaction.options.getMember('membro');
+        if (!memberToKick) {
+            return interaction.reply({ content: 'Usuário não encontrado no servidor.', flags: 64 });
+        }
 
-        const memberToKick = await interaction.guild.members.cache.get(id);
-        if (!memberToKick) return interaction.reply({ content: 'usuário não encontrado, verifique se ele está no servidor', flags: 64 });
+        const razao = await interaction.options.getString('razao') || 'Não há razão do punimento.';
 
         if (verifiPermission(interaction, memberToKick)) {
             const errEmbed = new EmbedBuilder()
-                .setDescription(`❌Para você expulsar <@${id}> você precisa ter um cargo da moderação.`)
+                .setDescription(`❌Para você expulsar <@${memberToKick.id}> você precisa ter um cargo da moderação.`)
                 .setColor(0xc72c3b);
 
             return interaction.reply({ embeds: [errEmbed] });
         }
 
         const embed = new EmbedBuilder()
-            .setDescription(`✅ <@${id}> foi expulso do servidor pelo motivo: **${razao}**`)
+            .setDescription(`✅ <@${memberToKick.id}> foi expulso do servidor pelo motivo: **${razao}**`)
             .setColor(0x5fb041)
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
-        await memberToKick.kick({ razao });
+        await memberToKick.kick({ reason: razao });
     },
 };

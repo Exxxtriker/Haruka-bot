@@ -74,26 +74,17 @@ function ganharLoot(userData) {
         'Espada de ferro': 10,
     };
 
-    function selectItem() {
-        const randomNum = Math.random() * 100;
-        let cumulativeChance = 0;
+    const randomNum = Math.random() * 100;
+    let cumulativeChance = 0;
+    const itemAleatorio = itens.find((item) => {
+        cumulativeChance += itemChances[item];
+        return randomNum < cumulativeChance;
+    });
 
-        for (const item of itens) {
-            cumulativeChance += itemChances[item];
-            if (randomNum < cumulativeChance) {
-                return item;
-            }
-        }
-    }
-
-    const itemAleatorio = selectItem();
     const quantity = Math.floor(Math.random() * 5) + 1;
     const coins = Math.floor(Math.random() * 30) + 20;
 
-    if (!userData.inventory[itemAleatorio]) {
-        userData.inventory[itemAleatorio] = 0;
-    }
-    userData.inventory[itemAleatorio] += quantity;
+    userData.inventory[itemAleatorio] = (userData.inventory[itemAleatorio] || 0) + quantity;
 
     return { item: itemAleatorio, quantity, coins };
 }

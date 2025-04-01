@@ -10,15 +10,16 @@ const degradePetStatus = (userId, petId) => {
     if (!user || !user.petInventory || !user.petInventory[petId]) return;
 
     const pet = user.petInventory[petId];
+    const initialStatus = { hunger: pet.hunger, thirst: pet.thirst, affection: pet.affection };
 
-    // Reduzir os status do pet
     pet.hunger = Math.max(0, pet.hunger - 5);
     pet.thirst = Math.max(0, pet.thirst - 5);
     pet.affection = Math.max(0, pet.affection - 2);
 
-    // Atualizar os dados do usuário
-    user.petInventory[petId] = pet;
-    dataManager.setGameData({ [userId]: user });
+    if (JSON.stringify(initialStatus) !== JSON.stringify({ hunger: pet.hunger, thirst: pet.thirst, affection: pet.affection })) {
+        user.petInventory[petId] = pet;
+        dataManager.setGameData({ [userId]: user });
+    }
 };
 
 module.exports = {
