@@ -189,3 +189,18 @@ body {
     width: 100%; /* Ensure the console spans the full width */
     text-align: left; /* Align text to the left */
 }
+
+.welcome-container {
+    background-color: #2a1a1a; /* Darker background for the welcome container */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center;
+    margin-bottom: 20px; /* Space below the welcome container */
+}
+
+.welcome-container h1 {
+    font-size: 32px;
+    color: purple; /* Highlighted title */
+    margin: 0;
+}

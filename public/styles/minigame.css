@@ -233,3 +233,18 @@ tbody tr:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px 8px rgba(128, 0, 128, 0.7); /* Enhance purple aura on hover */
 }
+
+.welcome-container {
+    background-color: #2a1a1a; /* Darker background for the welcome container */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center;
+    margin-bottom: 20px; /* Space below the welcome container */
+}
+
+.welcome-container h1 {
+    font-size: 32px;
+    color: purple; /* Highlighted title */
+    margin: 0;
+}
