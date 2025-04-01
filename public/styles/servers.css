@@ -36,7 +36,7 @@ body {
 
 .sidebar h2 {
     font-size: 20px;
-    color: purple;
+    color: #d4a373; /* Highlighted title */
     margin-bottom: 20px;
     text-align: center;
 }
@@ -123,13 +123,13 @@ body {
 
 .welcome-container h1 {
     font-size: 32px;
-    color: purple; /* Highlighted title color */
+    color: #d4a373; /* Highlighted title */
     margin: 0;
 }
 
 .header h1 {
     font-size: 32px;
-    color: purple;
+    color: #d4a373; /* Highlighted title */
     text-align: center;
 }
 

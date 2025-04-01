@@ -249,7 +249,7 @@ body {
 
 .welcome-container h1 {
     font-size: 32px;
-    color: purple; /* Highlighted title */
+    color: #d4a373; /* Highlighted title */
     margin: 0;
 }
 
@@ -264,7 +264,7 @@ body {
 
 .title-container h3 {
     font-size: 20px;
-    color: purple; /* Highlighted section titles */
+    color: #d4a373; /* Highlighted title */
     margin: 0;
     text-align: center;
 }
