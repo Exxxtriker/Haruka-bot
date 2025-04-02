@@ -8,16 +8,24 @@ module.exports = {
             // Ignorar bots
             if (member.user.bot) return;
 
-            // Buscar o papel
-            const memberRole = member.guild.roles.cache.find((role) => role.id === '1100053777907712101');
+            // Buscar o cargo corretamente
+            const roleId = '1100053777907712101';
+            const memberRole = member.guild.roles.cache.get(roleId) || await member.guild.roles.fetch(roleId).catch(() => null);
 
-            // Adicionar o papel ao novo membro
+            if (!memberRole) {
+                console.error(`Cargo com ID ${roleId} não encontrado.`);
+                return;
+            }
+
+            // Adicionar o cargo ao novo membro
             await member.roles.add(memberRole);
+            console.log(`Cargo ${memberRole.name} adicionado ao membro ${member.user.tag}`);
 
             // Buscar o canal de boas-vindas
-            const channel = member.guild.channels.cache.get('1100048390546542623');
+            const channelId = '1100048390546542623';
+            const channel = member.guild.channels.cache.get(channelId);
             if (!channel) {
-                console.error('Canal com ID 1100048390546542623 não encontrado.');
+                console.error(`Canal com ID ${channelId} não encontrado.`);
                 return;
             }
 
