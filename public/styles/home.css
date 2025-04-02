@@ -32,6 +32,12 @@ body {
 .sidebar ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+    background-color: #1e1e1e; /* Darker background for the container */
+    border: 2px solid purple; /* Add a border around the container */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    padding: 10px; /* Add padding inside the container */
 }
 
 .sidebar ul li {
@@ -46,6 +52,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s;
+    background-color: transparent; /* Default background is transparent */
 }
 
 .sidebar ul li a:hover {
@@ -70,6 +77,11 @@ body {
 .bot-icon-container {
     text-align: center;
     margin-bottom: 20px;
+    padding: 15px; /* Add padding around the image */
+    background-color: #1e1e1e; /* Darker background for the container */
+    border: 2px solid purple; /* Add a border around the container */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
 }
 
 .bot-icon {
