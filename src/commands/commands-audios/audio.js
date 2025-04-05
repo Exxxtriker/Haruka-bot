@@ -10,7 +10,7 @@ const isRadioActive = false; // Variable to track if radio is active
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('audio')
-        .setDescription('Toca um áudio específico de uma pasta na call (01 / 26)')
+        .setDescription('Toca um áudio específico de uma pasta na call (01 / 27)')
         .addStringOption((option) => option.setName('audio')
             .setDescription('Escolha o áudio para tocar (sem extensão)')
             .setRequired(true))
