@@ -8,12 +8,18 @@ module.exports = {
             // Ignorar bots
             if (member.user.bot) return;
 
-            // Buscar o cargo corretamente
+            // ID do cargo a ser atribuído
             const roleId = '1100053777907712101';
+
+            // Verificar se o cargo existe
             const memberRole = member.guild.roles.cache.get(roleId) || await member.guild.roles.fetch(roleId).catch(() => null);
+            if (!memberRole) {
+                console.error(`Cargo com ID ${roleId} não encontrado.`);
+                return;
+            }
 
             // Adicionar o cargo ao novo membro
-            await member.roles.add(memberRole);
+            await member.roles.add(roleId);
             console.log(`Cargo ${memberRole.name} adicionado ao membro ${member.user.tag}`);
 
             // Buscar o canal de boas-vindas
