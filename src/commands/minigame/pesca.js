@@ -17,13 +17,18 @@ module.exports = {
 
         // Verificar se o comando está sendo executado
         if (isFishingInProgress[userId]) {
-            return interaction.reply({ content: '⛔ Você já está pescando. Por favor, espere antes de tentar novamente!', flags: 64 });
+            return interaction.reply({
+                content: '⛔ Você já está pescando. Por favor, espere antes de tentar novamente!',
+                ephemeral: true,
+            });
         }
 
         // Definir o usuário como em progresso
         isFishingInProgress[userId] = true;
 
         try {
+            await interaction.deferReply({ flag: 64 });
+
             const fishChances = {
                 'Peixe comum': 80,
                 'Peixe raro': 10,
@@ -46,12 +51,16 @@ module.exports = {
 
             // Verificar se o usuário tem a vara de pesca
             if (!user.inventory['Vara de pesca'] || user.inventory['Vara de pesca'] <= 0) {
-                return interaction.reply({ content: '⛔ Você não tem uma vara de pesca! Adquira uma antes de tentar pescar.', flags: 64 });
+                return interaction.editReply({
+                    content: '⛔ Você não tem uma vara de pesca! Adquira uma antes de tentar pescar.',
+                });
             }
 
             // Verificar se o usuário tem isca
             if (!user.inventory.Isca || user.inventory.Isca <= 0) {
-                return interaction.reply({ content: '⛔ Você não tem isca! Adquira isca antes de tentar pescar.', flags: 64 });
+                return interaction.editReply({
+                    content: '⛔ Você não tem isca! Adquira isca antes de tentar pescar.',
+                });
             }
 
             // Recarregar estamina, se necessário
@@ -70,7 +79,7 @@ module.exports = {
                     .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                     .setTimestamp();
 
-                return interaction.reply({ embeds: [embed], flags: 64 });
+                return interaction.editReply({ embeds: [embed] });
             }
 
             // Determinar o item coletado com base nas chances
@@ -102,7 +111,8 @@ module.exports = {
                 user.inventory.Isca -= 1; // Consumir 1 isca
             }
             user.lastInteraction = Date.now();
-            // Salvar os dados atualizados no banco de dados (ou arquivo)
+
+            // Salvar os dados atualizados
             dataManager.setGameData({ [userId]: user });
 
             // Embed de sucesso
@@ -119,12 +129,11 @@ module.exports = {
                 .setFooter({ text: 'Continue pescando para obter mais recursos!' })
                 .setTimestamp();
 
-            await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         } catch (error) {
             console.error('Erro ao executar o comando de pesca:', error);
-            interaction.reply({ content: '❌ Ocorreu um erro ao tentar pescar. Tente novamente mais tarde!', flags: 64 });
+            await interaction.editReply({ content: '❌ Ocorreu um erro ao tentar pescar. Tente novamente mais tarde!' });
         } finally {
-            // Liberar o bloqueio
             isFishingInProgress[userId] = false;
         }
     },
