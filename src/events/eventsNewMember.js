@@ -13,10 +13,6 @@ module.exports = {
 
             // Verificar se o cargo existe
             const memberRole = member.guild.roles.cache.get(roleId) || await member.guild.roles.fetch(roleId).catch(() => null);
-            if (!memberRole) {
-                console.error(`Cargo com ID ${roleId} não encontrado.`);
-                return;
-            }
 
             // Adicionar o cargo ao novo membro
             await member.roles.add(roleId);
