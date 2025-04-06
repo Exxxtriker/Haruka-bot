@@ -19,7 +19,7 @@ module.exports = {
         if (isFishingInProgress[userId]) {
             return interaction.reply({
                 content: '⛔ Você já está pescando. Por favor, espere antes de tentar novamente!',
-                ephemeral: true,
+                flag: 64,
             });
         }
 
