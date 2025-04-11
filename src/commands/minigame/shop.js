@@ -41,7 +41,7 @@ module.exports = {
                     { name: 'Espada de diamante', value: 'Espada de diamante' },
                     { name: 'Vara de pesca', value: 'Vara de pesca' },
                     { name: 'Poção de vida', value: 'Poção de vida' },
-                    { name: 'Peixe comum', value: 'Poção de vida' },
+                    { name: 'Peixe comum', value: 'Peixe comum' },
                     { name: 'Ração de cachorro', value: 'Ração de cachorro' },
                     { name: 'Ração de gato', value: 'Ração de gato' },
                     { name: 'Ração de peixe', value: 'Ração de peixe' },
