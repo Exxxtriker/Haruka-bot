@@ -84,7 +84,7 @@ module.exports = {
             } else if (pet.name === 'Gato') {
                 embed.setImage('https://i0.statig.com.br/bancodeimagens/8s/9n/ug/8s9nugjvjc236jbubjhq50b5o.jpg');
             } else if (pet.name === 'Peixe-Beta') {
-                embed.setImage('https://www.petz.com.br/blog/wp-content/uploads/2021/03/qual-peixe-posso-colocar-junto-com-o-beta2.jpg');
+                embed.setImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThk6GBOB7T_aXBfPHnd2W8O47cC1H2tppddw&s');
             } else if (pet.name === 'Axolot') {
                 embed.setImage('https://i.pinimg.com/originals/1c/36/87/1c36870979d4001daa4f475164c1c203.gif');
             }
