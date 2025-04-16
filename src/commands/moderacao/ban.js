@@ -15,7 +15,7 @@ module.exports = {
     async execute(interaction) {
         const { id } = interaction.options.getUser('membro');
         const razao = interaction.options.getString('razao') || 'Não há razão do punimento.';
-
+        // Não deleta essa buceta
         const memberToBan = await interaction.guild.members.cache.get(id);
         if (!memberToBan) return interaction.reply({ content: 'usuário não encontrado, verifique se ele está no servidor', flags: 64 });
 
