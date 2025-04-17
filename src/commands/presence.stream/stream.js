@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const { SlashCommandBuilder } = require('@discordjs/builders'); // Importando corretamente
+const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,9 +32,11 @@ module.exports = {
         .setDMPermission(false), // Desabilita o comando na DM
 
     async execute(interaction) {
-    // Verifica se o usuário tem permissão para configurar
-        if (!interaction.member.permissions.has('ADMINISTRATOR')) {
-            return interaction.reply('Você não tem permissão para configurar as notificações de live.');
+        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+            return interaction.reply({
+                content: 'Você não tem permissão para configurar as notificações de live.',
+                flags: 64,
+            });
         }
 
         const canal = interaction.options.getChannel('canal');

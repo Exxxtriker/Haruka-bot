@@ -1,24 +1,24 @@
 const { Events } = require('discord.js');
-const embed = require('./embeds/welcomeBed'); // Certifique-se de que este arquivo exporta corretamente um embed
+const embed = require('./embeds/welcomeBed');
 
 module.exports = {
     name: Events.GuildMemberAdd,
     async execute(member) {
         try {
-            // Ignorar bots
-            if (member.user.bot) return;
+            // if (member.user.bot) return;
 
-            // ID do cargo a ser atribuído
             const roleId = '1100053777907712101';
 
-            // Verificar se o cargo existe
+            // Buscar o cargo corretamente
             const memberRole = member.guild.roles.cache.get(roleId) || await member.guild.roles.fetch(roleId).catch(() => null);
+            if (!memberRole) {
+                console.error(`Cargo com ID ${roleId} não encontrado.`);
+                return;
+            }
 
-            // Adicionar o cargo ao novo membro
-            await member.roles.add(roleId);
-            console.log(`Cargo ${memberRole.name} adicionado ao membro ${member.user.tag}`);
+            // Aqui usamos o objeto do cargo, não apenas o ID
+            await member.roles.add(memberRole);
 
-            // Buscar o canal de boas-vindas
             const channelId = '1100048390546542623';
             const channel = member.guild.channels.cache.get(channelId);
             if (!channel) {
@@ -26,7 +26,6 @@ module.exports = {
                 return;
             }
 
-            // Enviar mensagem de boas-vindas
             await channel.send({ embeds: [embed(member)] });
         } catch (error) {
             console.error('Erro ao processar evento GuildMemberAdd:', error);
