@@ -87,21 +87,50 @@
                 })
                 .catch(error => console.error('Error fetching dashboard stats:', error));
         }
-
-        // Fetch stats on page load
+    
+        function loadLogHistory() {
+            fetch('/api/logs')
+                .then(response => response.json())
+                .then(data => {
+                    const consoleDiv = document.getElementById('console');
+                    consoleDiv.innerHTML = ''; // limpa o conteúdo anterior
+    
+                    const lines = data.log.split('\n');
+                    lines.forEach(line => {
+                        if (line.trim() !== '') {
+                            const logMessage = document.createElement('div');
+                            logMessage.textContent = line;
+                            consoleDiv.appendChild(logMessage);
+                        }
+                    });
+    
+                    consoleDiv.scrollTop = consoleDiv.scrollHeight;
+                })
+                .catch(error => console.error('Erro ao carregar histórico de logs:', error));
+        }
+    
+        // Fetch stats and log history on page load
         updateDashboardStats();
-
+        loadLogHistory();
+    
         // Update stats every 5 minutes (300,000 milliseconds)
         setInterval(updateDashboardStats, 300000);
-
-        // WebSocket to receive logs
-        const ws = new WebSocket(`ws://${window.location.host}`);
+    
+        // WebSocket to receive live logs
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
+    
         ws.onmessage = (event) => {
             const consoleDiv = document.getElementById('console');
             const logMessage = document.createElement('div');
             logMessage.textContent = event.data;
             consoleDiv.appendChild(logMessage);
-            consoleDiv.scrollTop = consoleDiv.scrollHeight; // Auto-scroll to the bottom
+    
+            if (consoleDiv.children.length > 500) {
+                consoleDiv.removeChild(consoleDiv.firstChild); // Limita a 500 mensagens
+            }
+    
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
         };
     </script>
 </body>

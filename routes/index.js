@@ -306,4 +306,16 @@ router.get('/api/bot-profile', (req, res) => {
     });
 });
 
+router.get('/api/logs', (req, res) => {
+    const logPath = path.join(__dirname, '../logs/bot.log');
+
+    fs.readFile(logPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler o arquivo de log:', err);
+            return res.status(500).json({ error: 'Erro ao ler o arquivo de log.' });
+        }
+        res.type('text/plain').send(data);
+    });
+});
+
 module.exports = router;
