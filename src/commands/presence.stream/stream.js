@@ -18,10 +18,12 @@ function saveConfig(config) {
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
 
+const notifiedUsers = new Set(); // Rastreia usuários já notificados
+
 // Comando para configurar o canal e o cargo
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('config-live') // Nome do comando
+        .setName('config-live')
         .setDescription('Configura o canal e o cargo para notificações de live')
         .addChannelOption((option) => option.setName('canal')
             .setDescription('Escolha o canal para enviar notificações de live')
@@ -29,7 +31,7 @@ module.exports = {
         .addRoleOption((option) => option.setName('cargo')
             .setDescription('Escolha o cargo para ser mencionado nas notificações')
             .setRequired(true))
-        .setDMPermission(false), // Desabilita o comando na DM
+        .setDMPermission(false),
 
     async execute(interaction) {
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
@@ -58,5 +60,29 @@ module.exports = {
 
         // Responde com a confirmação
         return interaction.reply({ content: `Configurações atualizadas! As notificações de live serão enviadas para o canal ${canal} e o cargo ${cargo} será mencionado.`, flags: 64 });
+    },
+
+    async notifyLive(interaction, userId, userName, canalId) {
+        if (notifiedUsers.has(userId)) {
+            return; // Não envia outra notificação
+        }
+
+        notifiedUsers.add(userId); // Marca o usuário como notificado
+
+        const embed = {
+            title: '🔴 Live Iniciada!',
+            description: `${userName} está ao vivo agora!`,
+            color: 0xFF0000,
+            timestamp: new Date(),
+        };
+
+        const canal = await interaction.guild.channels.fetch(canalId);
+        if (canal) {
+            canal.send({ embeds: [embed] });
+        }
+    },
+
+    resetNotification(userId) {
+        notifiedUsers.delete(userId); // Remove o usuário do conjunto de notificados
     },
 };
