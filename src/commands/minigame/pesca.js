@@ -79,7 +79,7 @@ module.exports = {
                     .setFooter({ text: 'Aguarde até que sua estamina recarregue!' })
                     .setTimestamp();
 
-                return interaction.editReply({ embeds: [embed] });
+                return interaction.reply({ embeds: [embed], flags: 64 });
             }
 
             // Determinar o item coletado com base nas chances
