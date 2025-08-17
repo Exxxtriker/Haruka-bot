@@ -1,5 +1,5 @@
 const {
-    SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, ComponentType,
+    SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder,
 } = require('discord.js');
 const {
     joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus,
@@ -41,69 +41,112 @@ module.exports = {
                 return interaction.reply({ content: 'Nenhum áudio encontrado na pasta!', flags: 64 });
             }
 
-            // Criar select menu
-            const selectMenu = new StringSelectMenuBuilder()
-                .setCustomId('audio_select')
-                .setPlaceholder('Selecione um áudio para tocar')
-                .addOptions(audioNames.slice(0, 25).map((name) => ({
-                    label: name,
-                    value: name,
-                })));
+            // Paginação do select menu
+            const pageSize = 25;
+            let page = 0;
+            const getPageOptions = (currentPage) => audioNames.slice(currentPage * pageSize, (currentPage + 1) * pageSize).map((name) => ({
+                label: name,
+                value: name,
+                emoji: '☠️',
+            }));
 
-            const row = new ActionRowBuilder().addComponents(selectMenu);
+            const { ButtonBuilder, ButtonStyle } = require('discord.js');
+            const getRow = () => {
+                const selectMenu = new StringSelectMenuBuilder()
+                    .setCustomId(`audio_select_${page}`)
+                    .setPlaceholder(`Selecione um áudio para tocar (página ${page + 1}/${Math.ceil(audioNames.length / pageSize)})`)
+                    .addOptions(getPageOptions(page));
+                const buttons = [];
+                if (page > 0) {
+                    buttons.push(
+                        new ButtonBuilder()
+                            .setCustomId('prev_page')
+                            .setLabel('Anterior')
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji('⬅️'),
+                    );
+                }
+                if ((page + 1) * pageSize < audioNames.length) {
+                    buttons.push(
+                        new ButtonBuilder()
+                            .setCustomId('next_page')
+                            .setLabel('Próxima')
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji('➡️'),
+                    );
+                }
+                const row = new ActionRowBuilder().addComponents(selectMenu);
+                if (buttons.length > 0) {
+                    const btnRow = new ActionRowBuilder().addComponents(...buttons);
+                    return [row, btnRow];
+                }
+                return [row];
+            };
 
             await interaction.reply({
                 content: 'Escolha um áudio para tocar:',
-                components: [row],
-                ephemeral: false,
+                components: getRow(page),
             });
 
-            // Coletor de interação do select menu (5 minutos, todos podem usar)
+            // Coletor de interação do select menu e botões (5 minutos, todos podem usar)
             const collector = interaction.channel.createMessageComponentCollector({
                 message: (await interaction.fetchReply()),
-                componentType: ComponentType.StringSelect,
                 time: 5 * 60 * 1000, // 5 minutos
             });
 
-            collector.on('collect', async (selectInteraction) => {
-                const audioName = selectInteraction.values[0];
-                const audioPath = supportedExtensions.map((ext) => path.join(audioFolderPath, audioName + ext))
-                    .find((fullPath) => fs.existsSync(fullPath));
-                if (!audioPath) {
-                    return selectInteraction.reply({ content: `O áudio "${audioName}" não foi encontrado!`, ephemeral: true });
+            collector.on('collect', async (componentInteraction) => {
+                if (componentInteraction.isStringSelectMenu()) {
+                    const audioName = componentInteraction.values[0];
+                    const audioPath = supportedExtensions.map((ext) => path.join(audioFolderPath, audioName + ext))
+                        .find((fullPath) => fs.existsSync(fullPath));
+                    if (!audioPath) {
+                        return componentInteraction.reply({ content: `O áudio "${audioName}" não foi encontrado!`, ephemeral: true });
+                    }
+
+                    const connection = joinVoiceChannel({
+                        channelId: componentInteraction.member.voice.channel.id,
+                        guildId: componentInteraction.guild.id,
+                        adapterCreator: componentInteraction.guild.voiceAdapterCreator,
+                    });
+
+                    const player = createAudioPlayer();
+
+                    player.on(AudioPlayerStatus.Idle, () => {
+                        connection.destroy();
+                    });
+
+                    player.on('error', (error) => {
+                        console.error('Erro ao reproduzir o áudio:', error);
+                        componentInteraction.followUp({ content: 'Houve um erro ao tentar reproduzir o áudio.', ephemeral: true });
+                        connection.destroy();
+                    });
+
+                    const resource = createAudioResource(audioPath);
+                    connection.subscribe(player);
+                    player.play(resource);
+                    // Envia mensagem ephemeral anunciando o áudio tocando, que se auto apaga em 10 segundos
+                    await componentInteraction.reply({
+                        content: `Tocando o áudio: **${audioName}** no canal: **${componentInteraction.member.voice.channel.name}**`,
+                        flags: 64,
+                    });
+                    setTimeout(async () => {
+                        try {
+                            await componentInteraction.deleteReply();
+                        } catch (e) { /* Mensagem já deletada ou erro ignorado */ }
+                    }, 5000);
+                } else if (componentInteraction.isButton()) {
+                    if (componentInteraction.customId === 'next_page') {
+                        page += 1;
+                        await componentInteraction.update({
+                            components: getRow(page),
+                        });
+                    } else if (componentInteraction.customId === 'prev_page') {
+                        page -= 1;
+                        await componentInteraction.update({
+                            components: getRow(page),
+                        });
+                    }
                 }
-
-                const connection = joinVoiceChannel({
-                    channelId: selectInteraction.member.voice.channel.id,
-                    guildId: selectInteraction.guild.id,
-                    adapterCreator: selectInteraction.guild.voiceAdapterCreator,
-                });
-
-                const player = createAudioPlayer();
-
-                player.on(AudioPlayerStatus.Idle, () => {
-                    connection.destroy();
-                });
-
-                player.on('error', (error) => {
-                    console.error('Erro ao reproduzir o áudio:', error);
-                    selectInteraction.followUp({ content: 'Houve um erro ao tentar reproduzir o áudio.', ephemeral: true });
-                    connection.destroy();
-                });
-
-                const resource = createAudioResource(audioPath);
-                connection.subscribe(player);
-                player.play(resource);
-                // Envia mensagem ephemeral anunciando o áudio tocando, que se auto apaga em 10 segundos
-                await selectInteraction.reply({
-                    content: `Tocando o áudio: **${audioName}** no canal: **${selectInteraction.member.voice.channel.name}**`,
-                    flags: 64,
-                });
-                setTimeout(async () => {
-                    try {
-                        await selectInteraction.deleteReply();
-                    } catch (e) { /* Mensagem já deletada ou erro ignorado */ }
-                }, 5000);
             });
 
             collector.on('end', (collected) => {
