@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const {
     joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, VoiceConnectionStatus, entersState,
@@ -37,7 +38,7 @@ module.exports = {
             });
 
             connection.on(VoiceConnectionStatus.Ready, () => {
-                console.log(`Conectado ao canal de voz: ${voiceChannel.name}`);
+                // ...existing code...
             });
 
             connection.on(VoiceConnectionStatus.Disconnected, async (oldState, newState) => {
@@ -46,9 +47,9 @@ module.exports = {
                         entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
                         entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
                     ]);
-                    console.log('Reconectado ao canal de voz.');
+                    // ...existing code...
                 } catch (error) {
-                    console.log('Desconectado do canal de voz.');
+                    // ...existing code...
                     connection.destroy();
                     isRadioActive = false; // Set radio inactive
                 }
@@ -69,9 +70,9 @@ module.exports = {
 
             ffmpeg.on('close', (code) => {
                 if (code !== 0) {
-                    console.error(`FFmpeg processo finalizado com erro. Código de saída: ${code}`);
+                    // ...existing code...
                 } else {
-                    console.log('FFmpeg processo finalizado com sucesso.');
+                    // ...existing code...
                 }
                 isRadioActive = false; // Set radio inactive
             });
@@ -87,19 +88,19 @@ module.exports = {
             player.play(resource);
 
             player.on(AudioPlayerStatus.Playing, () => {
-                console.log('Reprodução de áudio iniciada.');
+                // ...existing code...
             });
 
             await interaction.editReply(`Reproduzindo o áudio de "Haruka" no canal de voz: ${voiceChannel.name}`);
 
             player.on(AudioPlayerStatus.Idle, () => {
-                console.log('Reprodução finalizada. Desconectando...');
+                // ...existing code...
                 connection.destroy();
                 ffmpeg.kill(); // Finaliza o processo do FFmpeg
                 isRadioActive = false; // Set radio inactive
             });
         } catch (error) {
-            console.error(error);
+            // ...existing code...
             await interaction.editReply('Ocorreu um erro ao tentar reproduzir o áudio.');
             isRadioActive = false; // Set radio inactive
         }
