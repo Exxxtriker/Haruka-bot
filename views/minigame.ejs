@@ -77,6 +77,22 @@
                     const inventory = document.getElementById(`inventory-${playerName}`);
                     inventory.style.display = inventory.style.display === 'none' ? 'block' : 'none';
                 }
+
+                // Atualização automática dos dados dos jogadores
+                function updatePlayers() {
+                    fetch('/minigame')
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const newPlayers = doc.querySelector('.players-container');
+                            if (newPlayers) {
+                                document.querySelector('.players-container').innerHTML = newPlayers.innerHTML;
+                            }
+                        })
+                        .catch(error => console.error('Erro ao atualizar jogadores:', error));
+                }
+                setInterval(updatePlayers, 5000);
             </script>
         </main>
     </div>

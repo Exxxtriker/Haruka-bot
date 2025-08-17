@@ -87,15 +87,14 @@
                 })
                 .catch(error => console.error('Error fetching dashboard stats:', error));
         }
-    
+
         function loadLogHistory() {
             fetch('/api/logs')
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     const consoleDiv = document.getElementById('console');
-                    consoleDiv.innerHTML = ''; // limpa o conteúdo anterior
-    
-                    const lines = data.log.split('\n');
+                    consoleDiv.innerHTML = '';
+                    const lines = data.split('\n');
                     lines.forEach(line => {
                         if (line.trim() !== '') {
                             const logMessage = document.createElement('div');
@@ -103,33 +102,28 @@
                             consoleDiv.appendChild(logMessage);
                         }
                     });
-    
                     consoleDiv.scrollTop = consoleDiv.scrollHeight;
                 })
                 .catch(error => console.error('Erro ao carregar histórico de logs:', error));
         }
-    
-        // Fetch stats and log history on page load
+
+        // Atualiza imediatamente e depois a cada 5 segundos
         updateDashboardStats();
         loadLogHistory();
-    
-        // Update stats every 5 minutes (300,000 milliseconds)
-        setInterval(updateDashboardStats, 300000);
-    
-        // WebSocket to receive live logs
+        setInterval(updateDashboardStats, 5000);
+        setInterval(loadLogHistory, 10000);
+
+        // WebSocket para logs ao vivo
         const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
         const ws = new WebSocket(`${wsProtocol}://${window.location.host}`);
-    
         ws.onmessage = (event) => {
             const consoleDiv = document.getElementById('console');
             const logMessage = document.createElement('div');
             logMessage.textContent = event.data;
             consoleDiv.appendChild(logMessage);
-    
             if (consoleDiv.children.length > 500) {
-                consoleDiv.removeChild(consoleDiv.firstChild); // Limita a 500 mensagens
+                consoleDiv.removeChild(consoleDiv.firstChild);
             }
-    
             consoleDiv.scrollTop = consoleDiv.scrollHeight;
         };
     </script>

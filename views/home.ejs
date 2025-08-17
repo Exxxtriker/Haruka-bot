@@ -44,7 +44,7 @@
         <main class="main-content scrollable-content">
             <header class="header">
                 <div class="welcome-container">
-                    <h1>Bem-vindo(a), Haruka Harano</h1>
+                    <h1>Bem-vindo(a)<% if (typeof username !== 'undefined' && username) { %>, <%= username %><% } %>!</h1>
                 </div>
             </header>
             <section class="content">
@@ -98,21 +98,27 @@
                     }
                 }
 
-                // Fetch bot profile data
-                fetch('/api/bot-profile')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('bot-avatar').src = data.avatarURL || '/images/default-bot-icon.png';
-                        document.getElementById('bot-name').textContent = data.name;
-                        document.getElementById('bot-id').textContent = data.id;
-                        document.getElementById('bot-servers').textContent = data.servers;
-                        document.getElementById('bot-users').textContent = data.users;
-                        document.getElementById('bot-ping').textContent = data.ping;
-                        document.getElementById('bot-created').textContent = data.createdAt;
-                        document.getElementById('bot-uptime').textContent = data.uptime;
-                        document.getElementById('bot-memory').textContent = data.memoryUsage;
-                    })
-                    .catch(error => console.error('Error fetching bot profile:', error));
+                // Atualização automática dos dados do bot
+                function updateBotProfile() {
+                    fetch('/api/bot-profile')
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('bot-avatar').src = data.avatarURL || '/images/default-bot-icon.png';
+                            document.getElementById('bot-name').textContent = data.name;
+                            document.getElementById('bot-id').textContent = data.id;
+                            document.getElementById('bot-servers').textContent = data.servers;
+                            document.getElementById('bot-users').textContent = data.users;
+                            document.getElementById('bot-ping').textContent = data.ping;
+                            document.getElementById('bot-created').textContent = data.createdAt;
+                            document.getElementById('bot-uptime').textContent = data.uptime;
+                            document.getElementById('bot-memory').textContent = data.memoryUsage;
+                        })
+                        .catch(error => console.error('Error fetching bot profile:', error));
+                }
+
+                // Atualiza imediatamente e depois a cada 5 segundos
+                updateBotProfile();
+                setInterval(updateBotProfile, 5000);
             </script>
         </main>
     </div>
