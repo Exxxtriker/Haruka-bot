@@ -7,20 +7,14 @@ const {
 const fs = require('fs');
 const path = require('path');
 
-const isRadioActive = false; // Variable to track if radio is active
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('audio')
-        .setDescription('Toca um áudio específico de uma pasta na call (01 / 27)')
+        .setDescription('Toca um áudio do diretório de áudios no canal de voz.')
         .setDMPermission(false),
 
     async execute(interaction) {
         try {
-            if (isRadioActive) {
-                return interaction.reply({ content: 'O comando /radio está ativo. Não é possível usar o comando /audio agora.', flags: 64 });
-            }
-
             const voiceChannel = interaction.member.voice.channel;
             if (!voiceChannel) {
                 return interaction.reply({ content: 'Você precisa estar em um canal de voz para usar este comando!', flags: 64 });
@@ -84,6 +78,10 @@ module.exports = {
             };
 
             await interaction.reply({
+                embeds: [{
+                    image: { url: 'https://i.pinimg.com/originals/32/d9/bd/32d9bd9064b63d40523415cbcfa3f510.gif' },
+                    color: 0x2f3136,
+                }],
                 content: 'Escolha um áudio para tocar:',
                 components: getRow(page),
             });
@@ -149,11 +147,11 @@ module.exports = {
                 }
             });
 
-            collector.on('end', (collected) => {
-                if (collected.size === 0) {
-                    interaction.deleteReply();
-                } else {
-                    interaction.editReply({ components: [] });
+            collector.on('end', async () => {
+                try {
+                    await interaction.deleteReply(); // Apaga texto e menu sempre
+                } catch (e) {
+                    // Ignora erro de mensagem desconhecida/deletada
                 }
             });
         } catch (error) {
