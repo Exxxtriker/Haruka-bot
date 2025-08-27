@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
     inventory: {
         type: Map,
         of: Number,
-        default: {}
-    }
+        default: {},
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);
