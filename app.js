@@ -9,7 +9,7 @@ const http = require('http');
 const { requestLogger, registerWebSocketClient, logToFile } = require('./logger'); // Import the request logger and WebSocket registration
 const routes = require('./routes/index');
 const { token } = require('./config');
-const connectDB = require('./src/utils/database');
+const connectDB = require('./src/models/database/database');
 
 connectDB();
 require('dotenv').config(); // Adicionado para carregar variáveis de ambiente
